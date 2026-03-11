@@ -64,16 +64,16 @@ function ConceptWall() {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const concepts = [
-    { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's-inspired wing spot. Basketball culture meets heat-level battles. Honey garlic to scorpion pepper.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg" },
-    { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Precision-roasted beans, mad-scientist energy, craft espresso culture.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg" },
-    { name: "Mojo Juice Bar", type: "Juice + Smoothies", desc: "Tropical juice bar on wheels. Fresh-pressed, skateboard-culture vibes, island-sunset energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png" },
-    { name: "Tha Morning After", type: "Breakfast + Brunch", desc: "Hangover-cure breakfast spot. Egg mascots in sunglasses. Pancakes, bacon, and no judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg" },
-    { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money oyster bar. Top hats, champagne, raw bar excellence. Speakeasy sophistication.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png" },
-    { name: "Pasta Bish", type: "Italian Kitchen", desc: "Vault-door pasta house. Secret recipes behind steel. Truffle-forward, old-world craft.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg" },
-    { name: "Patty Daddy", type: "Burger Bar", desc: "Neon-lit burger empire. Father-son mascot duo. Smash burgers, loaded fries, late-night runs.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg" },
-    { name: "Sweet Tooth", type: "Dessert Bar", desc: "Pink neon dessert kingdom. Cupcake queen mascot. Cakes, donuts, and sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png" },
-    { name: "Toss'd", type: "Salad + Bowls", desc: "Greenhouse-inspired salad bar. Lettuce royalty. Farm-to-fork bowls, clean eating with character.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png" },
-    { name: "Taco Yaki", type: "Taco + Yakitori Fusion", desc: "Fire-breathing panda mascot. Mexican-Japanese street food fusion. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg" },
+    { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's-inspired wing spot. Basketball culture meets heat-level battles. Honey garlic to scorpion pepper.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4" },
+    { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Precision-roasted beans, mad-scientist energy, craft espresso culture.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4" },
+    { name: "Mojo Juice Bar", type: "Juice + Smoothies", desc: "Tropical juice bar on wheels. Fresh-pressed, skateboard-culture vibes, island-sunset energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4" },
+    { name: "Tha Morning After", type: "Breakfast + Brunch", desc: "Hangover-cure breakfast spot. Egg mascots in sunglasses. Pancakes, bacon, and no judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4" },
+    { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money oyster bar. Top hats, champagne, raw bar excellence. Speakeasy sophistication.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4" },
+    { name: "Pasta Bish", type: "Italian Kitchen", desc: "Vault-door pasta house. Secret recipes behind steel. Truffle-forward, old-world craft.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4" },
+    { name: "Patty Daddy", type: "Burger Bar", desc: "Neon-lit burger empire. Father-son mascot duo. Smash burgers, loaded fries, late-night runs.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4" },
+    { name: "Sweet Tooth", type: "Dessert Bar", desc: "Pink neon dessert kingdom. Cupcake queen mascot. Cakes, donuts, and sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4" },
+    { name: "Toss'd", type: "Salad + Bowls", desc: "Greenhouse-inspired salad bar. Lettuce royalty. Farm-to-fork bowls, clean eating with character.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4" },
+    { name: "Taco Yaki", type: "Taco + Yakitori Fusion", desc: "Fire-breathing panda mascot. Mexican-Japanese street food fusion. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4" },
   ];
 
   return (
@@ -126,6 +126,22 @@ function ConceptWall() {
                   <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: c.accent, borderBottom: `1px solid ${c.accent}40`, paddingBottom: 2 }}>Explore &rarr;</span>
                 </div>
 
+                {/* Logo animation — plays when tile is expanded */}
+                <div style={{
+                  position: "absolute", bottom: 20, right: 20, width: expanded === i ? 120 : 0, height: expanded === i ? 120 : 0,
+                  borderRadius: "50%", overflow: "hidden",
+                  opacity: expanded === i ? 1 : 0,
+                  transition: "all 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s",
+                  border: `1px solid ${c.accent}30`,
+                  boxShadow: `0 0 40px ${c.accent}20`,
+                }}>
+                  {expanded === i && (
+                    <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                      <source src={c.vid} type="video/mp4" />
+                    </video>
+                  )}
+                </div>
+
                 <div style={{ position: "absolute", bottom: -20, right: 0, fontFamily: "'DM Mono',monospace", fontSize: 8, color: C.dim, opacity: expanded === i ? 0 : 0.3, transition: "opacity 0.3s ease" }}>Click to expand</div>
               </div>
             </div>
@@ -136,36 +152,53 @@ function ConceptWall() {
   );
 }
 
-/* ─── VIDEO SHOWCASE — Angel Wings + Casper Logo ─── */
-function VideoShowcase() {
-  const [ref, vis] = useInView(0.1);
+/* ─── BRAND REEL — All 10 logo animations ─── */
+function BrandReel() {
+  const [ref, vis] = useInView(0.05);
+  const brands = [
+    { src: "/videos/angel-wings.mp4", label: "ANGEL WINGS" },
+    { src: "/videos/espresso-co.mp4", label: "ESPRESSO CO" },
+    { src: "/videos/mojo-juice.mp4", label: "MOJO JUICE" },
+    { src: "/videos/mr-oyster.mp4", label: "MR. OYSTER" },
+    { src: "/videos/pasta-bish.mp4", label: "PASTA BISH" },
+    { src: "/videos/patty-daddy.mp4", label: "PATTY DADDY" },
+    { src: "/videos/sweet-tooth.mp4", label: "SWEET TOOTH" },
+    { src: "/videos/tossd.mp4", label: "TOSS'D" },
+    { src: "/videos/taco-yaki.mp4", label: "TACO YAKI" },
+    { src: "/videos/casper.mp4", label: "CASPER GROUP" },
+  ];
   return (
     <section ref={ref} style={{ position: "relative", overflow: "hidden", background: C.base, padding: "100px 0" }}>
       <div style={{ textAlign: "center", marginBottom: 48, padding: "0 6vw" }}>
-        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>In Motion</div></R>
-        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Experience.</em></h2></R>
+        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>Brand Identities</div></R>
+        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Empire</em> in motion.</h2></R>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%,480px),1fr))", gap: 0, maxWidth: "100%" }}>
-        {[
-          { src: "/videos/casper.mp4", label: "CASPER GROUP" },
-          { src: "/videos/angel.mp4", label: "ANGEL WINGS" },
-        ].map((v, i) => (
-          <div key={i} style={{
-            position: "relative", overflow: "hidden", aspectRatio: "16/9",
-            opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)",
-            transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.15}s`,
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 12%, black 85%, transparent), linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-            maskImage: "linear-gradient(to bottom, transparent, black 12%, black 85%, transparent), linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-            WebkitMaskComposite: "intersect" as unknown as string,
-            maskComposite: "intersect",
-          }}>
-            <video muted loop playsInline autoPlay style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-              <source src={v.src} type="video/mp4" />
-            </video>
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(transparent,rgba(13,13,15,0.8))", padding: "60px 40px 28px", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, letterSpacing: "0.2em", color: C.gold }}>{v.label}</span>
+
+      {/* 2-row grid of logo animations */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 3, padding: "0 6vw", maxWidth: 1400, margin: "0 auto" }}>
+        {brands.map((v, i) => (
+          <R key={v.label} delay={0.04 * i}>
+            <div style={{
+              position: "relative", overflow: "hidden", aspectRatio: "1/1",
+              background: C.deep,
+              opacity: vis ? 1 : 0, transform: vis ? "scale(1)" : "scale(0.9)",
+              transition: `all 0.6s cubic-bezier(0.16,1,0.3,1) ${0.04 * i}s`,
+              /* Vignette mask — dissolve edges */
+              WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+              maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+            }}>
+              <video muted loop playsInline autoPlay style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                <source src={v.src} type="video/mp4" />
+              </video>
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(transparent, rgba(13,13,15,0.85))",
+                padding: "32px 12px 10px", textAlign: "center"
+              }}>
+                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, letterSpacing: "0.2em", color: C.gold }}>{v.label}</span>
+              </div>
             </div>
-          </div>
+          </R>
         ))}
       </div>
     </section>
@@ -308,7 +341,7 @@ export default function CasperGroup() {
       <Nav />
       <Hero />
       <ConceptWall />
-      <VideoShowcase />
+      <BrandReel />
       <Proof />
       <Cities />
       <Partnership />
