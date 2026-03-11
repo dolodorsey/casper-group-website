@@ -22,16 +22,16 @@ const Grain = () => (<div style={{ position: "fixed", inset: 0, zIndex: 9999, po
 
 /* ─── BRAND DATA ─── */
 const BRANDS = [
-  { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's wing spot. Basketball meets heat-level battles.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4", mascot: "/images/mascot-loudini.png", mascotName: "Loudini" },
-  { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Mad-scientist craft espresso.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4", mascot: "/images/mascot-beanzo.png", mascotName: "Beanzo" },
-  { name: "Mojo Juice", type: "Juice Bar", desc: "Tropical juice on wheels. Skateboard culture, island energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4", mascot: "/images/mascot-mojo.png", mascotName: "Mojo" },
-  { name: "Morning After", type: "Brunch", desc: "Hangover-cure breakfast. Egg mascots. No judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4", mascot: "/images/mascot-eggavier.png", mascotName: "Eggavier" },
-  { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money raw bar. Top hats, champagne, speakeasy soul.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4", mascot: "/images/mascot-mr-miss-oyster.png", mascotName: "Mr. & Miss" },
-  { name: "Pasta Bish", type: "Italian", desc: "Vault-door pasta house. Secret recipes. Truffle-forward.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4", mascot: "/images/mascot-mac-daddy.png", mascotName: "Mac Daddy" },
-  { name: "Patty Daddy", type: "Burgers", desc: "Neon burger empire. Smash burgers, loaded fries, late nights.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4", mascot: "/images/mascot-paddy-daddy.png", mascotName: "Paddy Daddy" },
-  { name: "Sweet Tooth", type: "Desserts", desc: "Pink neon dessert kingdom. Cakes, donuts, sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4", mascot: "/images/mascot-sweet-tooth.png", mascotName: "Sweet Tooth" },
-  { name: "Toss'd", type: "Salads", desc: "Greenhouse salad bar. Lettuce royalty. Farm-to-fork bowls.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4", mascot: "/images/mascot-king-kale.png", mascotName: "King Kale" },
-  { name: "Taco Yaki", type: "Fusion", desc: "Mexican-Japanese street food. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4", mascot: "/images/mascot-yaki.png", mascotName: "Yaki" },
+  { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's wing spot. Basketball meets heat-level battles.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4", logo: "/images/logo-angel-wings.png", mascot: "/images/mascot-loudini.png", mascotName: "Loudini" },
+  { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Mad-scientist craft espresso.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4", logo: "/images/logo-espresso-co.png", mascot: "/images/mascot-beanzo.png", mascotName: "Beanzo" },
+  { name: "Mojo Juice", type: "Juice Bar", desc: "Tropical juice on wheels. Skateboard culture, island energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4", logo: "/images/logo-mojo-juice.png", mascot: "/images/mascot-mojo.png", mascotName: "Mojo" },
+  { name: "Morning After", type: "Brunch", desc: "Hangover-cure breakfast. Egg mascots. No judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4", logo: "/images/logo-morning-after.png", mascot: "/images/mascot-eggavier.png", mascotName: "Eggavier" },
+  { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money raw bar. Top hats, champagne, speakeasy soul.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4", logo: "/images/logo-mr-oyster.png", mascot: "/images/mascot-mr-miss-oyster.png", mascotName: "Mr. & Miss" },
+  { name: "Pasta Bish", type: "Italian", desc: "Vault-door pasta house. Secret recipes. Truffle-forward.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4", logo: "/images/logo-pasta-bish.png", mascot: "/images/mascot-mac-daddy.png", mascotName: "Mac Daddy" },
+  { name: "Patty Daddy", type: "Burgers", desc: "Neon burger empire. Smash burgers, loaded fries, late nights.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4", logo: "/images/logo-patty-daddy.png", mascot: "/images/mascot-paddy-daddy.png", mascotName: "Paddy Daddy" },
+  { name: "Sweet Tooth", type: "Desserts", desc: "Pink neon dessert kingdom. Cakes, donuts, sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4", logo: "/images/logo-sweet-tooth.png", mascot: "/images/mascot-sweet-tooth.png", mascotName: "Sweet Tooth" },
+  { name: "Toss'd", type: "Salads", desc: "Greenhouse salad bar. Lettuce royalty. Farm-to-fork bowls.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4", logo: "/images/logo-tossd.png", mascot: "/images/mascot-king-kale.png", mascotName: "King Kale" },
+  { name: "Taco Yaki", type: "Fusion", desc: "Mexican-Japanese street food. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4", logo: "/images/logo-taco-yaki.png", mascot: "/images/mascot-yaki.png", mascotName: "Yaki" },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -57,6 +57,7 @@ function Hero() {
         opacity: ready ? 1 : 0, transform: ready ? "scale(1)" : "scale(0.8)",
         transition: "all 1.5s cubic-bezier(0.16,1,0.3,1) 0.3s",
         mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
+        background: "#000",
       }}>
         <video autoPlay muted loop playsInline style={{
           width: "100%", height: "100%", objectFit: "contain",
@@ -81,7 +82,7 @@ function Hero() {
               opacity: ready ? 0.7 : 0,
               transition: `opacity 1s ease ${0.8 + i * 0.12}s`,
               mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-              borderRadius: "50%", overflow: "hidden",
+              borderRadius: "50%", overflow: "hidden", background: "#000",
             }}>
               <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
                 <source src={b.vid} type="video/mp4" />
@@ -166,18 +167,16 @@ function ConceptWall() {
               <div style={{ position: "relative", zIndex: 2 }}>
                 <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase", color: c.accent, marginBottom: 8 }}>{c.type}</div>
 
-                {/* LOGO ANIMATION instead of text brand name */}
+                {/* LOGO IMAGE instead of text brand name */}
                 <div style={{
+                  position: "relative",
                   width: expanded === i ? "clamp(160px,16vw,240px)" : "clamp(100px,10vw,140px)",
                   height: expanded === i ? "clamp(60px,6vw,90px)" : "clamp(40px,4vw,55px)",
                   marginBottom: 12,
                   transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
                   mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-                  overflow: "hidden",
                 }}>
-                  <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "contain" }}>
-                    <source src={c.vid} type="video/mp4" />
-                  </video>
+                  <Image src={c.logo} alt={c.name} fill style={{ objectFit: "contain", objectPosition: "left center" }} sizes="240px" />
                 </div>
 
                 {/* Expanded details */}
@@ -211,32 +210,30 @@ function ConceptWall() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   BRAND REEL — All 10 logo animations, lighten blended
+   LOGO WALL — All 10 brand logos as images, lighten blended
    ═══════════════════════════════════════════════════════════════ */
-function BrandReel() {
+function LogoWall() {
   const [ref, vis] = useInView(0.05);
   return (
     <section ref={ref} style={{ padding: "100px 6vw", background: C.base, position: "relative" }}>
       <div style={{ textAlign: "center", marginBottom: 48 }}>
         <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>Brand Identities</div></R>
-        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Empire</em> in motion.</h2></R>
+        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Empire.</em></h2></R>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 4, maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
         {BRANDS.map((b, i) => (
           <R key={b.name} delay={0.03 * i}>
             <div style={{
-              position: "relative", aspectRatio: "1/1", overflow: "hidden",
+              position: "relative", aspectRatio: "1/1",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: 20,
               opacity: vis ? 1 : 0, transform: vis ? "scale(1)" : "scale(0.9)",
               transition: `all 0.6s cubic-bezier(0.16,1,0.3,1) ${0.04 * i}s`,
-              /* lighten blend kills black video backgrounds */
               mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
             }}>
-              <video muted loop playsInline autoPlay style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-                <source src={b.vid} type="video/mp4" />
-              </video>
+              <Image src={b.logo} alt={b.name} fill style={{ objectFit: "contain", padding: 16 }} sizes="220px" />
             </div>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, letterSpacing: "0.15em", color: C.dim, textAlign: "center", marginTop: 6 }}>{b.type}</div>
           </R>
         ))}
       </div>
@@ -426,7 +423,7 @@ export default function CasperGroup() {
       <Nav />
       <Hero />
       <ConceptWall />
-      <BrandReel />
+      <LogoWall />
       <MascotParade />
       <Proof />
       <Cities />
