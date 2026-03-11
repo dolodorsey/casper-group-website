@@ -64,16 +64,16 @@ function ConceptWall() {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const concepts = [
-    { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's-inspired wing spot. Basketball culture meets heat-level battles. Honey garlic to scorpion pepper.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4" },
-    { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Precision-roasted beans, mad-scientist energy, craft espresso culture.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4" },
-    { name: "Mojo Juice Bar", type: "Juice + Smoothies", desc: "Tropical juice bar on wheels. Fresh-pressed, skateboard-culture vibes, island-sunset energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4" },
-    { name: "Tha Morning After", type: "Breakfast + Brunch", desc: "Hangover-cure breakfast spot. Egg mascots in sunglasses. Pancakes, bacon, and no judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4" },
-    { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money oyster bar. Top hats, champagne, raw bar excellence. Speakeasy sophistication.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4" },
-    { name: "Pasta Bish", type: "Italian Kitchen", desc: "Vault-door pasta house. Secret recipes behind steel. Truffle-forward, old-world craft.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4" },
-    { name: "Patty Daddy", type: "Burger Bar", desc: "Neon-lit burger empire. Father-son mascot duo. Smash burgers, loaded fries, late-night runs.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4" },
-    { name: "Sweet Tooth", type: "Dessert Bar", desc: "Pink neon dessert kingdom. Cupcake queen mascot. Cakes, donuts, and sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4" },
-    { name: "Toss'd", type: "Salad + Bowls", desc: "Greenhouse-inspired salad bar. Lettuce royalty. Farm-to-fork bowls, clean eating with character.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4" },
-    { name: "Taco Yaki", type: "Taco + Yakitori Fusion", desc: "Fire-breathing panda mascot. Mexican-Japanese street food fusion. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4" },
+    { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's-inspired wing spot. Basketball culture meets heat-level battles. Honey garlic to scorpion pepper.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4", mascot: "/images/mascot-loudini.png", mascotName: "Loudini" },
+    { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Precision-roasted beans, mad-scientist energy, craft espresso culture.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4", mascot: "/images/mascot-beanzo.png", mascotName: "Beanzo" },
+    { name: "Mojo Juice Bar", type: "Juice + Smoothies", desc: "Tropical juice bar on wheels. Fresh-pressed, skateboard-culture vibes, island-sunset energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4", mascot: "/images/mascot-mojo.png", mascotName: "Mojo the Mango" },
+    { name: "Tha Morning After", type: "Breakfast + Brunch", desc: "Hangover-cure breakfast spot. Egg mascots in sunglasses. Pancakes, bacon, and no judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4", mascot: "/images/mascot-eggavier.png", mascotName: "Eggavier" },
+    { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money oyster bar. Top hats, champagne, raw bar excellence. Speakeasy sophistication.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4", mascot: "/images/mascot-mr-miss-oyster.png", mascotName: "Mr. & Miss Oyster" },
+    { name: "Pasta Bish", type: "Italian Kitchen", desc: "Vault-door pasta house. Secret recipes behind steel. Truffle-forward, old-world craft.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4", mascot: "/images/mascot-mac-daddy.png", mascotName: "Mac Daddy" },
+    { name: "Patty Daddy", type: "Burger Bar", desc: "Neon-lit burger empire. Father-son mascot duo. Smash burgers, loaded fries, late-night runs.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4", mascot: "/images/mascot-paddy-daddy.png", mascotName: "Paddy Daddy" },
+    { name: "Sweet Tooth", type: "Dessert Bar", desc: "Pink neon dessert kingdom. Cupcake queen mascot. Cakes, donuts, and sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4", mascot: "/images/mascot-sweet-tooth.png", mascotName: "Sweet Tooth" },
+    { name: "Toss'd", type: "Salad + Bowls", desc: "Greenhouse-inspired salad bar. Lettuce royalty. Farm-to-fork bowls, clean eating with character.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4", mascot: "/images/mascot-king-kale.png", mascotName: "King Kale" },
+    { name: "Taco Yaki", type: "Taco + Yakitori Fusion", desc: "Fire-breathing panda mascot. Mexican-Japanese street food fusion. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4", mascot: "/images/mascot-yaki.png", mascotName: "Yaki" },
   ];
 
   return (
@@ -93,15 +93,14 @@ function ConceptWall() {
               border: `1px solid ${expanded === i ? c.accent + "30" : C.steel}`,
               minHeight: expanded === i ? 340 : "auto",
             }}>
-              {/* Background image — vignette masked, only visible when expanded */}
+              {/* Background image — lighten blend dissolves black bg into void */}
               <div style={{
                 position: "absolute", inset: 0,
-                opacity: expanded === i ? 0.35 : 0,
+                opacity: expanded === i ? 0.25 : 0,
                 transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1)",
-                WebkitMaskImage: "radial-gradient(ellipse 85% 80% at 50% 50%, black 30%, transparent 100%)",
-                maskImage: "radial-gradient(ellipse 85% 80% at 50% 50%, black 30%, transparent 100%)",
+                mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
               }}>
-                <Image src={c.img} alt={c.name} fill style={{ objectFit: "cover", filter: "brightness(0.6) saturate(0.8)" }} sizes="600px" />
+                <Image src={c.img} alt={c.name} fill style={{ objectFit: "cover", filter: "brightness(0.7) saturate(0.8)" }} sizes="600px" />
               </div>
 
               {/* Color overlay when expanded */}
@@ -128,7 +127,7 @@ function ConceptWall() {
 
                 {/* Logo animation — plays when tile is expanded */}
                 <div style={{
-                  position: "absolute", bottom: 20, right: 20, width: expanded === i ? 120 : 0, height: expanded === i ? 120 : 0,
+                  position: "absolute", bottom: 20, right: 20, width: expanded === i ? 100 : 0, height: expanded === i ? 100 : 0,
                   borderRadius: "50%", overflow: "hidden",
                   opacity: expanded === i ? 1 : 0,
                   transition: "all 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s",
@@ -139,6 +138,21 @@ function ConceptWall() {
                     <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
                       <source src={c.vid} type="video/mp4" />
                     </video>
+                  )}
+                </div>
+
+                {/* Mascot — lighten blend melts black bg, appears when expanded */}
+                <div style={{
+                  position: "absolute", bottom: 0, right: expanded === i ? 120 : -100,
+                  width: expanded === i ? "clamp(140px,14vw,200px)" : 0,
+                  height: expanded === i ? "clamp(180px,18vw,260px)" : 0,
+                  opacity: expanded === i ? 1 : 0,
+                  transition: "all 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s",
+                  mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
+                  pointerEvents: "none",
+                }}>
+                  {expanded === i && (
+                    <Image src={c.mascot} alt={c.mascotName} fill style={{ objectFit: "contain", objectPosition: "bottom" }} sizes="200px" />
                   )}
                 </div>
 
@@ -197,6 +211,68 @@ function BrandReel() {
               }}>
                 <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, letterSpacing: "0.2em", color: C.gold }}>{v.label}</span>
               </div>
+            </div>
+          </R>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── MASCOT PARADE — All characters with lighten blend ─── */
+function MascotParade() {
+  const [ref, vis] = useInView(0.05);
+  const mascots = [
+    { img: "/images/mascot-loudini.png", name: "Loudini", brand: "Angel Wings" },
+    { img: "/images/mascot-beanzo.png", name: "Beanzo", brand: "Espresso Co" },
+    { img: "/images/mascot-mojo.png", name: "Mojo", brand: "Mojo Juice" },
+    { img: "/images/mascot-eggavier.png", name: "Eggavier", brand: "Morning After" },
+    { img: "/images/mascot-scrambalina.png", name: "Scrambalina", brand: "Morning After" },
+    { img: "/images/mascot-mr-miss-oyster.png", name: "Mr. & Miss", brand: "Mr. Oyster" },
+    { img: "/images/mascot-mac-daddy.png", name: "Mac Daddy", brand: "Pasta Bish" },
+    { img: "/images/mascot-lil-linguine.png", name: "Lil Linguine", brand: "Pasta Bish" },
+    { img: "/images/mascot-paddy-daddy.png", name: "Paddy Daddy", brand: "Patty Daddy" },
+    { img: "/images/mascot-baby-bunz.png", name: "Baby Bunz", brand: "Patty Daddy" },
+    { img: "/images/mascot-sweet-tooth.png", name: "Sweet Tooth", brand: "Sweet Tooth" },
+    { img: "/images/mascot-king-kale.png", name: "King Kale", brand: "Toss'd" },
+    { img: "/images/mascot-sista-greens.png", name: "Sista Greens", brand: "Toss'd" },
+    { img: "/images/mascot-lenny-lettuce.png", name: "Lenny Lettuce", brand: "Toss'd" },
+    { img: "/images/mascot-yaki.png", name: "Yaki", brand: "Taco Yaki" },
+  ];
+  return (
+    <section ref={ref} style={{ padding: "100px 6vw", background: C.deep, position: "relative", overflow: "hidden" }}>
+      <div style={{ textAlign: "center", marginBottom: 64 }}>
+        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>Meet The Cast</div></R>
+        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Characters</em> behind the brands.</h2></R>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, maxWidth: 1200, margin: "0 auto" }}>
+        {mascots.map((m, i) => (
+          <R key={m.name} delay={0.03 * i}>
+            <div style={{
+              position: "relative", textAlign: "center", cursor: "default",
+              opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)",
+              transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${0.04 * i}s`,
+            }}
+            onMouseEnter={e => {
+              const img = e.currentTarget.querySelector(".mascot-img") as HTMLElement;
+              if (img) img.style.transform = "translateY(-8px) scale(1.05)";
+            }}
+            onMouseLeave={e => {
+              const img = e.currentTarget.querySelector(".mascot-img") as HTMLElement;
+              if (img) img.style.transform = "translateY(0) scale(1)";
+            }}
+            >
+              {/* Mascot image — lighten blend kills the black bg */}
+              <div className="mascot-img" style={{
+                position: "relative", width: "100%", aspectRatio: "3/4",
+                mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
+                transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
+              }}>
+                <Image src={m.img} alt={m.name} fill style={{ objectFit: "contain", objectPosition: "bottom" }} sizes="240px" />
+              </div>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(12px,1.2vw,16px)", color: C.cream, marginTop: 8 }}>{m.name}</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, letterSpacing: "0.2em", color: C.dim, marginTop: 2 }}>{m.brand}</div>
             </div>
           </R>
         ))}
@@ -342,6 +418,7 @@ export default function CasperGroup() {
       <Hero />
       <ConceptWall />
       <BrandReel />
+      <MascotParade />
       <Proof />
       <Cities />
       <Partnership />
