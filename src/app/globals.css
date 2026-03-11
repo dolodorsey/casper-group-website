@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --base: #111111;
+  --cream: #F6F0E7;
+  --burgundy: #5E1F24;
+  --silver: #B9BDC7;
+  --gold: #D89A2B;
+  --steel: #1C1C1E;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { overflow-x: hidden; background: var(--base); color: var(--cream); }
+::selection { background: rgba(94, 31, 36, 0.5); color: var(--cream); }
