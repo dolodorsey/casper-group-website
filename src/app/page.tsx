@@ -1,435 +1,65 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 
-const C = { base: "#111111", cream: "#F6F0E7", burgundy: "#5E1F24", silver: "#B9BDC7", gold: "#D89A2B", steel: "#1C1C1E", dim: "#7A7A80", warm: "#2A1A1C", deep: "#0D0D0F" };
+const C = {
+  base:"#0B0B0B", surface:"#141414", panel:"rgba(255,255,255,0.03)", border:"rgba(255,255,255,0.07)",
+  gold:"#D89A2B", goldDeep:"#8a5e14", cream:"#F6F0E7", muted:"#7A7E85", orange:"#C85A1A", burgundy:"#5E1F24",
+};
+function useInView(t=0.1){const ref=useRef(null);const[v,setV]=useState(false);useEffect(()=>{const el=ref.current;if(!el)return;const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true)},{threshold:t});o.observe(el);return()=>o.disconnect();},[]);return[ref,v];}
+function Reveal({children,d=0}){const[ref,v]=useInView();return<div ref={ref} style={{transform:v?"translateY(0)":"translateY(32px)",opacity:v?1:0,transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${d}s`}}>{children}</div>;}
+const Grain=()=>(<div style={{position:"absolute",inset:0,opacity:0.03,pointerEvents:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>);
 
-/* ─── Shared ─── */
-function useInView(t = 0.12) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [v, setV] = useState(false);
-  useEffect(() => { const el = ref.current; if (!el) return; const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.unobserve(el); } }, { threshold: t }); obs.observe(el); return () => obs.disconnect(); }, [t]);
-  return [ref, v] as const;
-}
+function Nav(){const[s,setS]=useState(false);useEffect(()=>{const h=()=>setS(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h);},[]);return(<nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,padding:s?"14px clamp(24px,4vw,56px)":"24px clamp(24px,4vw,56px)",display:"flex",justifyContent:"space-between",alignItems:"center",background:s?"rgba(11,11,11,0.94)":"transparent",backdropFilter:s?"blur(24px)":"none",borderBottom:s?`1px solid ${C.border}`:"none",transition:"all 0.5s cubic-bezier(0.16,1,0.3,1)"}}><div><div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"8px",letterSpacing:"0.45em",textTransform:"uppercase",color:C.gold,marginBottom:"3px"}}>Restaurant Concepts</div><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:400,fontStyle:"italic",color:C.cream}}>Casper Group</span></div><div style={{display:"flex",gap:"clamp(16px,2.5vw,36px)",alignItems:"center"}}>{["Concepts","Locations","Franchise","About"].map(n=>(<a key={n} href={`#${n.toLowerCase()}`} style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:500,letterSpacing:"0.22em",textTransform:"uppercase",color:C.muted,textDecoration:"none",transition:"color 0.3s"}} onMouseEnter={e=>e.target.style.color=C.cream} onMouseLeave={e=>e.target.style.color=C.muted}>{n}</a>))}<button style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:600,letterSpacing:"0.14em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"10px 26px",cursor:"pointer"}}>Inquire</button></div></nav>);}
 
-function R({ children, delay = 0, dir = "up", style = {} }: { children: React.ReactNode; delay?: number; dir?: string; style?: React.CSSProperties }) {
-  const [ref, vis] = useInView();
-  const t: Record<string, string> = { up: "translateY(50px)", left: "translateX(60px)", right: "translateX(-60px)", scale: "scale(0.92)" };
-  return <div ref={ref} style={{ ...style, opacity: vis ? 1 : 0, transform: vis ? "none" : t[dir] || t.up, transition: `all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`, willChange: "transform,opacity" }}>{children}</div>;
-}
+const BRANDS=[{name:"Angel Wings",type:"Wings Concept",desc:"Atlanta-style lemon pepper wings and Southern comfort energy built for mass demand.",emoji:"🍗"},{name:"Tha Morning After",type:"Breakfast Concept",desc:"Creative breakfast culture engineered for craveability and repeat traffic.",emoji:"🍳"},{name:"Patty Daddy",type:"Burger Concept",desc:"A larger-than-life burger concept with bold personality and high-volume appeal.",emoji:"🍔"},{name:"Mojo Juice",type:"Juice Bar",desc:"Fresh-pressed ritual with bright wellness positioning and easy expansion logic.",emoji:"🥤"},{name:"Espresso Co.",type:"Coffee Concept",desc:"Modern coffee culture driving premium everyday traffic and brand loyalty.",emoji:"☕"},{name:"Mr. Oyster",type:"Seafood Concept",desc:"Elevated seafood with visual edge and premium category positioning.",emoji:"🦪"},{name:"Sweet Tooth",type:"Dessert Concept",desc:"Dessert-driven indulgence designed for impulse and social documentation.",emoji:"🍰"},{name:"Taco Yaki",type:"Fusion Concept",desc:"A fusion-forward taco concept with high-visual menu appeal.",emoji:"🌮"},{name:"Toss'd",type:"Healthy Fast Casual",desc:"Fresh bowls and salads with speed, simplicity, and scalable reach.",emoji:"🥗"},{name:"Pasta Bish",type:"Pasta Concept",desc:"Comfort-food pasta with attitude and broad-market menu flexibility.",emoji:"🍝"}];
 
-const Grain = () => (<div style={{ position: "fixed", inset: 0, zIndex: 9999, pointerEvents: "none", mixBlendMode: "overlay", opacity: 0.03 }}><svg width="100%" height="100%"><filter id="g"><feTurbulence baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#g)" /></svg></div>);
+export default function CasperGroupV3(){const[loaded,setLoaded]=useState(false);const[hover,setHover]=useState(null);useEffect(()=>{setTimeout(()=>setLoaded(true),80);},[]);
+return(<div style={{background:C.base,minHeight:"100vh"}}>
+<Nav/>
+<section style={{minHeight:"100vh",position:"relative",overflow:"hidden",background:`radial-gradient(ellipse at 20% 80%, rgba(94,31,36,0.18) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(216,154,43,0.08) 0%, transparent 55%), ${C.base}`,display:"flex",flexDirection:"column",justifyContent:"flex-end",padding:"0 clamp(32px,6vw,96px) 80px"}}>
+<Grain/><div style={{position:"relative",zIndex:2,maxWidth:"1400px",margin:"0 auto",width:"100%"}}>
+<div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"0.5em",textTransform:"uppercase",color:C.gold,opacity:loaded?1:0,transition:"opacity 0.8s ease 0.3s"}}>An Enterprise of Flavor-Driven Brands</div>
+<h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(56px,10vw,148px)",fontWeight:400,lineHeight:0.88,letterSpacing:"-0.03em",color:C.cream,marginTop:"20px",opacity:loaded?1:0,transform:loaded?"translateY(0)":"translateY(40px)",transition:"all 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s"}}><em>Casper</em><br/><span style={{color:"rgba(246,240,231,0.28)"}}>Group</span></h1>
+<p style={{fontFamily:"'DM Sans',sans-serif",fontSize:"clamp(14px,1.2vw,17px)",lineHeight:1.8,color:C.muted,maxWidth:"520px",marginTop:"32px",opacity:loaded?1:0,transition:"all 0.9s ease 0.9s"}}>Distinct concepts. Shared power. Casper Group builds iconic QSR brands with production, operations, and training infrastructure to expand and scale.</p>
+<div style={{display:"flex",gap:"14px",marginTop:"44px",opacity:loaded?1:0,transition:"opacity 0.9s ease 1.2s",flexWrap:"wrap"}}>
+<button style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:600,letterSpacing:"0.15em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"15px 42px",cursor:"pointer"}} onMouseEnter={e=>{e.target.style.background=C.cream;e.target.style.transform="translateY(-2px)";}} onMouseLeave={e=>{e.target.style.background=C.gold;e.target.style.transform="translateY(0)";}}>Explore Brands</button>
+<button style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:500,letterSpacing:"0.15em",textTransform:"uppercase",color:C.cream,background:"transparent",border:`1px solid rgba(246,240,231,0.18)`,padding:"15px 36px",cursor:"pointer"}} onMouseEnter={e=>{e.target.style.borderColor=C.gold;e.target.style.color=C.gold;}} onMouseLeave={e=>{e.target.style.borderColor="rgba(246,240,231,0.18)";e.target.style.color=C.cream;}}>Partner With Us</button>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1px",marginTop:"64px",background:C.border,opacity:loaded?1:0,transition:"opacity 1s ease 1.4s"}}>
+{[["10+","Distinct Concepts"],["25+","Markets"],["150+","Locations"],["1","Mascot Universe"]].map(([v,l])=>(<div key={l} style={{padding:"24px 0 0",background:C.base}}><div style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,3.5vw,48px)",fontWeight:400,fontStyle:"italic",color:C.gold}}>{v}</div><div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"9px",fontWeight:500,letterSpacing:"0.32em",textTransform:"uppercase",color:C.muted,marginTop:"8px"}}>{l}</div></div>))}
+</div>
+</div></section>
 
-/* ─── BRAND DATA ─── */
-const BRANDS = [
-  { name: "Angel Wings", type: "Wing Bar", desc: "East Atlanta Lou's wing spot. Basketball meets heat-level battles.", color: "#2A1510", accent: "#E8A020", img: "/images/angel-wings-hero.jpg", vid: "/videos/angel-wings.mp4", logo: "/images/logo-angel-wings.png", mascot: "/images/mascot-loudini.png", mascotName: "Loudini" },
-  { name: "Espresso Co", type: "Coffee Lab", desc: "Steampunk coffee laboratory. Mad-scientist craft espresso.", color: "#0E2420", accent: "#4DD9B4", img: "/images/espresso-machine.jpg", vid: "/videos/espresso-co.mp4", logo: "/images/logo-espresso-co.png", mascot: "/images/mascot-beanzo.png", mascotName: "Beanzo" },
-  { name: "Mojo Juice", type: "Juice Bar", desc: "Tropical juice on wheels. Skateboard culture, island energy.", color: "#2D1A08", accent: "#F5A623", img: "/images/mojo-juice.png", vid: "/videos/mojo-juice.mp4", logo: "/images/logo-mojo-juice.png", mascot: "/images/mascot-mojo.png", mascotName: "Mojo" },
-  { name: "Morning After", type: "Brunch", desc: "Hangover-cure breakfast. Egg mascots. No judgment.", color: "#1A1510", accent: "#E8B040", img: "/images/morning-after-booth.jpg", vid: "/videos/casper.mp4", logo: "/images/logo-morning-after.png", mascot: "/images/mascot-eggavier.png", mascotName: "Eggavier" },
-  { name: "Mr. Oyster", type: "Oyster Bar", desc: "Old-money raw bar. Top hats, champagne, speakeasy soul.", color: "#1A1508", accent: "#D4A05A", img: "/images/mr-oyster.png", vid: "/videos/mr-oyster.mp4", logo: "/images/logo-mr-oyster.png", mascot: "/images/mascot-mr-miss-oyster.png", mascotName: "Mr. & Miss" },
-  { name: "Pasta Bish", type: "Italian", desc: "Vault-door pasta house. Secret recipes. Truffle-forward.", color: "#1A1810", accent: "#C8A040", img: "/images/pasta-bish.jpg", vid: "/videos/pasta-bish.mp4", logo: "/images/logo-pasta-bish.png", mascot: "/images/mascot-mac-daddy.png", mascotName: "Mac Daddy" },
-  { name: "Patty Daddy", type: "Burgers", desc: "Neon burger empire. Smash burgers, loaded fries, late nights.", color: "#2A0A08", accent: "#E85020", img: "/images/patty-daddy-hero.jpg", vid: "/videos/patty-daddy.mp4", logo: "/images/logo-patty-daddy.png", mascot: "/images/mascot-paddy-daddy.png", mascotName: "Paddy Daddy" },
-  { name: "Sweet Tooth", type: "Desserts", desc: "Pink neon dessert kingdom. Cakes, donuts, sugar artistry.", color: "#2A0820", accent: "#E860A0", img: "/images/sweet-tooth.png", vid: "/videos/sweet-tooth.mp4", logo: "/images/logo-sweet-tooth.png", mascot: "/images/mascot-sweet-tooth.png", mascotName: "Sweet Tooth" },
-  { name: "Toss'd", type: "Salads", desc: "Greenhouse salad bar. Lettuce royalty. Farm-to-fork bowls.", color: "#0A1A0A", accent: "#40A848", img: "/images/tossd.png", vid: "/videos/tossd.mp4", logo: "/images/logo-tossd.png", mascot: "/images/mascot-king-kale.png", mascotName: "King Kale" },
-  { name: "Taco Yaki", type: "Fusion", desc: "Mexican-Japanese street food. Tacos meet yakitori flame.", color: "#2A0A08", accent: "#E04020", img: "/images/taco-yaki-ninja.jpg", vid: "/videos/taco-yaki.mp4", logo: "/images/logo-taco-yaki.png", mascot: "/images/mascot-yaki.png", mascotName: "Yaki" },
-];
+<section id="concepts" style={{background:C.base,padding:"120px clamp(32px,6vw,96px)"}}>
+<div style={{maxWidth:"1400px",margin:"0 auto"}}>
+<Reveal><div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"16px"}}>Brand Portfolio</div>
+<h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(36px,5vw,72px)",fontWeight:400,fontStyle:"italic",color:C.cream,marginBottom:"64px"}}>Our Brand Worlds</h2></Reveal>
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:"2px",background:C.border}}>
+{BRANDS.map((b,i)=>(<div key={b.name} onMouseEnter={()=>setHover(i)} onMouseLeave={()=>setHover(null)} style={{background:hover===i?C.surface:C.base,padding:"32px 28px",cursor:"pointer",transition:"background 0.3s"}}>
+<div style={{fontSize:"28px",marginBottom:"14px"}}>{b.emoji}</div>
+<div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"8px",fontWeight:600,letterSpacing:"0.38em",textTransform:"uppercase",color:C.orange,marginBottom:"8px"}}>{b.type}</div>
+<div style={{fontFamily:"'Playfair Display',serif",fontSize:"22px",fontWeight:400,fontStyle:"italic",color:C.cream,marginBottom:"12px"}}>{b.name}</div>
+<p style={{fontFamily:"'DM Sans',sans-serif",fontSize:"13px",lineHeight:1.7,color:C.muted}}>{b.desc}</p>
+</div>))}
+</div></div></section>
 
-/* ═══════════════════════════════════════════════════════════════
-   HERO — Casper logo animation center, brand logos orbit around it
-   NO TEXT "Casper Group" — the video IS the identity
-   ═══════════════════════════════════════════════════════════════ */
-function Hero() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => { setTimeout(() => setReady(true), 800); }, []);
+<section style={{background:C.surface,padding:"120px clamp(32px,6vw,96px)",position:"relative",overflow:"hidden"}}>
+<div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 100%, ${C.gold}10, transparent 60%)`}}/>
+<div style={{maxWidth:"900px",margin:"0 auto",textAlign:"center",position:"relative",zIndex:2}}>
+<Reveal>
+<div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"24px"}}>Build With Us</div>
+<h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(36px,5vw,72px)",fontWeight:400,fontStyle:"italic",color:C.cream,lineHeight:1.0,letterSpacing:"-0.02em",marginBottom:"24px"}}>The Modern Fast-Food<br/>Empire Starts Here.</h2>
+<p style={{fontFamily:"'DM Sans',sans-serif",fontSize:"16px",lineHeight:1.8,color:C.muted,maxWidth:"560px",margin:"0 auto 48px"}}>Whether you are an operator, a landlord, or a strategic partner — Casper Group has a path designed for results at scale.</p>
+<div style={{display:"flex",gap:"16px",justifyContent:"center",flexWrap:"wrap"}}>
+<button style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:600,letterSpacing:"0.15em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"16px 48px",cursor:"pointer"}} onMouseEnter={e=>{e.target.style.background=C.cream;e.target.style.transform="translateY(-2px)";}} onMouseLeave={e=>{e.target.style.background=C.gold;e.target.style.transform="translateY(0)";}}>Explore Partnership</button>
+<button style={{fontFamily:"'DM Sans',sans-serif",fontSize:"10px",fontWeight:500,letterSpacing:"0.15em",textTransform:"uppercase",color:C.cream,background:"transparent",border:`1px solid rgba(246,240,231,0.18)`,padding:"16px 40px",cursor:"pointer"}} onMouseEnter={e=>{e.target.style.borderColor=C.gold;e.target.style.color=C.gold;}} onMouseLeave={e=>{e.target.style.borderColor="rgba(246,240,231,0.18)";e.target.style.color=C.cream;}}>Franchise Inquiry</button>
+</div>
+</Reveal></div></section>
 
-  return (
-    <section style={{ height: "100vh", position: "relative", overflow: "hidden", background: C.base, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {/* Ambient burgundy glow */}
-      <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 50% 45%, ${C.burgundy}12, transparent 60%)` }} />
-
-      {/* Gold architectural line */}
-      <div style={{ position: "absolute", top: "50%", left: "6vw", right: "6vw", height: 1, background: `linear-gradient(90deg, ${C.gold}10, ${C.gold}06, ${C.gold}10)`, opacity: ready ? 1 : 0, transition: "opacity 2s ease 1s" }} />
-
-      {/* ── CENTER: Casper Group logo animation video ── */}
-      <div style={{
-        position: "relative", zIndex: 10,
-        width: "clamp(240px, 30vw, 400px)", height: "clamp(240px, 30vw, 400px)",
-        opacity: ready ? 1 : 0, transform: ready ? "scale(1)" : "scale(0.8)",
-        transition: "all 1.5s cubic-bezier(0.16,1,0.3,1) 0.3s",
-        mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-        background: "#000",
-      }}>
-        <video autoPlay muted loop playsInline style={{
-          width: "100%", height: "100%", objectFit: "contain",
-        }}>
-          <source src="/videos/casper-logo.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* ── ORBITING: 10 brand logo animations in a ring ── */}
-      <div style={{
-        position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
-        animation: "orbitSpin 120s linear infinite",
-      }}>
-        {BRANDS.map((b, i) => {
-          const angle = (i / BRANDS.length) * 360;
-          const radius = "min(38vw, 340px)";
-          return (
-            <div key={b.name} style={{
-              position: "absolute",
-              width: "clamp(60px, 7vw, 90px)", height: "clamp(60px, 7vw, 90px)",
-              transform: `rotate(${angle}deg) translateX(${radius}) rotate(-${angle}deg)`,
-              opacity: ready ? 0.7 : 0,
-              transition: `opacity 1s ease ${0.8 + i * 0.12}s`,
-              mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-              borderRadius: "50%", overflow: "hidden", background: "#000",
-            }}>
-              <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-                <source src={b.vid} type="video/mp4" />
-              </video>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Tagline below center logo */}
-      <div style={{
-        position: "absolute", bottom: "14vh", left: 0, right: 0, textAlign: "center", zIndex: 15,
-        opacity: ready ? 1 : 0, transform: ready ? "translateY(0)" : "translateY(20px)",
-        transition: "all 1s ease 1.2s",
-      }}>
-        <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.5em", textTransform: "uppercase", color: C.gold, marginBottom: 16, display: "inline-flex", alignItems: "center", gap: 12 }}>
-          <span style={{ width: 24, height: 1, background: C.gold, display: "inline-block" }} />
-          Multi-Concept Dining Empire — 10 Brands — 8 Cities
-          <span style={{ width: 24, height: 1, background: C.gold, display: "inline-block" }} />
-        </div>
-        <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(13px,1.1vw,16px)", fontWeight: 300, color: C.silver, maxWidth: 380, margin: "0 auto", lineHeight: 1.6 }}>
-          Every brand tells its own story. Every concept owns its lane.
-        </p>
-      </div>
-
-      <style>{`
-        @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CONCEPT WALL — Logo animation videos replace brand names
-   Mascots appear on expand. All images lighten-blended.
-   ═══════════════════════════════════════════════════════════════ */
-function ConceptWall() {
-  const [expanded, setExpanded] = useState<number | null>(null);
-
-  return (
-    <section style={{ minHeight: "100vh", background: C.deep, padding: "120px 6vw", position: "relative" }}>
-      <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 64, display: "flex", alignItems: "center", gap: 12 }}>
-        <span style={{ width: 32, height: 1, background: C.gold, display: "inline-block" }} />The Concepts
-      </div></R>
-
-      <div style={{ display: "grid", gridTemplateColumns: expanded !== null ? "1fr" : "repeat(2, 1fr)", gap: 3, transition: "all 0.6s ease" }}>
-        {BRANDS.map((c, i) => (
-          <R key={c.name} delay={0.04 + i * 0.03}>
-            <div onClick={() => setExpanded(expanded === i ? null : i)} style={{
-              background: C.steel, position: "relative", overflow: "hidden", cursor: "pointer",
-              padding: expanded === i ? "clamp(48px,5vw,80px)" : "clamp(28px,2.5vw,44px)",
-              transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)",
-              border: `1px solid ${expanded === i ? c.accent + "30" : C.steel}`,
-              minHeight: expanded === i ? 360 : "auto",
-            }}>
-              {/* Scene image bg — lighten blend kills dark bg */}
-              <div style={{
-                position: "absolute", inset: 0,
-                opacity: expanded === i ? 0.2 : 0,
-                transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1)",
-                mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-              }}>
-                <Image src={c.img} alt="" fill style={{ objectFit: "cover", filter: "brightness(0.7) saturate(0.7)" }} sizes="800px" />
-              </div>
-
-              {/* Color overlay when expanded */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: expanded === i ? `${c.color}D0` : "transparent",
-                transition: "background 0.5s ease",
-              }} />
-
-              {/* Ghost number */}
-              <div style={{
-                position: "absolute", top: 8, right: 16,
-                fontFamily: "'Playfair Display',serif", fontSize: "clamp(40px,4vw,70px)",
-                color: expanded === i ? c.accent : C.base, opacity: expanded === i ? 0.12 : 0.06,
-                transition: "all 0.5s ease", lineHeight: 1, fontStyle: "italic", zIndex: 2
-              }}>{String(i + 1).padStart(2, "0")}</div>
-
-              {/* Content — logo animation replaces text name */}
-              <div style={{ position: "relative", zIndex: 2 }}>
-                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase", color: c.accent, marginBottom: 8 }}>{c.type}</div>
-
-                {/* LOGO IMAGE instead of text brand name */}
-                <div style={{
-                  position: "relative",
-                  width: expanded === i ? "clamp(160px,16vw,240px)" : "clamp(100px,10vw,140px)",
-                  height: expanded === i ? "clamp(60px,6vw,90px)" : "clamp(40px,4vw,55px)",
-                  marginBottom: 12,
-                  transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
-                  mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-                }}>
-                  <Image src={c.logo} alt={c.name} fill style={{ objectFit: "contain", objectPosition: "left center" }} sizes="240px" />
-                </div>
-
-                {/* Expanded details */}
-                <div style={{ maxHeight: expanded === i ? 220 : 0, opacity: expanded === i ? 1 : 0, overflow: "hidden", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)" }}>
-                  <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.cream, opacity: 0.7, maxWidth: 500, marginBottom: 24 }}>{c.desc}</p>
-                  <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: c.accent, borderBottom: `1px solid ${c.accent}40`, paddingBottom: 2 }}>Explore &rarr;</span>
-                </div>
-              </div>
-
-              {/* Mascot — lighten blend, slides in on expand */}
-              <div style={{
-                position: "absolute", bottom: 0, right: expanded === i ? 20 : -120,
-                width: expanded === i ? "clamp(130px,13vw,190px)" : 0,
-                height: expanded === i ? "clamp(170px,17vw,250px)" : 0,
-                opacity: expanded === i ? 1 : 0,
-                transition: "all 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s",
-                mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-                pointerEvents: "none",
-              }}>
-                {expanded === i && <Image src={c.mascot} alt={c.mascotName} fill style={{ objectFit: "contain", objectPosition: "bottom" }} sizes="190px" />}
-              </div>
-
-              {/* Collapse hint */}
-              <div style={{ position: "absolute", bottom: 12, left: expanded === i ? -100 : 20, fontFamily: "'DM Mono',monospace", fontSize: 8, color: C.dim, opacity: expanded === i ? 0 : 0.25, transition: "all 0.3s ease" }}>Click to expand</div>
-            </div>
-          </R>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   LOGO WALL — All 10 brand logos as images, lighten blended
-   ═══════════════════════════════════════════════════════════════ */
-function LogoWall() {
-  const [ref, vis] = useInView(0.05);
-  return (
-    <section ref={ref} style={{ padding: "100px 6vw", background: C.base, position: "relative" }}>
-      <div style={{ textAlign: "center", marginBottom: 48 }}>
-        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>Brand Identities</div></R>
-        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Empire.</em></h2></R>
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
-        {BRANDS.map((b, i) => (
-          <R key={b.name} delay={0.03 * i}>
-            <div style={{
-              position: "relative", aspectRatio: "1/1",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: 20,
-              opacity: vis ? 1 : 0, transform: vis ? "scale(1)" : "scale(0.9)",
-              transition: `all 0.6s cubic-bezier(0.16,1,0.3,1) ${0.04 * i}s`,
-              mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-            }}>
-              <Image src={b.logo} alt={b.name} fill style={{ objectFit: "contain", padding: 16 }} sizes="220px" />
-            </div>
-          </R>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   MASCOT PARADE — All characters, lighten blend on black bg
-   ═══════════════════════════════════════════════════════════════ */
-function MascotParade() {
-  const [ref, vis] = useInView(0.05);
-  const mascots = [
-    { img: "/images/mascot-loudini.png", name: "Loudini", brand: "Angel Wings" },
-    { img: "/images/mascot-beanzo.png", name: "Beanzo", brand: "Espresso Co" },
-    { img: "/images/mascot-mojo.png", name: "Mojo", brand: "Mojo Juice" },
-    { img: "/images/mascot-eggavier.png", name: "Eggavier", brand: "Morning After" },
-    { img: "/images/mascot-scrambalina.png", name: "Scrambalina", brand: "Morning After" },
-    { img: "/images/mascot-mr-miss-oyster.png", name: "Mr. & Miss", brand: "Mr. Oyster" },
-    { img: "/images/mascot-mac-daddy.png", name: "Mac Daddy", brand: "Pasta Bish" },
-    { img: "/images/mascot-lil-linguine.png", name: "Lil Linguine", brand: "Pasta Bish" },
-    { img: "/images/mascot-paddy-daddy.png", name: "Paddy Daddy", brand: "Patty Daddy" },
-    { img: "/images/mascot-baby-bunz.png", name: "Baby Bunz", brand: "Patty Daddy" },
-    { img: "/images/mascot-sweet-tooth.png", name: "Sweet Tooth", brand: "Sweet Tooth" },
-    { img: "/images/mascot-king-kale.png", name: "King Kale", brand: "Toss'd" },
-    { img: "/images/mascot-sista-greens.png", name: "Sista Greens", brand: "Toss'd" },
-    { img: "/images/mascot-lenny-lettuce.png", name: "Lenny", brand: "Toss'd" },
-    { img: "/images/mascot-yaki.png", name: "Yaki", brand: "Taco Yaki" },
-  ];
-  return (
-    <section ref={ref} style={{ padding: "100px 6vw", background: C.deep, position: "relative" }}>
-      <div style={{ textAlign: "center", marginBottom: 64 }}>
-        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 16 }}>Meet The Cast</div></R>
-        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,5vw,64px)", fontWeight: 400, color: C.cream }}>The <em style={{ color: C.gold }}>Characters.</em></h2></R>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, maxWidth: 1200, margin: "0 auto" }}>
-        {mascots.map((m, i) => (
-          <R key={m.name} delay={0.03 * i}>
-            <div style={{ textAlign: "center", opacity: vis ? 1 : 0, transition: `all 0.6s ease ${0.04 * i}s` }}
-              onMouseEnter={e => { const el = e.currentTarget.querySelector(".m-img") as HTMLElement; if (el) el.style.transform = "translateY(-8px) scale(1.04)"; }}
-              onMouseLeave={e => { const el = e.currentTarget.querySelector(".m-img") as HTMLElement; if (el) el.style.transform = "translateY(0) scale(1)"; }}
-            >
-              <div className="m-img" style={{
-                position: "relative", width: "100%", aspectRatio: "3/4",
-                mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"],
-                transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-              }}>
-                <Image src={m.img} alt={m.name} fill style={{ objectFit: "contain", objectPosition: "bottom" }} sizes="220px" />
-              </div>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(11px,1.1vw,15px)", color: C.cream, marginTop: 6 }}>{m.name}</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 7, letterSpacing: "0.2em", color: C.dim, marginTop: 2 }}>{m.brand}</div>
-            </div>
-          </R>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════ */
-function Proof() {
-  const stats = [{ v: "10", u: "", l: "Concepts" }, { v: "8", u: "+", l: "Cities" }, { v: "50", u: "K+", l: "Guests" }, { v: "∞", u: "", l: "Ambition" }];
-  return (
-    <section style={{ padding: "140px 6vw", background: C.base, position: "relative", overflow: "hidden" }}>
-      {[25, 50, 75].map(p => <div key={p} style={{ position: "absolute", top: 0, bottom: 0, left: `${p}%`, width: 1, background: C.steel }} />)}
-      <R><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(48px,8vw,120px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.9, color: C.cream, margin: "0 0 80px" }}>Scale.</h2></R>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", position: "relative", zIndex: 1 }}>
-        {stats.map((s, i) => (
-          <R key={s.l} delay={0.08 + i * 0.08}><div style={{ padding: "40px 20px 40px 0" }}>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(48px,6vw,80px)", fontWeight: 400, color: C.gold, lineHeight: 1 }}>{s.v}<span style={{ fontSize: "clamp(14px,1.5vw,20px)", fontFamily: "'DM Mono',monospace", marginLeft: 2, color: C.dim }}>{s.u}</span></div>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase", color: C.dim, marginTop: 12 }}>{s.l}</div>
-          </div></R>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Cities() {
-  const [hov, setHov] = useState<number | null>(null);
-  const cities = ["Atlanta", "Houston", "Miami", "New York", "LA", "Charlotte", "Las Vegas", "DC"];
-  return (
-    <section style={{ padding: "140px 6vw", background: C.deep }}>
-      <R><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(40px,7vw,100px)", fontWeight: 400, lineHeight: 0.9, color: C.cream, margin: "0 0 64px" }}>Where we<br /><em style={{ color: C.gold }}>operate.</em></h2></R>
-      <R delay={0.15}><div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", borderTop: `1px solid ${C.steel}` }}>
-        {cities.map((c, i) => (
-          <div key={c} onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)} style={{
-            padding: "28px 16px", borderBottom: `1px solid ${C.steel}`,
-            borderRight: (i + 1) % 4 !== 0 ? `1px solid ${C.steel}` : "none",
-            background: hov === i ? C.burgundy : "transparent", transition: "all 0.4s ease", cursor: "default",
-          }}><span style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(18px,1.8vw,24px)", fontWeight: 400, color: hov === i ? C.cream : C.silver, transition: "color 0.3s" }}>{c}</span></div>
-        ))}
-      </div></R>
-    </section>
-  );
-}
-
-function Partnership() {
-  return (
-    <section style={{ minHeight: "70vh", background: C.base, display: "flex", alignItems: "center", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", left: "-3vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(100px,18vw,260px)", fontWeight: 700, fontStyle: "italic", color: C.steel, opacity: 0.12, whiteSpace: "nowrap" }}>Invest</div>
-      <div style={{ padding: "100px 6vw", position: "relative", zIndex: 1, maxWidth: "55vw", marginLeft: "auto" }}>
-        <R><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: 28, display: "flex", alignItems: "center", gap: 12 }}><span style={{ width: 32, height: 1, background: C.gold, display: "inline-block" }} />Franchise &amp; Partnership</div></R>
-        <R delay={0.1}><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(36px,4vw,56px)", fontWeight: 400, lineHeight: 1.05, color: C.cream, margin: "0 0 24px" }}>Build with the<br /><em style={{ color: C.gold }}>Casper universe.</em></h2></R>
-        <R delay={0.2}><p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: C.silver, opacity: 0.5, maxWidth: 400, marginBottom: 40 }}>Franchise opportunities, white-label kitchen partnerships, and strategic joint ventures.</p></R>
-        <R delay={0.3}><a href="#contact" style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: C.base, background: C.gold, padding: "14px 36px", textDecoration: "none", display: "inline-block", transition: "all 0.4s" }} onMouseEnter={e => { (e.target as HTMLElement).style.background = C.cream; }} onMouseLeave={e => { (e.target as HTMLElement).style.background = C.gold; }}>Partner With Us</a></R>
-      </div>
-    </section>
-  );
-}
-
-function Conversion() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  return (
-    <section id="contact" style={{ minHeight: "70vh", background: C.deep, display: "flex", alignItems: "center", position: "relative", overflow: "hidden" }}>
-      {/* Casper logo watermark — lighten blend */}
-      <div style={{ position: "absolute", right: "6vw", top: "50%", transform: "translateY(-50%)", width: "clamp(200px,25vw,350px)", height: "clamp(200px,25vw,350px)", opacity: 0.06, mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"] }}>
-        <Image src="/images/casper-logo-white.png" alt="" fill style={{ objectFit: "contain" }} sizes="350px" />
-      </div>
-      <div style={{ padding: "100px 6vw", position: "relative", zIndex: 1 }}>
-        <R><h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(48px,10vw,140px)", fontWeight: 400, lineHeight: 0.88, color: C.cream, margin: "0 0 48px" }}>Join the<br /><em style={{ color: C.gold }}>Empire.</em></h2></R>
-        <R delay={0.15}><div style={{ maxWidth: 480 }}>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.silver, opacity: 0.5, marginBottom: 36 }}>Openings, events, private dining, and franchise updates.</p>
-          {!done ? (
-            <div style={{ display: "flex", border: `1px solid ${C.steel}` }}>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" style={{ flex: 1, padding: "16px 20px", fontFamily: "'DM Mono',monospace", fontSize: 13, border: "none", outline: "none", background: "transparent", color: C.cream }} />
-              <button onClick={() => email && setDone(true)} style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", padding: "16px 28px", background: C.burgundy, color: C.cream, border: "none", cursor: "pointer", transition: "background 0.3s" }} onMouseEnter={e => { (e.target as HTMLElement).style.background = C.gold; (e.target as HTMLElement).style.color = C.base; }} onMouseLeave={e => { (e.target as HTMLElement).style.background = C.burgundy; (e.target as HTMLElement).style.color = C.cream; }}>Join</button>
-            </div>
-          ) : <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 24, fontStyle: "italic", color: C.gold }}>Welcome to the empire.</div>}
-        </div></R>
-      </div>
-    </section>
-  );
-}
-
-function Nav() {
-  const [s, setS] = useState(false);
-  useEffect(() => { const fn = () => setS(window.scrollY > 80); window.addEventListener("scroll", fn, { passive: true }); return () => window.removeEventListener("scroll", fn); }, []);
-  return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "22px 6vw", display: "flex", justifyContent: "space-between", alignItems: "center", background: s ? `${C.base}F2` : "transparent", backdropFilter: s ? "blur(24px)" : "none", borderBottom: s ? `1px solid ${C.steel}` : "1px solid transparent", transition: "all 0.5s ease" }}>
-      {/* Nav logo — white ghost mark, lighten blend */}
-      <div style={{ width: 28, height: 28, mixBlendMode: s ? "normal" as React.CSSProperties["mixBlendMode"] : "lighten" as React.CSSProperties["mixBlendMode"], position: "relative" }}>
-        <Image src="/images/casper-logo-white.png" alt="Casper" fill style={{ objectFit: "contain" }} sizes="28px" />
-      </div>
-      <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-        {["Concepts", "Cities", "Careers"].map(i => <a key={i} href="#" className="nav-hide" style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: C.dim, textDecoration: "none", transition: "color 0.3s" }} onMouseEnter={e => { (e.target as HTMLElement).style.color = C.cream; }} onMouseLeave={e => { (e.target as HTMLElement).style.color = C.dim; }}>{i}</a>)}
-        <a href="#contact" style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: C.base, background: C.gold, padding: "8px 18px", textDecoration: "none", transition: "all 0.3s" }} onMouseEnter={e => { (e.target as HTMLElement).style.background = C.cream; }} onMouseLeave={e => { (e.target as HTMLElement).style.background = C.gold; }}>Connect</a>
-      </div>
-    </nav>
-  );
-}
-
-function Footer() {
-  return (
-    <footer style={{ background: C.base, padding: "56px 6vw 40px", borderTop: `1px solid ${C.steel}` }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 24 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 24, height: 24, position: "relative", mixBlendMode: "lighten" as React.CSSProperties["mixBlendMode"] }}>
-            <Image src="/images/casper-logo-white.png" alt="" fill style={{ objectFit: "contain" }} sizes="24px" />
-          </div>
-          <div>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: C.cream, letterSpacing: "0.1em" }}>Casper Group Worldwide</div>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, color: C.dim, opacity: 0.3 }}>&copy; 2026 &mdash; A Kollective Hospitality Group Brand</div>
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 24 }}>
-          {["Instagram", "Careers", "Legal"].map(l => <a key={l} href="#" style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: C.dim, textDecoration: "none", opacity: 0.3, transition: "opacity 0.3s" }} onMouseEnter={e => { (e.target as HTMLElement).style.opacity = "1"; }} onMouseLeave={e => { (e.target as HTMLElement).style.opacity = "0.3"; }}>{l}</a>)}
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-export default function CasperGroup() {
-  return (
-    <main style={{ overflowX: "hidden" }}>
-      <style>{`
-        @media(max-width:900px){
-          div[style*="repeat(5"]{grid-template-columns:repeat(3,1fr)!important}
-          div[style*="repeat(4"]{grid-template-columns:1fr 1fr!important}
-          div[style*="repeat(2, 1fr)"]{grid-template-columns:1fr!important}
-          .nav-hide{display:none}
-        }
-      `}</style>
-      <Grain />
-      <Nav />
-      <Hero />
-      <ConceptWall />
-      <LogoWall />
-      <MascotParade />
-      <Proof />
-      <Cities />
-      <Partnership />
-      <Conversion />
-      <Footer />
-    </main>
-  );
-}
+<footer style={{background:"#080808",borderTop:`1px solid ${C.border}`,padding:"64px clamp(32px,6vw,96px) 40px"}}>
+<div style={{maxWidth:"1400px",margin:"0 auto"}}>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"16px"}}>
+<div><div style={{fontFamily:"'Playfair Display',serif",fontSize:"24px",fontWeight:400,fontStyle:"italic",color:C.cream}}>Casper Group</div><p style={{fontFamily:"'DM Sans',sans-serif",fontSize:"13px",color:C.muted,marginTop:"8px"}}>10+ distinct concepts. Multi-city infrastructure.</p></div>
+<div style={{fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"rgba(255,255,255,0.22)"}}>© 2026 Casper Group. A KHG Enterprise.</div>
+</div></div></footer>
+</div>);}
