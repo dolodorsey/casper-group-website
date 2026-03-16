@@ -1,338 +1,84 @@
 "use client";
-import type { ReactNode } from "react";
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-// ─── TOKENS ───────────────────────────────────────────────────────────────────
-const C = {
-  base:     "#0B0B0B",
-  surface:  "#141414",
-  panel:    "rgba(255,255,255,0.03)",
-  border:   "rgba(255,255,255,0.07)",
-  gold:     "#D89A2B",
-  goldDeep: "#8a5e14",
-  cream:    "#F6F0E7",
-  muted:    "#7A7E85",
-  orange:   "#C85A1A",
-  burgundy: "#5E1F24",
-};
+const C={base:"#0B0B0B",surface:"#141414",panel:"rgba(255,255,255,0.03)",border:"rgba(255,255,255,0.07)",gold:"#D89A2B",goldDeep:"#8a5e14",cream:"#F6F0E7",muted:"#7A7E85",orange:"#C85A1A",burgundy:"#5E1F24"};
+const F={serif:"'Playfair Display',Georgia,serif",sans:"'DM Sans','Inter',system-ui,sans-serif"};
+function useInView(t=0.1){const ref=useRef<HTMLDivElement>(null);const[v,setV]=useState(false);useEffect(()=>{const el=ref.current;if(!el)return;const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true)},{threshold:t});o.observe(el);return()=>o.disconnect()},[t]);return[ref,v] as const}
+function Reveal({children,d=0}:{children:React.ReactNode;d?:number}){const[ref,v]=useInView();return<div ref={ref} style={{transform:v?"translateY(0)":"translateY(32px)",opacity:v?1:0,transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${d}s`}}>{children}</div>}
+const Grain=({o=0.03}:{o?:number})=>(<div style={{position:"absolute",inset:0,opacity:o,pointerEvents:"none",zIndex:1,backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>);
 
-// ─── UTILITY HOOKS ────────────────────────────────────────────────────────────
-function useInView(t = 0.1) {
-  const ref = useRef(null);
-  const [v, setV] = useState(false);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: t });
-    o.observe(el); return () => o.disconnect();
-  }, []);
-  return [ref, v];
-}
+function VideoPreloader({onComplete}:{onComplete:()=>void}){const videoRef=useRef<HTMLVideoElement>(null);const[phase,setPhase]=useState<"playing"|"dissolving"|"done">("playing");useEffect(()=>{const vid=videoRef.current;if(!vid)return;const he=()=>{setPhase("dissolving");setTimeout(()=>{setPhase("done");onComplete()},800)};vid.addEventListener("ended",he);vid.play().catch(()=>{setPhase("done");onComplete()});return()=>{vid.removeEventListener("ended",he)}},[onComplete]);if(phase==="done")return null;return(
+<div onClick={()=>{setPhase("done");onComplete()}} style={{position:"fixed",inset:0,zIndex:9999,background:"#0B0B0B",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",opacity:phase==="dissolving"?0:1,transition:"opacity 1s cubic-bezier(0.16,1,0.3,1)"}}>
+<video ref={videoRef} src="/videos/casper-logo.mp4" muted playsInline preload="auto" style={{maxWidth:"280px",maxHeight:"280px",objectFit:"contain"}}/>
+<Grain o={0.04}/></div>)}
 
-function Reveal({ children, d = 0, y = 36 }) {
-  const [ref, v] = useInView();
-  return (
-    <div ref={ref} style={{ transform: v ? "translateY(0)" : `translateY(${y}px)`, opacity: v ? 1 : 0, transition: `transform 0.9s cubic-bezier(0.16,1,0.3,1) ${d}s, opacity 0.8s ease ${d}s` }}>
-      {children}
-    </div>
-  );
-}
+function Nav({visible}:{visible:boolean}){const[s,setS]=useState(false);useEffect(()=>{const h=()=>setS(window.scrollY>60);window.addEventListener("scroll",h,{passive:true});return()=>window.removeEventListener("scroll",h)},[]);return(
+<nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,padding:s?"14px clamp(24px,4vw,56px)":"24px clamp(24px,4vw,56px)",display:"flex",justifyContent:"space-between",alignItems:"center",background:s?"rgba(11,11,11,0.94)":"transparent",backdropFilter:s?"blur(24px)":"none",borderBottom:s?`1px solid ${C.border}`:"none",transition:"all 0.5s cubic-bezier(0.16,1,0.3,1)",opacity:visible?1:0,transform:visible?"translateY(0)":"translateY(-20px)"}}>
+<div style={{display:"flex",alignItems:"center",gap:"12px"}}><img src="/images/casper-logo-white.png" alt="Casper Group" style={{height:"32px",width:"auto"}}/></div>
+<div style={{display:"flex",gap:"clamp(16px,2.5vw,36px)",alignItems:"center"}}>
+{["Concepts","Mascots","Franchise"].map(n=>(<a key={n} href={`#${n.toLowerCase()}`} style={{fontFamily:F.sans,fontSize:"10px",fontWeight:500,letterSpacing:"0.22em",textTransform:"uppercase",color:C.muted,textDecoration:"none",transition:"color 0.3s"}} onMouseEnter={e=>(e.target as HTMLElement).style.color=C.cream} onMouseLeave={e=>(e.target as HTMLElement).style.color=C.muted}>{n}</a>))}
+<button style={{fontFamily:F.sans,fontSize:"10px",fontWeight:600,letterSpacing:"0.14em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"10px 26px",cursor:"pointer",transition:"all 0.3s"}}>Inquire</button></div></nav>)}
 
-function Stagger({ children, base = 0 }) {
-  const [ref, v] = useInView();
-  const arr = Array.isArray(children) ? children : [children];
-  return (
-    <div ref={ref} style={{ display: "contents" }}>
-      {arr.map((c, i) => (
-        <div key={i} style={{ transform: v ? "translateY(0)" : "translateY(28px)", opacity: v ? 1 : 0, transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${base + i * 0.08}s` }}>{c}</div>
-      ))}
-    </div>
-  );
-}
+function Hero({ready}:{ready:boolean}){const[loaded,setLoaded]=useState(false);useEffect(()=>{if(ready)setTimeout(()=>setLoaded(true),200)},[ready]);return(
+<section style={{minHeight:"100vh",position:"relative",overflow:"hidden",background:C.base,display:"flex",flexDirection:"column",justifyContent:"flex-end",padding:"0 clamp(32px,6vw,96px) 80px"}}>
+<Grain o={0.03}/>
+<div style={{position:"absolute",inset:0}}><img src="/images/angel-wings-hero.jpg" alt="Angel Wings restaurant" style={{width:"100%",height:"100%",objectFit:"cover",opacity:loaded?0.35:0,transition:"opacity 1.5s cubic-bezier(0.16,1,0.3,1)"}}/><div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,rgba(11,11,11,0.4) 0%,rgba(11,11,11,0.6) 40%,rgba(11,11,11,0.95) 80%,${C.base} 100%)`}}/></div>
+<div style={{position:"relative",zIndex:2,maxWidth:"1400px",margin:"0 auto",width:"100%"}}>
+<div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.5em",textTransform:"uppercase",color:C.gold,opacity:loaded?1:0,transition:"opacity 0.8s ease 0.3s"}}>An Enterprise of Flavor-Driven Brands</div>
+<h1 style={{fontFamily:F.serif,fontSize:"clamp(56px,10vw,148px)",fontWeight:400,lineHeight:0.88,letterSpacing:"-0.03em",color:C.cream,marginTop:"20px",opacity:loaded?1:0,transform:loaded?"translateY(0)":"translateY(40px)",transition:"all 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s"}}><em>Casper</em><br/><span style={{color:"rgba(246,240,231,0.28)"}}>Group</span></h1>
+<p style={{fontFamily:F.sans,fontSize:"clamp(14px,1.2vw,17px)",lineHeight:1.8,color:C.muted,maxWidth:"520px",marginTop:"32px",opacity:loaded?1:0,transition:"all 0.9s ease 0.9s"}}>Ten distinct restaurant concepts. Shared power. Mascot universe. Built to franchise and dominate every food category.</p>
+<div style={{display:"flex",gap:"14px",marginTop:"44px",opacity:loaded?1:0,transition:"opacity 0.9s ease 1.2s",flexWrap:"wrap"}}>
+<button style={{fontFamily:F.sans,fontSize:"10px",fontWeight:600,letterSpacing:"0.15em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"15px 42px",cursor:"pointer",transition:"all 0.3s"}}>Explore Brands</button>
+<button style={{fontFamily:F.sans,fontSize:"10px",fontWeight:500,letterSpacing:"0.15em",textTransform:"uppercase",color:C.cream,background:"transparent",border:`1px solid rgba(246,240,231,0.18)`,padding:"15px 36px",cursor:"pointer",transition:"all 0.3s"}}>Franchise Inquiry</button></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1px",marginTop:"64px",background:C.border,borderTop:`1px solid ${C.border}`,opacity:loaded?1:0,transition:"opacity 1s ease 1.4s"}}>
+{[{v:"10+",l:"Concepts"},{v:"25+",l:"Markets"},{v:"150+",l:"Locations"},{v:"15",l:"Mascots"}].map(s=>(<div key={s.l} style={{padding:"24px 0",background:C.base}}><div style={{fontFamily:F.serif,fontSize:"clamp(28px,3.5vw,48px)",fontWeight:400,fontStyle:"italic",color:C.gold}}>{s.v}</div><div style={{fontFamily:F.sans,fontSize:"9px",fontWeight:500,letterSpacing:"0.32em",textTransform:"uppercase",color:C.muted,marginTop:"8px"}}>{s.l}</div></div>))}</div></div></section>)}
 
-const Grain = ({ o = 0.03 }) => (
-  <div style={{ position: "absolute", inset: 0, opacity: o, pointerEvents: "none", zIndex: 1, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
-);
-
-// ─── NAV ──────────────────────────────────────────────────────────────────────
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const h = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
-  return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: scrolled ? "14px clamp(24px,4vw,56px)" : "24px clamp(24px,4vw,56px)", display: "flex", justifyContent: "space-between", alignItems: "center", background: scrolled ? "rgba(11,11,11,0.94)" : "transparent", backdropFilter: scrolled ? "blur(24px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)" }}>
-      <div>
-        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", letterSpacing: "0.45em", textTransform: "uppercase", color: C.gold, marginBottom: "3px" }}>Restaurant Concepts</div>
-        <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "20px", fontWeight: 400, fontStyle: "italic", color: C.cream, letterSpacing: "0.01em" }}>Casper Group</span>
-      </div>
-      <div style={{ display: "flex", gap: "clamp(16px,2.5vw,36px)", alignItems: "center" }}>
-        {["Concepts", "Locations", "Franchise", "About"].map(n => (
-          <a key={n} href={`#${n.toLowerCase()}`} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", color: C.muted, textDecoration: "none", transition: "color 0.3s" }} onMouseEnter={e => e.target.style.color = C.cream} onMouseLeave={e => e.target.style.color = C.muted}>{n}</a>
-        ))}
-        <button style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#0B0B0B", background: C.gold, border: "none", padding: "10px 26px", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => { e.target.style.background = C.cream; }} onMouseLeave={e => { e.target.style.background = C.gold; }}>Inquire</button>
-      </div>
-    </nav>
-  );
-}
-
-// ─── HERO ─────────────────────────────────────────────────────────────────────
-function Hero() {
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
-
-  const stats = [
-    { v: "10+", l: "Distinct Concepts" },
-    { v: "25+", l: "Markets & Growing" },
-    { v: "150+", l: "Locations" },
-    { v: "1", l: "Mascot Universe" },
-  ];
-
-  return (
-    <section style={{ minHeight: "100vh", position: "relative", overflow: "hidden", background: `radial-gradient(ellipse at 20% 80%, rgba(94,31,36,0.18) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(216,154,43,0.08) 0%, transparent 55%), ${C.base}`, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 clamp(32px,6vw,96px) 80px" }}>
-      <Grain o={0.03} />
-      {/* Decorative line grid */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 1, opacity: 0.04, backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "100px 100px" }} />
-
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
-        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.gold, opacity: loaded ? 1 : 0, transition: "opacity 0.8s ease 0.3s" }}>
-          An Enterprise of Flavor-Driven Brands
-        </div>
-
-        <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(56px, 10vw, 148px)", fontWeight: 400, lineHeight: 0.88, letterSpacing: "-0.03em", color: C.cream, marginTop: "20px", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(40px)", transition: "all 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s" }}>
-          <em>Casper</em><br />
-          <span style={{ color: "rgba(246,240,231,0.28)" }}>Group</span>
-        </h1>
-
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(14px,1.2vw,17px)", lineHeight: 1.8, color: C.muted, maxWidth: "520px", marginTop: "32px", opacity: loaded ? 1 : 0, transition: "all 0.9s ease 0.9s" }}>
-          Distinct concepts. Shared power. Casper Group builds iconic QSR brands with production, operations, and training infrastructure to expand and scale.
-        </p>
-
-        <div style={{ display: "flex", gap: "14px", marginTop: "44px", opacity: loaded ? 1 : 0, transition: "opacity 0.9s ease 1.2s", flexWrap: "wrap" }}>
-          <button style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#0B0B0B", background: C.gold, border: "none", padding: "15px 42px", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => { e.target.style.background = C.cream; e.target.style.transform = "translateY(-2px)"; }} onMouseLeave={e => { e.target.style.background = C.gold; e.target.style.transform = "translateY(0)"; }}>Explore Brands</button>
-          <button style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: C.cream, background: "transparent", border: `1px solid rgba(246,240,231,0.18)`, padding: "15px 36px", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => { e.target.style.borderColor = C.gold; e.target.style.color = C.gold; }} onMouseLeave={e => { e.target.style.borderColor = "rgba(246,240,231,0.18)"; e.target.style.color = C.cream; }}>Partner With Casper Group</button>
-        </div>
-
-        {/* Stats row */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1px", marginTop: "64px", background: C.border, borderTop: `1px solid ${C.border}`, opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.4s" }}>
-          {stats.map(s => (
-            <div key={s.l} style={{ padding: "24px 0 0", background: C.base }}>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 400, fontStyle: "italic", color: C.gold }}>{s.v}</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", fontWeight: 500, letterSpacing: "0.32em", textTransform: "uppercase", color: C.muted, marginTop: "8px" }}>{s.l}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── BRAND WORLDS ─────────────────────────────────────────────────────────────
-const BRANDS = [
-  { name: "Angel Wings", type: "Wings Concept", desc: "Atlanta-style lemon pepper wings and Southern comfort energy built for mass demand and franchise velocity.", accent: "#C85A1A", emoji: "🍗" },
-  { name: "Tha Morning After", type: "Breakfast Concept", desc: "Creative breakfast and brunch culture engineered for craveability, content moments, and repeat traffic.", accent: "#D89A2B", emoji: "🍳" },
-  { name: "Patty Daddy", type: "Burger Concept", desc: "A larger-than-life burger concept with bold personality, high-volume output, and visual brand dominance.", accent: "#C85A1A", emoji: "🍔" },
-  { name: "Mojo Juice", type: "Juice Bar", desc: "Fresh-pressed ritual with bright wellness positioning, clean visual branding, and effortless expansion logic.", accent: "#4A8A3A", emoji: "🥤" },
-  { name: "Espresso Co.", type: "Coffee Concept", desc: "Modern coffee culture driving premium everyday traffic and a design language built to inspire loyalty.", accent: "#8A6A3A", emoji: "☕" },
-  { name: "Mr. Oyster", type: "Seafood Concept", desc: "Elevated seafood character with visual edge, premium category positioning, and curated menu authority.", accent: "#3A6A8A", emoji: "🦪" },
-  { name: "Sweet Tooth", type: "Dessert Concept", desc: "Dessert-driven indulgence designed for impulse buys, social documentation, and memorable visual branding.", accent: "#C83A8A", emoji: "🍰" },
-  { name: "Taco Yaki", type: "Fusion Concept", desc: "A fusion-forward taco concept with high-visual menu appeal and strong urban cultural energy.", accent: "#C85A1A", emoji: "🌮" },
-  { name: "Toss'd", type: "Healthy Fast Casual", desc: "Fresh bowls and salads with speed, simplicity, and scalable healthy fast-casual market reach.", accent: "#4A8A3A", emoji: "🥗" },
-  { name: "Pasta Bish", type: "Pasta Concept", desc: "Comfort-food pasta with attitude, rich visual branding, and broad-market menu flexibility.", accent: "#C83A3A", emoji: "🍝" },
+const BRANDS=[
+{name:"Angel Wings",type:"Wings",logo:"/images/logo-angel-wings.png",hero:"/images/angel-wings-hero.jpg",video:"/videos/angel-wings.mp4",mascot:"/images/mascot-loudini.png",mascotName:"LOUDINI",accent:"#C85A1A",desc:"Atlanta-style lemon pepper wings built for mass demand and franchise velocity."},
+{name:"Tha Morning After",type:"Breakfast",logo:"/images/logo-morning-after.png",hero:"/images/morning-after-hero.jpg",video:null,mascot:"/images/mascot-eggavier.png",mascotName:"EGGAVIER",accent:"#D89A2B",desc:"Creative breakfast culture engineered for craveability and repeat traffic."},
+{name:"Patty Daddy",type:"Burgers",logo:"/images/logo-patty-daddy.png",hero:"/images/patty-daddy-hero.jpg",video:"/videos/patty-daddy.mp4",mascot:"/images/mascot-paddy-daddy.png",mascotName:"PADDY DADDY",accent:"#C85A1A",desc:"Larger-than-life burger concept with bold personality and high-volume output."},
+{name:"Espresso Co.",type:"Coffee",logo:"/images/logo-espresso-co.png",hero:"/images/espresso-machine.jpg",video:"/videos/espresso-co.mp4",mascot:"/images/mascot-beanzo.png",mascotName:"BEANZO",accent:"#8A6A3A",desc:"Modern coffee culture driving premium everyday traffic and loyalty."},
+{name:"Mojo Juice",type:"Juice Bar",logo:"/images/logo-mojo-juice.png",hero:"/images/mojo-juice.png",video:"/videos/mojo-juice.mp4",mascot:"/images/mascot-mojo.png",mascotName:"MOJO",accent:"#4A8A3A",desc:"Fresh-pressed ritual with bright wellness positioning and clean branding."},
+{name:"Mr. Oyster",type:"Seafood",logo:"/images/logo-mr-oyster.png",hero:"/images/mr-oyster.png",video:"/videos/mr-oyster.mp4",mascot:"/images/mascot-mr-miss-oyster.png",mascotName:"MR. OYSTER",accent:"#3A6A8A",desc:"Elevated seafood with visual edge and premium category positioning."},
+{name:"Sweet Tooth",type:"Desserts",logo:"/images/logo-sweet-tooth.png",hero:"/images/sweet-tooth.png",video:"/videos/sweet-tooth.mp4",mascot:"/images/mascot-sweet-tooth.png",mascotName:"SWEET TOOTH",accent:"#C83A8A",desc:"Dessert-driven indulgence designed for impulse and social documentation."},
+{name:"Taco Yaki",type:"Fusion",logo:"/images/logo-taco-yaki.png",hero:"/images/taco-yaki-ninja.jpg",video:"/videos/taco-yaki.mp4",mascot:"/images/mascot-yaki.png",mascotName:"YAKI",accent:"#C85A1A",desc:"Fusion-forward tacos with high-visual menu appeal and urban cultural energy."},
+{name:"Toss'd",type:"Healthy",logo:"/images/logo-tossd.png",hero:"/images/tossd.png",video:"/videos/tossd.mp4",mascot:"/images/mascot-king-kale.png",mascotName:"KING KALE",accent:"#4A8A3A",desc:"Fresh bowls and salads with speed, simplicity, and scalable reach."},
+{name:"Pasta Bish",type:"Pasta",logo:"/images/logo-pasta-bish.png",hero:"/images/pasta-bish.jpg",video:"/videos/pasta-bish.mp4",mascot:"/images/mascot-lil-linguine.png",mascotName:"LIL LINGUINE",accent:"#C83A3A",desc:"Comfort-food pasta with attitude and broad-market flexibility."},
 ];
 
-function BrandWorlds() {
-  const [hover, setHover] = useState(null);
+function BrandWorlds(){const[hover,setHover]=useState<number|null>(null);const[active,setActive]=useState<number|null>(null);return(
+<section id="concepts" style={{background:C.base,padding:"120px clamp(32px,6vw,96px)"}}><div style={{maxWidth:"1400px",margin:"0 auto"}}><Reveal><div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"16px"}}>Brand Portfolio</div><div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:"24px",flexWrap:"wrap"}}><h2 style={{fontFamily:F.serif,fontSize:"clamp(36px,5vw,72px)",fontWeight:400,lineHeight:0.95,letterSpacing:"-0.03em",color:C.cream,fontStyle:"italic"}}>Our Brand Worlds</h2><p style={{fontFamily:F.sans,fontSize:"15px",lineHeight:1.75,color:C.muted,maxWidth:"420px"}}>Ten distinct concepts — each with its own brand, mascot, and universe.</p></div></Reveal>
+<div style={{marginTop:"64px",display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:"2px",background:C.border}}>
+{BRANDS.map((b,i)=>(<div key={b.name} onMouseEnter={()=>setHover(i)} onMouseLeave={()=>setHover(null)} onClick={()=>setActive(active===i?null:i)} style={{background:hover===i?C.surface:C.base,padding:"24px 20px",cursor:"pointer",transition:"background 0.3s",position:"relative",overflow:"hidden"}}>
+{hover===i&&<div style={{position:"absolute",inset:0,background:`radial-gradient(circle at 50% 0%,${b.accent}15,transparent 70%)`}}/>}
+<div style={{position:"absolute",top:0,left:0,right:0,height:"2px",background:hover===i?b.accent:"transparent",transition:"background 0.3s"}}/>
+<div style={{position:"relative",zIndex:1}}>
+<div style={{width:"100%",aspectRatio:"1",marginBottom:"16px",display:"flex",alignItems:"center",justifyContent:"center",background:`${b.accent}08`,borderRadius:"8px",overflow:"hidden"}}><img src={b.logo} alt={b.name} style={{width:"70%",height:"70%",objectFit:"contain",transform:hover===i?"scale(1.08)":"scale(1)",transition:"transform 0.5s cubic-bezier(0.16,1,0.3,1)"}}/></div>
+<div style={{fontFamily:F.sans,fontSize:"8px",fontWeight:600,letterSpacing:"0.38em",textTransform:"uppercase",color:b.accent,marginBottom:"6px"}}>{b.type}</div>
+<div style={{fontFamily:F.serif,fontSize:"18px",fontWeight:400,fontStyle:"italic",color:C.cream,marginBottom:"8px"}}>{b.name}</div>
+<p style={{fontFamily:F.sans,fontSize:"11px",lineHeight:1.65,color:C.muted}}>{b.desc}</p></div></div>))}</div></div></section>)}
 
-  return (
-    <section id="concepts" style={{ background: C.base, padding: "120px clamp(32px,6vw,96px)" }}>
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        <Reveal>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.48em", textTransform: "uppercase", color: C.gold, marginBottom: "16px" }}>Brand Portfolio</div>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(36px,5vw,72px)", fontWeight: 400, lineHeight: 0.95, letterSpacing: "-0.03em", color: C.cream, fontStyle: "italic" }}>Our Brand Worlds</h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "15px", lineHeight: 1.75, color: C.muted, maxWidth: "420px" }}>Explore our world with all its own distinct concepts — each engineered to dominate its category.</p>
-          </div>
-        </Reveal>
+function MascotUniverse(){return(
+<section id="mascots" style={{background:C.surface,padding:"120px clamp(32px,6vw,96px)",position:"relative",overflow:"hidden"}}><Grain o={0.025}/><div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 100%,${C.gold}10,transparent 60%)`}}/>
+<div style={{maxWidth:"1400px",margin:"0 auto",position:"relative",zIndex:2}}>
+<Reveal><div style={{textAlign:"center",marginBottom:"64px"}}><div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"16px"}}>Meet the Family</div><h2 style={{fontFamily:F.serif,fontSize:"clamp(36px,5vw,68px)",fontWeight:400,fontStyle:"italic",color:C.cream,lineHeight:1}}>The Mascot Universe</h2><p style={{fontFamily:F.sans,fontSize:"15px",lineHeight:1.75,color:C.muted,maxWidth:"480px",margin:"20px auto 0"}}>15 characters bringing our brands to life — built for culture, content, and connection.</p></div></Reveal>
+<div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:"2px",background:C.border}}>
+{BRANDS.map(b=>(<div key={b.mascotName} style={{background:C.base,padding:"32px 16px",textAlign:"center"}}>
+<div style={{width:"90px",height:"90px",margin:"0 auto 16px",borderRadius:"50%",overflow:"hidden",background:`${b.accent}10`,border:`1px solid ${b.accent}25`,display:"flex",alignItems:"center",justifyContent:"center"}}><img src={b.mascot} alt={b.mascotName} style={{width:"80%",height:"80%",objectFit:"contain"}}/></div>
+<div style={{fontFamily:F.sans,fontSize:"12px",fontWeight:800,letterSpacing:"0.08em",color:C.cream,marginBottom:"4px"}}>{b.mascotName}</div>
+<div style={{fontFamily:F.sans,fontSize:"9px",fontWeight:500,letterSpacing:"0.3em",textTransform:"uppercase",color:b.accent}}>{b.name}</div></div>))}</div></div></section>)}
 
-        <div style={{ marginTop: "64px", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "2px", background: C.border }}>
-          {BRANDS.map((b, i) => (
-            <div
-              key={b.name}
-              onMouseEnter={() => setHover(i)}
-              onMouseLeave={() => setHover(null)}
-              style={{ background: hover === i ? C.surface : C.base, padding: "32px 28px", cursor: "pointer", transition: "background 0.3s", position: "relative", overflow: "hidden" }}
-            >
-              {hover === i && <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 80% 20%, ${b.accent}18, transparent 70%)`, pointerEvents: "none" }} />}
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <div style={{ fontSize: "28px", marginBottom: "14px" }}>{b.emoji}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 600, letterSpacing: "0.38em", textTransform: "uppercase", color: b.accent, marginBottom: "8px" }}>{b.type}</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 400, fontStyle: "italic", color: C.cream, marginBottom: "12px" }}>{b.name}</div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", lineHeight: 1.7, color: C.muted }}>{b.desc}</p>
-                <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "6px", fontFamily: "'DM Sans', sans-serif", fontSize: "9px", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: b.accent, opacity: hover === i ? 1 : 0, transition: "opacity 0.3s" }}>
-                  Explore Concept →
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+function FoodGallery(){const images=[{src:"/images/patty-daddy-hero.jpg",label:"Patty Daddy"},{src:"/images/espresso-crew.jpg",label:"Espresso Co."},{src:"/images/morning-after-booth.jpg",label:"Tha Morning After"},{src:"/images/taco-yaki-ninja.jpg",label:"Taco Yaki"},{src:"/images/angel-wings-mural.jpg",label:"Angel Wings"},{src:"/images/pasta-bish.jpg",label:"Pasta Bish"}];return(
+<section style={{background:C.base,padding:"120px 0",position:"relative",overflow:"hidden"}}><Grain o={0.02}/><div style={{padding:"0 clamp(32px,6vw,96px)",maxWidth:"1400px",margin:"0 auto 64px"}}><Reveal><div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"16px"}}>Visual Identity</div><h2 style={{fontFamily:F.serif,fontSize:"clamp(32px,4.5vw,64px)",fontWeight:400,fontStyle:"italic",lineHeight:0.95,color:C.cream}}>Flavor In<br/><span style={{color:C.gold}}>Every Frame.</span></h2></Reveal></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"3px",padding:"0 3px"}}>
+{images.map((img,i)=>(<div key={i} style={{position:"relative",overflow:"hidden",aspectRatio:i===0||i===3?"16/10":"3/4"}}><img src={img.src} alt={img.label} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.8s cubic-bezier(0.16,1,0.3,1)"}} onMouseEnter={e=>e.currentTarget.style.transform="scale(1.04)"} onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}/><div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 24px 20px",background:"linear-gradient(transparent,rgba(0,0,0,0.7))"}}><div style={{fontFamily:F.sans,fontSize:"8px",fontWeight:600,letterSpacing:"0.4em",textTransform:"uppercase",color:C.gold}}>{img.label}</div></div></div>))}</div></section>)}
 
-// ─── MASCOT UNIVERSE ──────────────────────────────────────────────────────────
-function MascotUniverse() {
-  const mascots = [
-    { name: "HALO", brand: "Angel Wings", color: C.orange },
-    { name: "YAKI", brand: "Taco Yaki", color: "#D89A2B" },
-    { name: "BEANZO", brand: "Espresso Co.", color: "#8A6A3A" },
-    { name: "KING KALE", brand: "Mojo Juice", color: "#4A8A3A" },
-    { name: "EGGAVIER", brand: "Tha Morning After", color: "#C85A1A" },
-  ];
+function WhyCasper(){const cols=[{title:"Our Brands",items:["Operators seeking proven concepts","Landlords looking for quality tenants","Vendors building supply partnerships","Media and press collaborations"]},{title:"Our Markets",items:["Atlanta — Flagship market depth","Houston — Strong expansion traction","Charlotte — Growing demand base","Nationwide ghost kitchen scale"]},{title:"Our Company",items:["Franchise-ready infrastructure","Dual-kitchen operating model","Mascot universe IP advantage","Casper Group central support"]}];return(
+<section id="franchise" style={{background:C.base,padding:"120px clamp(32px,6vw,96px)"}}><div style={{maxWidth:"1400px",margin:"0 auto"}}><Reveal><div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"16px"}}>The Power Platform</div><h2 style={{fontFamily:F.serif,fontSize:"clamp(36px,5vw,68px)",fontWeight:400,fontStyle:"italic",color:C.cream,lineHeight:1.0,letterSpacing:"-0.02em",marginBottom:"64px"}}>Why Casper Group</h2></Reveal>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px",background:C.border}}>{cols.map(col=>(<div key={col.title} style={{background:C.surface,padding:"48px 36px"}}><div style={{fontFamily:F.sans,fontSize:"9px",fontWeight:600,letterSpacing:"0.4em",textTransform:"uppercase",color:C.gold,marginBottom:"28px"}}>{col.title}</div><ul style={{listStyle:"none",padding:0,margin:0,display:"flex",flexDirection:"column",gap:"14px"}}>{col.items.map(item=>(<li key={item} style={{display:"flex",alignItems:"flex-start",gap:"12px",fontFamily:F.sans,fontSize:"14px",lineHeight:1.6,color:C.muted}}><div style={{width:"4px",height:"4px",borderRadius:"50%",background:C.gold,flexShrink:0,marginTop:"8px"}}/>{item}</li>))}</ul></div>))}</div></div></section>)}
 
-  return (
-    <section style={{ background: C.surface, padding: "120px clamp(32px,6vw,96px)", position: "relative", overflow: "hidden" }}>
-      <Grain o={0.025} />
-      <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 50% 100%, ${C.gold}10, transparent 60%)` }} />
-      <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-        <Reveal>
-          <div style={{ textAlign: "center", marginBottom: "64px" }}>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.48em", textTransform: "uppercase", color: C.gold, marginBottom: "16px" }}>Meet the Family</div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(36px,5vw,68px)", fontWeight: 400, fontStyle: "italic", color: C.cream, lineHeight: 1 }}>The Mascot Universe</h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "15px", lineHeight: 1.75, color: C.muted, maxWidth: "480px", margin: "20px auto 0" }}>The mascots bringing our brands to life — characters with personality built for culture, content, and connection.</p>
-          </div>
-        </Reveal>
+function PartnerCTA(){return(<section style={{background:C.surface,padding:"120px clamp(32px,6vw,96px)",position:"relative",overflow:"hidden"}}><Grain o={0.025}/><div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 50%,${C.gold}10,transparent 65%)`}}/><div style={{maxWidth:"900px",margin:"0 auto",textAlign:"center",position:"relative",zIndex:2}}><Reveal><div style={{fontFamily:F.sans,fontSize:"9px",letterSpacing:"0.48em",textTransform:"uppercase",color:C.gold,marginBottom:"24px"}}>Build With Us</div><h2 style={{fontFamily:F.serif,fontSize:"clamp(36px,5vw,72px)",fontWeight:400,fontStyle:"italic",color:C.cream,lineHeight:1.0,letterSpacing:"-0.02em",marginBottom:"24px"}}>The Modern Fast-Food<br/>Empire Starts Here.</h2><p style={{fontFamily:F.sans,fontSize:"16px",lineHeight:1.8,color:C.muted,maxWidth:"560px",margin:"0 auto 48px"}}>Whether you are an operator, a landlord, or a strategic partner — Casper Group has a path designed for results at scale.</p><div style={{display:"flex",gap:"16px",justifyContent:"center",flexWrap:"wrap"}}><button style={{fontFamily:F.sans,fontSize:"10px",fontWeight:600,letterSpacing:"0.15em",textTransform:"uppercase",color:"#0B0B0B",background:C.gold,border:"none",padding:"16px 48px",cursor:"pointer",transition:"all 0.3s"}}>Explore Partnership</button><button style={{fontFamily:F.sans,fontSize:"10px",fontWeight:500,letterSpacing:"0.15em",textTransform:"uppercase",color:C.cream,background:"transparent",border:`1px solid rgba(246,240,231,0.18)`,padding:"16px 40px",cursor:"pointer",transition:"all 0.3s"}}>Franchise Inquiry</button></div></Reveal></div></section>)}
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "2px", background: C.border }}>
-          {mascots.map(m => (
-            <div key={m.name} style={{ background: C.base, padding: "40px 24px", textAlign: "center" }}>
-              <div style={{ width: "72px", height: "72px", borderRadius: "50%", background: `${m.color}18`, border: `1px solid ${m.color}30`, margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 800, letterSpacing: "0.1em", color: m.color }}>{m.name[0]}</div>
-              </div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 800, letterSpacing: "0.08em", color: C.cream, marginBottom: "6px" }}>{m.name}</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase", color: m.color }}>{m.brand}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+function Footer(){return(<footer style={{background:"#080808",borderTop:`1px solid ${C.border}`,padding:"64px clamp(32px,6vw,96px) 40px"}}><div style={{maxWidth:"1400px",margin:"0 auto"}}><div style={{display:"grid",gridTemplateColumns:"1.5fr repeat(3,1fr)",gap:"48px",marginBottom:"64px"}}><div><img src="/images/casper-logo-white.png" alt="Casper Group" style={{height:"40px",marginBottom:"16px"}}/><p style={{fontFamily:F.sans,fontSize:"13px",lineHeight:1.7,color:C.muted}}>10+ distinct concepts. Multi-city infrastructure. Built to scale.</p></div>{[{h:"Brands",l:["Angel Wings","Tha Morning After","Espresso Co.","Mr. Oyster","Toss'd","Taco Yaki","Pasta Bish"]},{h:"Company",l:["About Casper Group","Locations","Franchise Inquiry","Vendor Relations","Press & Media"]},{h:"Contact",l:["info@caspergroupworldwide.com","Operator Inquiry","Landlord Inquiry","Become a Vendor"]}].map(col=>(<div key={col.h}><div style={{fontFamily:F.sans,fontSize:"8px",fontWeight:600,letterSpacing:"0.4em",textTransform:"uppercase",color:C.gold,marginBottom:"20px"}}>{col.h}</div><ul style={{listStyle:"none",padding:0,margin:0,display:"flex",flexDirection:"column",gap:"10px"}}>{col.l.map(i=><li key={i} style={{fontFamily:F.sans,fontSize:"13px",color:C.muted}}>{i}</li>)}</ul></div>))}</div><div style={{borderTop:`1px solid ${C.border}`,paddingTop:"24px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"16px"}}><div style={{fontFamily:F.sans,fontSize:"11px",color:"rgba(255,255,255,0.22)"}}>© 2026 Casper Group. A KHG Enterprise. All rights reserved.</div><div style={{display:"flex",gap:"24px"}}>{["Privacy","Terms","Contact"].map(i=><span key={i} style={{fontFamily:F.sans,fontSize:"11px",color:"rgba(255,255,255,0.25)",cursor:"pointer"}}>{i}</span>)}</div></div></div></footer>)}
 
-// ─── WHY CASPER ───────────────────────────────────────────────────────────────
-function WhyCasper() {
-  const cols = [
-    {
-      title: "Our Brands",
-      items: ["Operators looking for proven concepts", "Landlords seeking quality tenants", "Vendors building supply relationships", "Media & press partnerships"],
-    },
-    {
-      title: "Our Markets",
-      items: ["Atlanta — Flagship market depth", "Houston — Strong expansion traction", "Charlotte — Growing demand base", "Nationwide ghost kitchen scale"],
-    },
-    {
-      title: "Our Company",
-      items: ["Franchise-ready infrastructure", "Dual-kitchen operating model", "Mascot universe IP advantage", "Casper Group central support"],
-    },
-  ];
-
-  return (
-    <section id="franchise" style={{ background: C.base, padding: "120px clamp(32px,6vw,96px)" }}>
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        <Reveal>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.48em", textTransform: "uppercase", color: C.gold, marginBottom: "16px" }}>The Power Platform</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(36px,5vw,68px)", fontWeight: 400, fontStyle: "italic", color: C.cream, lineHeight: 1.0, letterSpacing: "-0.02em", marginBottom: "64px" }}>Why Casper Group</h2>
-        </Reveal>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2px", background: C.border }}>
-          {cols.map(col => (
-            <div key={col.title} style={{ background: C.surface, padding: "48px 36px" }}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", fontWeight: 600, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: "28px" }}>{col.title}</div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "14px" }}>
-                {col.items.map(item => (
-                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontFamily: "'DM Sans', sans-serif", fontSize: "14px", lineHeight: 1.6, color: C.muted }}>
-                    <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: C.gold, flexShrink: 0, marginTop: "8px" }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── PARTNER CTA ──────────────────────────────────────────────────────────────
-function PartnerCTA() {
-  return (
-    <section style={{ background: C.surface, padding: "120px clamp(32px,6vw,96px)", position: "relative", overflow: "hidden" }}>
-      <Grain o={0.025} />
-      <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 50% 50%, ${C.gold}10, transparent 65%)` }} />
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-        <Reveal>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.48em", textTransform: "uppercase", color: C.gold, marginBottom: "24px" }}>Build With Us</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(36px,5vw,72px)", fontWeight: 400, fontStyle: "italic", color: C.cream, lineHeight: 1.0, letterSpacing: "-0.02em", marginBottom: "24px" }}>
-            The Modern Fast-Food<br />Empire Starts Here.
-          </h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "16px", lineHeight: 1.8, color: C.muted, maxWidth: "560px", margin: "0 auto 48px" }}>
-            Whether you are an operator, a landlord, or a strategic partner — Casper Group has a path designed for results at scale.
-          </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <button style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#0B0B0B", background: C.gold, border: "none", padding: "16px 48px", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => { e.target.style.background = C.cream; e.target.style.transform = "translateY(-2px)"; }} onMouseLeave={e => { e.target.style.background = C.gold; e.target.style.transform = "translateY(0)"; }}>Explore Partnership</button>
-            <button style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: C.cream, background: "transparent", border: `1px solid rgba(246,240,231,0.18)`, padding: "16px 40px", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => { e.target.style.borderColor = C.gold; e.target.style.color = C.gold; }} onMouseLeave={e => { e.target.style.borderColor = "rgba(246,240,231,0.18)"; e.target.style.color = C.cream; }}>Franchise Inquiry</button>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-// ─── FOOTER ───────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer style={{ background: "#080808", borderTop: `1px solid ${C.border}`, padding: "64px clamp(32px,6vw,96px) 40px" }}>
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(3,1fr)", gap: "48px", marginBottom: "64px" }}>
-          <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", letterSpacing: "0.45em", textTransform: "uppercase", color: C.gold, marginBottom: "8px" }}>Restaurant Concepts Worldwide</div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 400, fontStyle: "italic", color: C.cream, marginBottom: "16px" }}>Casper Group</div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", lineHeight: 1.7, color: C.muted }}>10+ distinct concepts. Multi-city infrastructure. Built to scale.</p>
-          </div>
-          {[
-            { h: "Brands", l: ["Angel Wings", "Tha Morning After", "Espresso Co.", "Mr. Oyster", "Toss'd", "Taco Yaki", "Pasta Bish"] },
-            { h: "Company", l: ["About Casper Group", "Locations", "Franchise Inquiry", "Vendor Relations", "Press & Media"] },
-            { h: "Contact", l: ["info@caspergroupworldwide.com", "Operator Inquiry", "Landlord Inquiry", "Become a Vendor"] },
-          ].map(col => (
-            <div key={col.h}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 600, letterSpacing: "0.4em", textTransform: "uppercase", color: C.gold, marginBottom: "20px" }}>{col.h}</div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
-                {col.l.map(i => <li key={i} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: C.muted }}>{i}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.22)" }}>© 2026 Casper Group. A KHG Enterprise. All rights reserved.</div>
-          <div style={{ display: "flex", gap: "24px" }}>
-            {["Privacy", "Terms", "Contact"].map(i => <a key={i} href="#" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.25)", textDecoration: "none" }}>{i}</a>)}
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// ─── ROOT ─────────────────────────────────────────────────────────────────────
-export default function CasperGroupV3() {
-  return (
-    <div style={{ background: C.base }}>
-      <Nav />
-      <Hero />
-      <BrandWorlds />
-      <MascotUniverse />
-      <WhyCasper />
-      <PartnerCTA />
-      <Footer />
-    </div>
-  );
-}
+export default function CasperGroupV3(){const[ready,setReady]=useState(false);const onComplete=useCallback(()=>setReady(true),[]);return(<div style={{background:C.base}}>{!ready&&<VideoPreloader onComplete={onComplete}/>}<Nav visible={ready}/><Hero ready={ready}/><BrandWorlds/><MascotUniverse/><FoodGallery/><WhyCasper/><PartnerCTA/><Footer/></div>)}
