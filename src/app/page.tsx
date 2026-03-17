@@ -73,6 +73,7 @@ const BRANDS = [
     accent: "#C85A1A",         bg: "#1a1008",
     desc: "Atlanta-style lemon pepper wings built for mass demand and ghost kitchen velocity.",
     heroImg: "/images/angel-wings-hero.jpg",
+    portal: "/images/portal-angel-wings.jpeg",
   },
   {
     name: "Tha Morning After", type: "Breakfast", slug: "morning-after",
@@ -82,6 +83,7 @@ const BRANDS = [
     accent: "#D89A2B",         bg: "#1a1608",
     desc: "Creative breakfast culture engineered for craveability and all-day repeat traffic.",
     heroImg: "/images/morning-after-hero.jpg",
+    portal: "/images/portal-morning-after.jpeg",
   },
   {
     name: "Patty Daddy",       type: "Burgers",   slug: "patty-daddy",
@@ -91,6 +93,7 @@ const BRANDS = [
     accent: "#D89A2B",         bg: "#18120a",
     desc: "Larger-than-life burger concept with bold personality and franchise-ready systems.",
     heroImg: "/images/patty-daddy-hero.jpg",
+    portal: "/images/portal-patty-daddy.jpeg",
   },
   {
     name: "Espresso Co.",      type: "Coffee",    slug: "espresso-co",
@@ -100,6 +103,7 @@ const BRANDS = [
     accent: "#8A6A3A",         bg: "#15120a",
     desc: "Modern coffee culture driving premium everyday traffic and high repeat frequency.",
     heroImg: "/images/espresso-machine.jpg",
+    portal: "/images/portal-espresso.jpeg",
   },
   {
     name: "Mojo Juice",        type: "Juice Bar", slug: "mojo-juice",
@@ -109,6 +113,7 @@ const BRANDS = [
     accent: "#4A8A3A",         bg: "#0e1608",
     desc: "Fresh-pressed ritual with bright wellness positioning and lifestyle brand appeal.",
     heroImg: "/images/mojo-juice.png",
+    portal: "/images/portal-mojo.jpeg",
   },
   {
     name: "Mr. Oyster",        type: "Seafood",   slug: "mr-oyster",
@@ -118,6 +123,7 @@ const BRANDS = [
     accent: "#3A6A8A",         bg: "#0a1018",
     desc: "Elevated seafood with visual authority, strong unit economics, and premium positioning.",
     heroImg: "/images/mr-oyster.png",
+    portal: "/images/portal-mr-oyster.jpeg",
   },
   {
     name: "Sweet Tooth",       type: "Desserts",  slug: "sweet-tooth",
@@ -127,6 +133,7 @@ const BRANDS = [
     accent: "#C83A8A",         bg: "#180a18",
     desc: "Dessert indulgence engineered for impulse, social virality, and high-margin volume.",
     heroImg: "/images/sweet-tooth.png",
+    portal: "/images/portal-sweet-tooth.jpeg",
   },
   {
     name: "Taco Yaki",         type: "Fusion",    slug: "taco-yaki",
@@ -136,6 +143,7 @@ const BRANDS = [
     accent: "#C85A1A",         bg: "#1a1008",
     desc: "Fusion tacos with high-visual appeal, urban energy, and cross-cultural cravability.",
     heroImg: "/images/taco-yaki-ninja.jpg",
+    portal: "/images/portal-taco-yaki.png",
   },
   {
     name: "Toss'd",            type: "Healthy",   slug: "tossd",
@@ -145,6 +153,7 @@ const BRANDS = [
     accent: "#4A8A3A",         bg: "#0e1608",
     desc: "Fresh bowls and salads with speed, simplicity, and wellness-forward brand identity.",
     heroImg: "/images/tossd.png",
+    portal: "/images/portal-tossd.jpeg",
   },
   {
     name: "Pasta Bish",        type: "Pasta",     slug: "pasta-bish",
@@ -154,17 +163,11 @@ const BRANDS = [
     accent: "#C83A3A",         bg: "#180808",
     desc: "Comfort-food pasta with attitude, flexibility, and ghost kitchen dominance potential.",
     heroImg: "/images/pasta-bish.jpg",
+    portal: "/images/portal-pasta-bish.jpeg",
   },
 ];
 
-// Extra mascots not tied to a concept card
-const EXTRA_MASCOTS = [
-  { name: "BABY BUNZ",     src: "/images/mascot-baby-bunz.png",    brand: "Morning After" },
-  { name: "MAC DADDY",     src: "/images/mascot-mac-daddy.png",    brand: "Patty Daddy" },
-  { name: "SCRAMBALINA",   src: "/images/mascot-scrambalina.png",  brand: "Morning After" },
-  { name: "LENNY LETTUCE", src: "/images/mascot-lenny-lettuce.png",brand: "Toss'd" },
-  { name: "SISTA GREENS",  src: "/images/mascot-sista-greens.png", brand: "Toss'd" },
-];
+
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
 function Nav() {
@@ -407,8 +410,8 @@ function UniverseThesis() {
   );
 }
 
-// ─── SCREEN 3: BRAND WORLDS — MASCOT-FORWARD ──────────────────────────────────
-// Each card: mascot FILLS the card. Logo floats clean top-left. NO background boxes on logo.
+// ─── SCREEN 3: BRAND PORTALS — PORTAL ART AS GATEWAY ─────────────────────────
+// Each brand card is the full portal illustration. Click to enter each world.
 function BrandWorlds() {
   const [active, setActive] = useState<number | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -422,13 +425,13 @@ function BrandWorlds() {
             Brand Portfolio
           </div>
           <h2 style={{ fontFamily: F.serif, fontSize: "clamp(36px,5vw,72px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.9, letterSpacing: "-0.02em", color: C.cream }}>
-            Ten Brand Worlds
+            Enter the Universe
           </h2>
         </Reveal>
       </div>
 
-      {/* 5×2 MASCOT-FORWARD GRID — full bleed, no padding */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "2px" }}>
+      {/* 5×2 PORTAL GRID — full bleed portal art */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "3px" }}>
         {BRANDS.map((b, i) => (
           <div
             key={b.name}
@@ -437,87 +440,94 @@ function BrandWorlds() {
             onClick={() => setActive(active === i ? null : i)}
             style={{
               position: "relative", overflow: "hidden",
-              height: "420px", cursor: "pointer",
+              aspectRatio: "9/16",
+              cursor: "pointer",
               background: b.bg,
-              transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
             }}
           >
-            {/* Brand color atmosphere */}
+            {/* ── PORTAL IMAGE — fills entire card ── */}
+            <img
+              src={b.portal} alt={`${b.name} Portal`}
+              style={{
+                position: "absolute", inset: 0,
+                width: "100%", height: "100%",
+                objectFit: "cover", objectPosition: "center",
+                transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease",
+                transform: hovered === i ? "scale(1.06)" : "scale(1)",
+                filter: hovered === i ? "brightness(1.1)" : "brightness(0.85)",
+              }}
+            />
+
+            {/* Subtle vignette overlay */}
             <div style={{
               position: "absolute", inset: 0,
-              background: `radial-gradient(ellipse at 50% 30%, ${b.accent}18 0%, transparent 65%)`,
+              background: `radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 100%)`,
+              pointerEvents: "none",
             }} />
 
-            {/* ── MASCOT IMAGE — fills 75% of card height, bottom-anchored ── */}
+            {/* Bottom gradient for text readability */}
             <div style={{
-              position: "absolute", bottom: 0, left: "50%",
-              transform: hovered === i ? "translateX(-50%) translateY(-8px) scale(1.04)" : "translateX(-50%) translateY(0) scale(1)",
-              transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
-              width: "85%", height: "75%",
-              display: "flex", alignItems: "flex-end", justifyContent: "center",
-            }}>
-              <img
-                src={b.mascot} alt={b.mascotName}
-                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "bottom" }}
-              />
-            </div>
-
-            {/* Bottom gradient — reading surface */}
-            <div style={{
-              position: "absolute", bottom: 0, left: 0, right: 0, height: "55%",
-              background: `linear-gradient(to top, ${b.bg} 0%, ${b.bg}CC 40%, transparent 100%)`,
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
+              background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)`,
+              pointerEvents: "none",
+              opacity: hovered === i ? 1 : 0.7,
+              transition: "opacity 0.5s ease",
             }} />
 
-            {/* Top-left: logo — TRANSPARENT, NO BOX, NO BACKGROUND */}
-            <div style={{ position: "absolute", top: "16px", left: "16px", zIndex: 3 }}>
-              <img
-                src={b.logo} alt={b.name}
-                style={{ height: "36px", width: "auto", objectFit: "contain" }}
-              />
-            </div>
+            {/* Top accent line on hover */}
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: "3px",
+              background: `linear-gradient(90deg, transparent, ${b.accent}, transparent)`,
+              opacity: hovered === i ? 1 : 0,
+              transition: "opacity 0.4s ease",
+              zIndex: 5,
+            }} />
 
             {/* Top-right: category tag */}
             <div style={{
-              position: "absolute", top: "16px", right: "16px", zIndex: 3,
+              position: "absolute", top: "16px", right: "16px", zIndex: 5,
               fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.3em", textTransform: "uppercase",
-              color: b.accent, opacity: 0.8,
+              color: "rgba(255,255,255,0.6)",
+              background: "rgba(0,0,0,0.4)",
+              backdropFilter: "blur(8px)",
+              padding: "5px 10px",
+              borderRadius: "2px",
             }}>
               {b.type}
             </div>
 
-            {/* Bottom content */}
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px", zIndex: 3 }}>
-              {/* Mascot name */}
+            {/* Bottom content — brand name + enter prompt */}
+            <div style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, padding: "24px 16px 20px",
+              zIndex: 5,
+            }}>
               <div style={{
-                fontFamily: F.mono, fontSize: "9px", fontWeight: 700, letterSpacing: "0.25em",
-                color: b.accent, marginBottom: "4px",
-              }}>
-                {b.mascotName}
-              </div>
-              {/* Brand name */}
-              <div style={{
-                fontFamily: F.serif, fontSize: "clamp(16px,1.8vw,22px)", fontStyle: "italic",
-                color: C.cream, marginBottom: "6px", lineHeight: 1.1,
+                fontFamily: F.serif, fontSize: "clamp(16px,1.6vw,22px)", fontStyle: "italic",
+                color: "#fff", marginBottom: "6px", lineHeight: 1.1,
+                textShadow: "0 2px 12px rgba(0,0,0,0.8)",
               }}>
                 {b.name}
               </div>
-              {/* Description — visible on hover */}
               <div style={{
-                fontFamily: F.sans, fontSize: "11px", lineHeight: 1.65, color: C.muted,
-                maxHeight: hovered === i ? "60px" : "0",
-                overflow: "hidden", opacity: hovered === i ? 1 : 0,
-                transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
+                fontFamily: F.mono, fontSize: "8px", fontWeight: 600,
+                letterSpacing: "0.3em", textTransform: "uppercase",
+                color: b.accent,
+                opacity: hovered === i ? 1 : 0,
+                transform: hovered === i ? "translateY(0)" : "translateY(8px)",
+                transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
               }}>
-                {b.desc}
+                Enter World →
               </div>
             </div>
 
-            {/* Accent border on hover */}
+            {/* Glow border on hover */}
             <div style={{
-              position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-              background: b.accent,
-              opacity: hovered === i ? 1 : 0,
+              position: "absolute", inset: 0,
+              border: `1px solid ${b.accent}`,
+              opacity: hovered === i ? 0.5 : 0,
               transition: "opacity 0.4s ease",
+              pointerEvents: "none",
+              zIndex: 4,
             }} />
           </div>
         ))}
@@ -578,126 +588,6 @@ function BrandWorlds() {
   );
 }
 
-// ─── SCREEN 4: MASCOT UNIVERSE ────────────────────────────────────────────────
-// All 15 mascots. This is Casper's #1 differentiator. Make it BIG.
-function MascotUniverse() {
-  // Build full mascot roster from brands + extras
-  const allMascots = [
-    ...BRANDS.map(b => ({ name: b.mascotName, src: b.mascot, brand: b.name, accent: b.accent })),
-    ...EXTRA_MASCOTS.map(m => ({ name: m.name, src: m.src, brand: m.brand, accent: C.gold })),
-  ];
-
-  const [hovered, setHovered] = useState<number | null>(null);
-
-  return (
-    <section id="universe" style={{
-      background: C.dark, padding: "120px 0",
-      position: "relative", overflow: "hidden",
-    }}>
-      {/* Big watermark text */}
-      <div style={{
-        position: "absolute", top: "5%", left: "-2%",
-        fontFamily: F.serif, fontSize: "clamp(100px,18vw,260px)",
-        fontStyle: "italic", fontWeight: 400, lineHeight: 1,
-        color: "rgba(246,240,231,0.018)", pointerEvents: "none", whiteSpace: "nowrap",
-        zIndex: 0,
-      }}>
-        Universe
-      </div>
-      <Grain opacity={0.02} />
-
-      <div style={{ padding: "0 clamp(32px,5vw,80px)", maxWidth: "1400px", margin: "0 auto 64px", position: "relative", zIndex: 1 }}>
-        <Reveal>
-          <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.gold, marginBottom: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ width: "32px", height: "1px", background: C.gold, display: "inline-block" }} />
-            Mascot IP
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px" }}>
-            <h2 style={{ fontFamily: F.serif, fontSize: "clamp(36px,5.5vw,80px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.9, color: C.cream }}>
-              15 Characters.<br />
-              <span style={{ color: C.gold }}>Infinite Loyalty.</span>
-            </h2>
-            <p style={{ fontFamily: F.sans, fontSize: "clamp(13px,1.1vw,16px)", lineHeight: 1.85, color: C.muted, maxWidth: "400px" }}>
-              Each Casper brand has its own original mascot character — a proprietary IP asset that drives customer loyalty, social virality, and franchise desirability at a level no competitor can replicate.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Mascot grid — full width, cinematic */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(5, 1fr)",
-        gap: "2px",
-        position: "relative", zIndex: 1,
-      }}>
-        {allMascots.map((m, i) => (
-          <div
-            key={m.name}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
-            style={{
-              position: "relative", overflow: "hidden",
-              height: i < 5 ? "380px" : "320px",
-              background: C.surface,
-              cursor: "default",
-            }}
-          >
-            {/* Accent glow on hover */}
-            <div style={{
-              position: "absolute", inset: 0,
-              background: `radial-gradient(circle at 50% 80%, ${m.accent}18, transparent 65%)`,
-              opacity: hovered === i ? 1 : 0,
-              transition: "opacity 0.5s ease",
-            }} />
-
-            {/* Mascot — large, fills cell */}
-            <div style={{
-              position: "absolute", bottom: "48px", left: "50%",
-              transform: hovered === i
-                ? "translateX(-50%) translateY(-10px) scale(1.06)"
-                : "translateX(-50%) translateY(0) scale(1)",
-              transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
-              width: "80%", height: "75%",
-              display: "flex", alignItems: "flex-end", justifyContent: "center",
-            }}>
-              <img
-                src={m.src} alt={m.name}
-                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "bottom" }}
-              />
-            </div>
-
-            {/* Name strip at bottom */}
-            <div style={{
-              position: "absolute", bottom: 0, left: 0, right: 0,
-              padding: "12px 16px",
-              background: `linear-gradient(to top, ${C.dark}CC, transparent)`,
-            }}>
-              <div style={{
-                fontFamily: F.mono, fontSize: "9px", fontWeight: 700,
-                letterSpacing: "0.25em", textTransform: "uppercase",
-                color: hovered === i ? m.accent : C.muted,
-                transition: "color 0.3s", marginBottom: "2px",
-              }}>
-                {m.name}
-              </div>
-              <div style={{ fontFamily: F.sans, fontSize: "10px", color: "rgba(246,240,231,0.3)" }}>
-                {m.brand}
-              </div>
-            </div>
-
-            {/* Top accent line on hover */}
-            <div style={{
-              position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-              background: m.accent, opacity: hovered === i ? 1 : 0,
-              transition: "opacity 0.4s ease",
-            }} />
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 // ─── SCREEN 5: FOOD GALLERY ───────────────────────────────────────────────────
 function FoodGallery() {
@@ -956,14 +846,13 @@ function Footer() {
 }
 
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
-export default function CasperGroupV2() {
+export default function CasperGroupV3() {
   return (
     <div style={{ background: C.base }}>
       <Nav />
       <Hero />
       <UniverseThesis />
       <BrandWorlds />
-      <MascotUniverse />
       <FoodGallery />
       <GhostKitchen />
       <WhyCasper />
