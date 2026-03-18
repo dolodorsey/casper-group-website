@@ -105,6 +105,11 @@ function Nav() {
 
 function Hero() {
   const [loaded, setLoaded] = useState(false);
+  // Fallback: reveal hero after 3s even if video hasn't loaded
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
       {/* Left accent image — subtle, just so sides aren't blank */}
@@ -118,7 +123,7 @@ function Hero() {
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}44 0%, ${C.bg} 100%)` }} />
       </div>
       {/* MAIN ANIMATION — center focus, as big as possible without stretching */}
-      <video src="/videos/casper-ani.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)}
+      <video src="/videos/casper-ani.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)} onError={() => setLoaded(true)}
         style={{ position: "absolute", width: "100%", height: "100%", objectFit: "contain", objectPosition: "center center", opacity: loaded ? 1 : 0, transition: "opacity 1.6s ease", zIndex: 2 }} />
       {/* Soft vignette top/bottom only — no side gradients blocking animation */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "12%", zIndex: 3, pointerEvents: "none", background: `linear-gradient(to bottom, ${C.bg} 0%, transparent 100%)` }} />
