@@ -72,16 +72,16 @@ const Divider = () => (
 );
 
 const BRANDS = [
-  { name: "Angel Wings", type: "Wings", logo: "/images/logo-angel-wings.png", portal: "/images/portal-angel-wings.jpeg", food: ["/images/angel-wings-plate.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "Heaven-sent heat.", desc: "Atlanta-style lemon pepper wings built for mass demand and ghost kitchen velocity. Every wing gets the halo treatment — sauced, tossed, and served with divine crunch.", url: "https://angel-wings-website.vercel.app" },
-  { name: "Tha Morning After", type: "Breakfast", logo: "/images/logo-morning-after.png", portal: "/images/portal-morning-after.jpeg", food: ["/images/morning-french-toast.jpg", "/images/morning-sandwiches.jpg"], accent: "#D89A2B", bg: "#1a1608", tagline: "Wake up legendary.", desc: "Creative breakfast culture engineered for craveability and all-day repeat traffic. French toast that makes you forget last night.", url: "#" },
-  { name: "Patty Daddy", type: "Burgers", logo: "/images/logo-patty-daddy.png", portal: "/images/portal-patty-daddy.jpeg", food: ["/images/patty-smashburger.jpg", "/images/patty-sliders.jpg"], accent: "#D89A2B", bg: "#18120a", tagline: "Bigger. Bolder. Daddy.", desc: "Larger-than-life burger concept with bold personality and franchise-ready systems. Smashed patties, towers of flavor.", url: "#" },
-  { name: "Espresso Co.", type: "Coffee Lab", logo: "/images/logo-espresso-co.png", portal: "/images/portal-espresso.jpeg", food: ["/images/espresso-lab.png", "/images/espresso-latte.png"], accent: "#8A6A3A", bg: "#15120a", tagline: "Science of the perfect cup.", desc: "Modern coffee culture meets lab precision. Every pour is an experiment. Every sip is the result.", url: "https://espresso-co-website.vercel.app" },
-  { name: "Mojo Juice", type: "Juice & Smoothies", logo: "/images/logo-mojo-juice.png", portal: "/images/portal-mojo.jpeg", food: ["/images/mojo-smoothie.png"], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fuel the ritual.", desc: "Fresh-pressed ritual with bright wellness positioning and lifestyle brand appeal.", url: "#" },
-  { name: "Mr. Oyster", type: "Seafood Bar", logo: "/images/logo-mr-oyster.png", portal: "/images/portal-mr-oyster.jpeg", food: ["/images/oyster-scallops.jpg"], accent: "#3A6A8A", bg: "#0a1018", tagline: "The deep end of flavor.", desc: "Elevated seafood with visual authority. Squid ink pasta, seared scallops, calamari towers.", url: "#" },
-  { name: "Sweet Tooth", type: "Desserts", logo: "/images/logo-sweet-tooth.png", portal: "/images/portal-sweet-tooth.jpeg", food: [], accent: "#C83A8A", bg: "#180a18", tagline: "Indulgence engineered.", desc: "Dessert indulgence engineered for impulse, social virality, and high-margin volume.", url: "#" },
-  { name: "Taco Yaki", type: "Fusion", logo: "/images/logo-taco-yaki.png", portal: "/images/portal-taco-yaki.png", food: ["/images/taco-platter.jpg", "/images/taco-hibachi.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "East meets west. Fire meets grill.", desc: "Fusion tacos meet hibachi heat. Wood-fired tortillas loaded with global flavors.", url: "#" },
-  { name: "Toss'd", type: "Healthy Bowls", logo: "/images/logo-tossd.png", portal: "/images/portal-tossd.jpeg", food: [], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fresh. Fast. No excuses.", desc: "Fresh bowls and salads with speed, simplicity, and wellness-forward brand identity.", url: "#" },
-  { name: "Pasta Bish", type: "Pasta", logo: "/images/logo-pasta-bish.png", portal: "/images/portal-pasta-bish.jpeg", food: ["/images/pasta-fettuccine.jpg", "/images/pasta-marinara.jpg"], accent: "#C83A3A", bg: "#180808", tagline: "Comfort with attitude.", desc: "Comfort-food pasta with personality. Creamy fettuccine, proper marinara, fresh herbs.", url: "#" },
+  { name: "Angel Wings", type: "Basket Bar", logo: "/images/logo-angel-wings.png", portal: "/images/portal-angel-wings.jpeg", food: ["/images/angel-wings-plate.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "Heaven-sent heat.", desc: "Atlanta-style lemon pepper wings built for mass demand and ghost kitchen velocity. Every wing gets the halo treatment — sauced, tossed, and served with divine crunch.", url: "https://angel-wings-website.vercel.app" },
+  { name: "Tha Morning After", type: "Breakfast Bar", logo: "/images/logo-morning-after.png", portal: "/images/portal-morning-after.jpeg", food: ["/images/morning-french-toast.jpg", "/images/morning-sandwiches.jpg"], accent: "#D89A2B", bg: "#1a1608", tagline: "Wake up legendary.", desc: "Creative breakfast culture engineered for craveability and all-day repeat traffic. French toast that makes you forget last night.", url: "#" },
+  { name: "Patty Daddy", type: "Burger Bar", logo: "/images/logo-patty-daddy.png", portal: "/images/portal-patty-daddy.jpeg", food: ["/images/patty-smashburger.jpg", "/images/patty-sliders.jpg"], accent: "#D89A2B", bg: "#18120a", tagline: "Bigger. Bolder. Daddy.", desc: "Larger-than-life burger concept with bold personality and franchise-ready systems. Smashed patties, towers of flavor.", url: "#" },
+  { name: "Espresso Co.", type: "Coffee Bar", logo: "/images/logo-espresso-co.png", portal: "/images/portal-espresso.jpeg", food: ["/images/espresso-lab.png", "/images/espresso-latte.png"], accent: "#8A6A3A", bg: "#15120a", tagline: "Science of the perfect cup.", desc: "Modern coffee culture meets lab precision. Every pour is an experiment. Every sip is the result.", url: "https://espresso-co-website.vercel.app" },
+  { name: "Mojo Juice", type: "Juice Bar", logo: "/images/logo-mojo-juice.png", portal: "/images/portal-mojo.jpeg", food: ["/images/mojo-smoothie.png"], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fuel the ritual.", desc: "Fresh-pressed ritual with bright wellness positioning and lifestyle brand appeal.", url: "#" },
+  { name: "Mr. Oyster", type: "Oyster Bar", logo: "/images/logo-mr-oyster.png", portal: "/images/portal-mr-oyster.jpeg", food: ["/images/oyster-scallops.jpg"], accent: "#3A6A8A", bg: "#0a1018", tagline: "The deep end of flavor.", desc: "Elevated seafood with visual authority. Squid ink pasta, seared scallops, calamari towers.", url: "#" },
+  { name: "Sweet Tooth", type: "Dessert Bar", logo: "/images/logo-sweet-tooth.png", portal: "/images/portal-sweet-tooth.jpeg", food: [], accent: "#C83A8A", bg: "#180a18", tagline: "Indulgence engineered.", desc: "Dessert indulgence engineered for impulse, social virality, and high-margin volume.", url: "#" },
+  { name: "Taco Yaki", type: "Taco × Hibachi", logo: "/images/logo-taco-yaki.png", portal: "/images/portal-taco-yaki.png", food: ["/images/taco-platter.jpg", "/images/taco-hibachi.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "East meets west. Fire meets grill.", desc: "Fusion tacos meet hibachi heat. Wood-fired tortillas loaded with global flavors.", url: "#" },
+  { name: "Toss'd", type: "Salad Bar", logo: "/images/logo-tossd.png", portal: "/images/portal-tossd.jpeg", food: [], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fresh. Fast. No excuses.", desc: "Fresh bowls and salads with speed, simplicity, and wellness-forward brand identity.", url: "#" },
+  { name: "Pasta Bish", type: "Pasta Bar", logo: "/images/logo-pasta-bish.png", portal: "/images/portal-pasta-bish.jpeg", food: ["/images/pasta-fettuccine.jpg", "/images/pasta-marinara.jpg"], accent: "#C83A3A", bg: "#180808", tagline: "Comfort with attitude.", desc: "Comfort-food pasta with personality. Creamy fettuccine, proper marinara, fresh herbs.", url: "#" },
 ];
 
 function Nav() {
@@ -210,14 +210,17 @@ function BrandPortals() {
                 onMouseEnter={e => { e.currentTarget.style.background = C.surface2; e.currentTarget.style.borderBottomColor = b.accent; }}
                 onMouseLeave={e => { e.currentTarget.style.background = C.surface; e.currentTarget.style.borderBottomColor = `${b.accent}40`; }}
               >
-                <img src={b.logo} alt={b.name} style={{ maxHeight: "80px", maxWidth: "85%", objectFit: "contain", marginBottom: "16px", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }} />
-                <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.35em", textTransform: "uppercase", color: b.accent, textAlign: "center" }}>{b.type}</div>
+                <img src={b.logo} alt={b.name} style={{ maxHeight: "110px", maxWidth: "90%", objectFit: "contain", marginBottom: "14px", filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.6))" }} />
+                <div style={{ fontFamily: F.serif, fontSize: "clamp(14px,1.4vw,18px)", fontStyle: "italic", color: C.cream, textAlign: "center", marginBottom: "4px" }}>{b.name}</div>
+                <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: b.accent, textAlign: "center" }}>({b.type})</div>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
     </section>
+
+    <FoodGallery />
 
     {/* === SECTION 2: THE MASCOTS — portal art grid === */}
     <section style={{ background: C.dark, paddingBottom: 0 }}>
@@ -260,7 +263,7 @@ function BrandPortals() {
                 <div>
                   <h3 style={{ fontFamily: F.serif, fontSize: "clamp(28px,3.5vw,48px)", fontStyle: "italic", fontWeight: 400, color: C.cream, margin: "0 0 8px", lineHeight: 1 }}>{b.name}</h3>
                   <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: b.accent, marginBottom: "20px" }}>{b.type} — {b.tagline}</div>
-                  <p style={{ fontFamily: F.sans, fontSize: "clamp(14px,1.2vw,16px)", lineHeight: 1.8, color: C.muted, maxWidth: "640px" }}>{b.desc}</p>
+                  <p style={{ fontFamily: F.sans, fontSize: "clamp(16px,1.4vw,19px)", lineHeight: 1.8, color: C.muted, maxWidth: "640px" }}>{b.desc}</p>
                 </div>
               </div>
               {b.food.length > 0 && (
@@ -475,7 +478,6 @@ export default function CasperGroupV3() {
       <Thesis />
       <Divider />
       <BrandPortals />
-      <FoodGallery />
       <Divider />
       <Operation />
       <Divider />
