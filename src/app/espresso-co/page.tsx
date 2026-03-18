@@ -34,7 +34,7 @@ function Nav() {
   useEffect(() => { const h = () => setSc(window.scrollY > 80); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
   return (
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 300, padding: sc ? "14px clamp(24px,4vw,60px)" : "28px clamp(24px,4vw,60px)", display: "flex", justifyContent: "space-between", alignItems: "center", background: sc ? "rgba(13,15,14,0.92)" : "transparent", backdropFilter: sc ? "blur(24px) saturate(180%)" : "none", borderBottom: sc ? `1px solid ${C.border}` : "none", transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)" }}>
-      <a href="/"><img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: sc ? "32px" : "48px", width: "auto", transition: "height 0.4s ease" }} /></a>
+      <a href="/"><img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: sc ? "32px" : "48px", width: "auto", transition: "height 0.4s ease", mixBlendMode: "lighten" }} /></a>
       <div style={{ display: "flex", gap: "clamp(20px,3vw,40px)", alignItems: "center" }}>
         {["Menu", "Lab", "Craft"].map(n => (
           <a key={n} href={`#${n.toLowerCase()}`} style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 400, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(185,189,199,0.7)", textDecoration: "none", transition: "color 0.3s" }}
@@ -57,7 +57,7 @@ function Hero() {
       <div style={{ position: "absolute", inset: 0, zIndex: 2, background: `linear-gradient(180deg, ${C.bg}88 0%, transparent 35%, transparent 55%, ${C.bg}ee 100%)` }} />
       <Grain opacity={0.02} />
       <div style={{ position: "absolute", bottom: "clamp(60px,10vh,140px)", left: "clamp(32px,6vw,100px)", zIndex: 10 }}>
-        <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "clamp(72px,12vw,140px)", width: "auto", marginBottom: "24px", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(40px)", transition: "all 1.4s cubic-bezier(0.16,1,0.3,1) 0.5s" }} />
+        <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "clamp(72px,12vw,140px)", width: "auto", marginBottom: "24px", mixBlendMode: "lighten", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(40px)", transition: "all 1.4s cubic-bezier(0.16,1,0.3,1) 0.5s" }} />
         <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.brown, opacity: loaded ? 0.8 : 0, transition: "opacity 1s ease 1.2s" }}>Science of the Perfect Cup · A Casper Group Brand</div>
       </div>
       <div style={{ position: "absolute", bottom: "32px", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", opacity: loaded ? 0.3 : 0, transition: "opacity 1.2s ease 2s", zIndex: 10 }}>
@@ -179,7 +179,7 @@ function OrderCTA() {
       <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 30% 50%, ${C.brownGlow}, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(216,154,43,0.08), transparent 50%)` }} />
       <div style={{ maxWidth: "780px", margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2 }}>
         <Reveal>
-          <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "64px", margin: "0 auto 36px", display: "block", opacity: 0.7 }} />
+          <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "64px", margin: "0 auto 36px", display: "block", opacity: 0.7, mixBlendMode: "lighten" }} />
           <h2 style={{ fontFamily: F.serif, fontSize: "clamp(36px,5.5vw,76px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.0, color: C.cream, marginBottom: "20px" }}>Visit the Lab.</h2>
           <p style={{ fontFamily: F.sans, fontSize: "clamp(14px,1.2vw,17px)", lineHeight: 1.85, color: C.muted, maxWidth: "520px", margin: "0 auto 44px" }}>
             The perfect cup is an experiment. Come find yours at Espresso Co. — where science meets soul.
@@ -199,7 +199,7 @@ function Footer() {
     <footer style={{ background: C.dark, borderTop: `1px solid ${C.border}`, padding: "48px clamp(32px,5vw,80px) 32px" }}>
       <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
         <div>
-          <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "28px", marginBottom: "8px", display: "block", opacity: 0.5 }} />
+          <img src="/images/logo-espresso-co.png" alt="Espresso Co." style={{ height: "28px", marginBottom: "8px", display: "block", opacity: 0.5, mixBlendMode: "lighten" }} />
           <div style={{ fontFamily: F.mono, fontSize: "9px", color: "rgba(246,240,231,0.15)" }}>© 2026 Espresso Co. A Casper Group Brand. A KHG Enterprise.</div>
         </div>
         <div style={{ display: "flex", gap: "24px" }}>

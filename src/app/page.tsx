@@ -203,7 +203,7 @@ function BrandPortals() {
             <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 5, fontFamily: F.mono, fontSize: "7px", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", padding: "5px 10px" }}>{b.type}</div>
             {/* Brand LOGO centered on card */}
             <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", width: "70%", pointerEvents: "none" }}>
-              <img src={b.logo} alt={b.name} style={{ width: "100%", maxHeight: "120px", objectFit: "contain", filter: "drop-shadow(0 4px 20px rgba(0,0,0,0.8))", opacity: 0.9, transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)", transform: hovered === i ? "scale(1.1)" : "scale(1)" }} />
+              <img src={b.logo} alt={b.name} style={{ width: "100%", maxHeight: "120px", objectFit: "contain", filter: "drop-shadow(0 4px 20px rgba(0,0,0,0.8))", opacity: 0.9, transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)", transform: hovered === i ? "scale(1.1)" : "scale(1)", mixBlendMode: "lighten" }} />
             </div>
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 16px 18px", zIndex: 5 }}>
               <div style={{ fontFamily: F.serif, fontSize: "clamp(14px,1.4vw,20px)", fontStyle: "italic", color: "#fff", lineHeight: 1.1, marginBottom: "4px", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>{b.name}</div>
@@ -220,7 +220,7 @@ function BrandPortals() {
             <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 20% 50%, ${b.accent}15, transparent 60%)` }} />
             <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative", zIndex: 2 }}>
               <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "clamp(32px,4vw,64px)", alignItems: "start" }}>
-                <div style={{ width: "clamp(80px,8vw,120px)" }}><img src={b.logo} alt={b.name} style={{ width: "100%", height: "auto", filter: "brightness(1.1)" }} /></div>
+                <div style={{ width: "clamp(80px,8vw,120px)" }}><img src={b.logo} alt={b.name} style={{ width: "100%", height: "auto", filter: "brightness(1.1)", mixBlendMode: "lighten" }} /></div>
                 <div>
                   <h3 style={{ fontFamily: F.serif, fontSize: "clamp(28px,3.5vw,48px)", fontStyle: "italic", fontWeight: 400, color: C.cream, margin: "0 0 8px", lineHeight: 1 }}>{b.name}</h3>
                   <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: b.accent, marginBottom: "20px" }}>{b.type} — {b.tagline}</div>
