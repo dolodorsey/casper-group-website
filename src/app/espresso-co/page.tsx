@@ -52,7 +52,7 @@ function Hero() {
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: C.bg }}>
       {/* FULL SCREEN STRETCHED VIDEO — using the other animation */}
-      <video src="/videos/espresso-co.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)}
+      <video src="/videos/animated-response.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)}
         style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover", opacity: loaded ? 1 : 0, transition: "opacity 1.6s ease", zIndex: 1, filter: "brightness(0.65) contrast(1.1) saturate(0.9)" }} />
       <div style={{ position: "absolute", inset: 0, zIndex: 2, background: `linear-gradient(180deg, ${C.bg}88 0%, transparent 35%, transparent 55%, ${C.bg}ee 100%)` }} />
       <Grain opacity={0.02} />
