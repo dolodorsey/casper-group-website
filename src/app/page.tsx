@@ -112,15 +112,15 @@ function Hero() {
   }, []);
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {/* Left accent image — food imagery visible on the side */}
-      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "28%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/food/lemon-pepper-wings.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.55, filter: "brightness(0.6) saturate(0.7)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${C.bg}22 0%, ${C.bg}cc 70%, ${C.bg} 100%)` }} />
+      {/* Left side — Casper Group emblem background */}
+      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "30%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/casper-hero-bg.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.6, filter: "brightness(0.55) saturate(0.8)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, transparent 0%, ${C.bg}aa 60%, ${C.bg} 100%)` }} />
       </div>
-      {/* Right accent image — different food photo, mirrored gradient */}
-      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "28%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/food/premium-burger.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.55, filter: "brightness(0.6) saturate(0.7)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}22 0%, ${C.bg}cc 70%, ${C.bg} 100%)` }} />
+      {/* Right side — mirrored Casper emblem */}
+      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "30%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/casper-hero-bg.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.6, filter: "brightness(0.55) saturate(0.8)", transform: "scaleX(-1)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, transparent 0%, ${C.bg}aa 60%, ${C.bg} 100%)` }} />
       </div>
       {/* MAIN ANIMATION — center focus, as big as possible without stretching */}
       <video src="/videos/casper-ani.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)} onError={() => setLoaded(true)}
@@ -185,34 +185,65 @@ function BrandPortals() {
   const [hovered, setHovered] = useState<number | null>(null);
   const [expanded, setExpanded] = useState<number | null>(null);
   return (
-    <section id="brands" style={{ background: C.bg, paddingBottom: 0 }}>
-      <div style={{ padding: "clamp(80px,10vh,120px) clamp(32px,5vw,80px) clamp(40px,5vh,64px)", maxWidth: "1400px", margin: "0 auto" }}>
+    <>
+    {/* === SECTION 1: THE BRANDS — logos only, clean grid === */}
+    <section id="brands" style={{ background: C.bg, padding: "clamp(80px,10vh,120px) clamp(32px,5vw,80px)", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.14 }}>
+        <img src="/images/casper-hero-bg.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.6)" }} />
+      </div>
+      <Grain opacity={0.02} />
+      <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Reveal>
           <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.gold, marginBottom: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ width: "32px", height: "1px", background: C.gold, display: "inline-block" }} />
             Brand Portfolio
           </div>
-          <h2 style={{ fontFamily: F.serif, fontSize: "clamp(36px,5vw,72px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.92, color: C.cream }}>
-            Enter the Universe
+          <h2 style={{ fontFamily: F.serif, fontSize: "clamp(40px,6vw,80px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.92, color: C.cream, marginBottom: "64px" }}>
+            The <span style={{ color: C.gold }}>Brands</span>
           </h2>
+        </Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "3px" }}>
+          {BRANDS.map((b, i) => (
+            <Reveal key={b.name} d={i * 0.04}>
+              <div onClick={() => { if (b.url && b.url !== "#") window.open(b.url, "_blank"); else setExpanded(expanded === i ? null : i); }}
+                style={{ background: C.surface, padding: "clamp(28px,3vw,44px) 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)", borderBottom: `2px solid ${b.accent}40`, minHeight: "180px" }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.surface2; e.currentTarget.style.borderBottomColor = b.accent; }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.surface; e.currentTarget.style.borderBottomColor = `${b.accent}40`; }}
+              >
+                <img src={b.logo} alt={b.name} style={{ maxHeight: "80px", maxWidth: "85%", objectFit: "contain", marginBottom: "16px", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }} />
+                <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.35em", textTransform: "uppercase", color: b.accent, textAlign: "center" }}>{b.type}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* === SECTION 2: THE MASCOTS — portal art grid === */}
+    <section style={{ background: C.dark, paddingBottom: 0 }}>
+      <div style={{ padding: "clamp(80px,10vh,120px) clamp(32px,5vw,80px) clamp(40px,5vh,64px)", maxWidth: "1400px", margin: "0 auto" }}>
+        <Reveal>
+          <div style={{ fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.burgundy, marginBottom: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ width: "32px", height: "1px", background: C.burgundy, display: "inline-block" }} />
+            Character Universe
+          </div>
+          <h2 style={{ fontFamily: F.serif, fontSize: "clamp(40px,6vw,80px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.92, color: C.cream, marginBottom: "16px" }}>
+            The <span style={{ color: C.burgundy }}>Mascots</span>
+          </h2>
+          <p style={{ fontFamily: F.sans, fontSize: "clamp(14px,1.2vw,17px)", color: C.muted, maxWidth: "560px", lineHeight: 1.8, marginBottom: "48px" }}>Every brand has a face. Every face tells a story. Meet the characters behind the empire.</p>
         </Reveal>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "2px", background: C.border }}>
         {BRANDS.map((b, i) => (
-          <div key={b.name} onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)} onClick={() => { if (b.url && b.url !== "#") { window.open(b.url, "_blank"); } else { setExpanded(expanded === i ? null : i); } }}
+          <div key={b.name} onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
             style={{ position: "relative", overflow: "hidden", aspectRatio: "3/4", cursor: "pointer", background: b.bg }}>
-            <img src={b.portal} alt={b.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease", transform: hovered === i ? "scale(1.08)" : "scale(1)", filter: hovered === i ? "brightness(1.15) saturate(1.1)" : "brightness(0.75) saturate(0.9)" }} />
-            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "60%", background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)", pointerEvents: "none" }} />
+            <img src={b.portal} alt={b.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease", transform: hovered === i ? "scale(1.08)" : "scale(1)", filter: hovered === i ? "brightness(1.15) saturate(1.1)" : "brightness(0.85) saturate(0.95)" }} />
+            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.5) 100%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: b.accent, opacity: hovered === i ? 1 : 0, transition: "opacity 0.3s ease", zIndex: 5 }} />
-            <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 5, fontFamily: F.mono, fontSize: "7px", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", padding: "5px 10px" }}>{b.type}</div>
-            {/* Brand LOGO centered on card */}
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", width: "70%", pointerEvents: "none" }}>
-              <img src={b.logo} alt={b.name} style={{ width: "100%", maxHeight: "120px", objectFit: "contain", filter: "drop-shadow(0 4px 20px rgba(0,0,0,0.8))", opacity: 0.9, transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)", transform: hovered === i ? "scale(1.1)" : "scale(1)", mixBlendMode: "lighten" }} />
-            </div>
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 16px 18px", zIndex: 5 }}>
-              <div style={{ fontFamily: F.serif, fontSize: "clamp(14px,1.4vw,20px)", fontStyle: "italic", color: "#fff", lineHeight: 1.1, marginBottom: "4px", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>{b.name}</div>
-              <div style={{ fontFamily: F.sans, fontSize: "10px", color: "rgba(255,255,255,0.4)", lineHeight: 1.3, opacity: hovered === i ? 1 : 0, transform: hovered === i ? "translateY(0)" : "translateY(6px)", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>{b.tagline}</div>
+              <div style={{ fontFamily: F.serif, fontSize: "clamp(16px,1.6vw,22px)", fontStyle: "italic", color: "#fff", lineHeight: 1.1, marginBottom: "4px", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>{b.name}</div>
+              <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.3em", textTransform: "uppercase", color: b.accent }}>{b.type}</div>
             </div>
           </div>
         ))}
@@ -248,6 +279,7 @@ function BrandPortals() {
         );
       })()}
     </section>
+    </>
   );
 }
 
