@@ -107,20 +107,22 @@ function Hero() {
   const [loaded, setLoaded] = useState(false);
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {/* Left background image */}
-      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "30%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.35, filter: "brightness(0.6) saturate(0.7)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${C.bg}33 0%, ${C.bg}99 60%, ${C.bg} 100%)` }} />
+      {/* Left accent image — subtle, just so sides aren't blank */}
+      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "25%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.2, filter: "brightness(0.4) saturate(0.5)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${C.bg}44 0%, ${C.bg} 100%)` }} />
       </div>
-      {/* Right background image */}
-      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "30%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.35, filter: "brightness(0.6) saturate(0.7)", transform: "scaleX(-1)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}33 0%, ${C.bg}99 60%, ${C.bg} 100%)` }} />
+      {/* Right accent image — mirrored */}
+      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "25%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.2, filter: "brightness(0.4) saturate(0.5)", transform: "scaleX(-1)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}44 0%, ${C.bg} 100%)` }} />
       </div>
+      {/* MAIN ANIMATION — center focus, as big as possible without stretching */}
       <video src="/videos/casper-ani.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)}
-        style={{ position: "absolute", width: "100%", height: "100%", objectFit: "contain", objectPosition: "center center", opacity: loaded ? 1 : 0, transition: "opacity 1.6s ease", zIndex: 1 }} />
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "18%", zIndex: 3, pointerEvents: "none", background: `linear-gradient(to bottom, ${C.bg} 0%, ${C.bg}88 40%, transparent 100%)` }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "18%", zIndex: 3, pointerEvents: "none", background: `linear-gradient(to top, ${C.bg} 0%, ${C.bg}88 40%, transparent 100%)` }} />
+        style={{ position: "absolute", width: "100%", height: "100%", objectFit: "contain", objectPosition: "center center", opacity: loaded ? 1 : 0, transition: "opacity 1.6s ease", zIndex: 2 }} />
+      {/* Soft vignette top/bottom only — no side gradients blocking animation */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "12%", zIndex: 3, pointerEvents: "none", background: `linear-gradient(to bottom, ${C.bg} 0%, transparent 100%)` }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "12%", zIndex: 3, pointerEvents: "none", background: `linear-gradient(to top, ${C.bg} 0%, transparent 100%)` }} />
       <Grain opacity={0.02} />
       <div style={{ position: "absolute", bottom: "32px", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", opacity: loaded ? 0.35 : 0, transition: "opacity 1.2s ease 3s", zIndex: 10 }}>
         <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.5em", textTransform: "uppercase", color: C.cream }}>Scroll</div>
