@@ -5,7 +5,8 @@ import { useState, useEffect, useRef } from "react";
 // Aesthetic: "Dark Appetite" — luxury fast-casual empire meets cinematic mascot world
 // Palette: near-black / cream / deep burgundy / gold / silver
 // Signature interaction: mascot-forward brand cards (mascot IS the visual, not a thumbnail)
-// Hero: casper-logo.mp4 FILLS 100vh 100vw — animation IS the homescreen
+// Hero: CASPER_ani.mov (converted to casper-ani.mp4) — the brand universe animation IS the homescreen
+// Video is square-ish (712x720), so edge-blending gradients match bg color #0d0f0e for seamless look
 
 const C = {
   base:        "#0f0d0b",
@@ -213,8 +214,10 @@ function Nav() {
 }
 
 // ─── SCREEN 1: FULL-SCREEN VIDEO HERO ─────────────────────────────────────────
-// casper-logo.mp4 FILLS 100vh edge to edge. Text floats ON the video.
-// This is the homescreen. Not a panel. Not a box. THE WHOLE SCREEN.
+// CASPER_ani.mov — the brand universe animation IS the homescreen.
+// Video is ~square (712x720). On wide screens, the left/right edges must
+// seamlessly blend into the same dark background so it looks fullscreen.
+// Background color matched from edge-pixel sampling: ~#0d0f0e
 function Hero() {
   const [loaded, setLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -224,125 +227,70 @@ function Hero() {
     return () => clearTimeout(t);
   }, []);
 
+  // The exact background color sampled from the animation's edges
+  const videoBg = "#0d0f0e";
+
   return (
     <section style={{
       position: "relative",
       width: "100%", height: "100vh",
       overflow: "hidden",
-      background: C.dark,
-      display: "flex", flexDirection: "column", justifyContent: "flex-end",
+      background: videoBg,
+      display: "flex", alignItems: "center", justifyContent: "center",
     }}>
-      {/* ── THE VIDEO — FILLS ENTIRE SCREEN ── */}
+      {/* ── THE VIDEO — centered, fills height, blends at edges ── */}
       <video
         ref={videoRef}
-        src="/videos/casper-logo.mp4"
+        src="/videos/casper-ani.mp4"
         autoPlay muted loop playsInline
+        onLoadedData={() => setLoaded(true)}
         style={{
-          position: "absolute", inset: 0,
+          position: "absolute",
           width: "100%", height: "100%",
-          objectFit: "cover",
-          objectPosition: "center",
+          objectFit: "contain",
+          objectPosition: "center center",
           opacity: loaded ? 1 : 0,
           transition: "opacity 1.4s ease",
+          zIndex: 1,
         }}
       />
 
-      {/* ── GRADIENT LAYERS over the video ── */}
-      {/* Top fade — protects nav */}
+      {/* ── EDGE BLENDING — gradient feathers on left and right ──
+          These blend the video edges into the background so the
+          boundary between animation and bg is invisible, especially
+          during the glow/smoke phase when edges lighten. */}
       <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: "35%",
-        background: "linear-gradient(to bottom, rgba(9,8,7,0.6) 0%, transparent 100%)",
+        position: "absolute", top: 0, left: 0, bottom: 0,
+        width: "25%", zIndex: 2, pointerEvents: "none",
+        background: `linear-gradient(to right, ${videoBg} 0%, ${videoBg}ee 15%, ${videoBg}88 40%, transparent 100%)`,
       }} />
-      {/* Bottom fade — creates reading surface for copy */}
       <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: "60%",
-        background: "linear-gradient(to top, rgba(9,8,7,0.97) 0%, rgba(9,8,7,0.6) 50%, transparent 100%)",
+        position: "absolute", top: 0, right: 0, bottom: 0,
+        width: "25%", zIndex: 2, pointerEvents: "none",
+        background: `linear-gradient(to left, ${videoBg} 0%, ${videoBg}ee 15%, ${videoBg}88 40%, transparent 100%)`,
       }} />
-      {/* Subtle burgundy atmosphere */}
+
+      {/* Top fade — protects nav readability */}
       <div style={{
-        position: "absolute", inset: 0,
-        background: `radial-gradient(ellipse at 30% 80%, ${C.burgundyGlow} 0%, transparent 50%)`,
+        position: "absolute", top: 0, left: 0, right: 0, height: "20%", zIndex: 3,
+        background: `linear-gradient(to bottom, ${videoBg} 0%, transparent 100%)`,
+        pointerEvents: "none",
       }} />
-      <Grain opacity={0.025} />
 
-      {/* ── HERO COPY — anchored to bottom-left ── */}
+      {/* Bottom fade — reading surface for scroll indicator */}
       <div style={{
-        position: "relative", zIndex: 2,
-        padding: "0 clamp(32px,5vw,80px) clamp(60px,7vh,96px)",
-        maxWidth: "1400px", margin: "0 auto", width: "100%",
-      }}>
-        {/* Eyebrow */}
-        <div style={{
-          fontFamily: F.mono, fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase",
-          color: C.gold, marginBottom: "20px",
-          opacity: loaded ? 1 : 0, transition: "opacity 1s ease 0.6s",
-        }}>
-          Restaurant Concepts Worldwide
-        </div>
+        position: "absolute", bottom: 0, left: 0, right: 0, height: "15%", zIndex: 3,
+        background: `linear-gradient(to top, ${videoBg} 0%, transparent 100%)`,
+        pointerEvents: "none",
+      }} />
 
-        {/* Main headline — minimal, powerful */}
-        <h1 style={{
-          fontFamily: F.serif,
-          fontSize: "clamp(52px,8.5vw,128px)",
-          fontWeight: 400, fontStyle: "italic",
-          lineHeight: 0.88, letterSpacing: "-0.02em",
-          color: C.cream, margin: "0 0 12px",
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(50px)",
-          transition: "all 1.2s cubic-bezier(0.16,1,0.3,1) 0.7s",
-        }}>
-          Ten worlds.
-        </h1>
-        <h1 style={{
-          fontFamily: F.serif,
-          fontSize: "clamp(52px,8.5vw,128px)",
-          fontWeight: 400, fontStyle: "italic",
-          lineHeight: 0.88, letterSpacing: "-0.02em",
-          color: C.gold, margin: "0 0 40px",
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(50px)",
-          transition: "all 1.2s cubic-bezier(0.16,1,0.3,1) 0.9s",
-        }}>
-          One empire.
-        </h1>
-
-        {/* CTAs */}
-        <div style={{
-          display: "flex", gap: "14px", flexWrap: "wrap",
-          opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.4s",
-        }}>
-          <a href="#brands" style={{
-            fontFamily: F.sans, fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase",
-            color: C.dark, background: C.gold, padding: "15px 44px", textDecoration: "none", display: "inline-block",
-            transition: "all 0.3s",
-          }}>Explore Brands</a>
-          <a href="#franchise" style={{
-            fontFamily: F.sans, fontSize: "10px", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase",
-            color: C.cream, background: "transparent", border: `1px solid rgba(246,240,231,0.2)`, padding: "15px 36px",
-            textDecoration: "none", display: "inline-block", transition: "all 0.3s",
-          }}>Franchise Inquiry</a>
-        </div>
-      </div>
-
-      {/* Stats — bottom right corner */}
-      <div style={{
-        position: "absolute", bottom: "clamp(48px,6vh,80px)", right: "clamp(32px,5vw,80px)",
-        display: "flex", gap: "32px", zIndex: 2,
-        opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.6s",
-      }}>
-        {[["10+", "Concepts"], ["15", "Mascots"], ["25+", "Markets"]].map(([v, l]) => (
-          <div key={l} style={{ textAlign: "right" }}>
-            <div style={{ fontFamily: F.serif, fontSize: "clamp(22px,2.5vw,36px)", fontStyle: "italic", color: C.gold, lineHeight: 1 }}>{v}</div>
-            <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.35em", textTransform: "uppercase", color: C.muted, marginTop: "5px" }}>{l}</div>
-          </div>
-        ))}
-      </div>
+      <Grain opacity={0.02} />
 
       {/* Scroll indicator */}
       <div style={{
         position: "absolute", bottom: "28px", left: "50%", transform: "translateX(-50%)",
         display: "flex", flexDirection: "column", alignItems: "center", gap: "8px",
-        opacity: loaded ? 0.4 : 0, transition: "opacity 1s ease 2.2s", zIndex: 2,
+        opacity: loaded ? 0.4 : 0, transition: "opacity 1s ease 2.2s", zIndex: 4,
       }}>
         <div style={{ fontFamily: F.mono, fontSize: "8px", letterSpacing: "0.4em", textTransform: "uppercase", color: C.cream }}>Scroll</div>
         <div style={{ width: "1px", height: "36px", background: `linear-gradient(180deg, ${C.gold}, transparent)` }} />
