@@ -201,6 +201,10 @@ function BrandPortals() {
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "60%", background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: b.accent, opacity: hovered === i ? 1 : 0, transition: "opacity 0.3s ease", zIndex: 5 }} />
             <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 5, fontFamily: F.mono, fontSize: "7px", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", padding: "5px 10px" }}>{b.type}</div>
+            {/* Brand LOGO centered on card */}
+            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", width: "70%", pointerEvents: "none" }}>
+              <img src={b.logo} alt={b.name} style={{ width: "100%", maxHeight: "120px", objectFit: "contain", filter: "drop-shadow(0 4px 20px rgba(0,0,0,0.8))", opacity: 0.9, transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)", transform: hovered === i ? "scale(1.1)" : "scale(1)" }} />
+            </div>
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 16px 18px", zIndex: 5 }}>
               <div style={{ fontFamily: F.serif, fontSize: "clamp(14px,1.4vw,20px)", fontStyle: "italic", color: "#fff", lineHeight: 1.1, marginBottom: "4px", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>{b.name}</div>
               <div style={{ fontFamily: F.sans, fontSize: "10px", color: "rgba(255,255,255,0.4)", lineHeight: 1.3, opacity: hovered === i ? 1 : 0, transform: hovered === i ? "translateY(0)" : "translateY(6px)", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>{b.tagline}</div>
