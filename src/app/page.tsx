@@ -112,15 +112,15 @@ function Hero() {
   }, []);
   return (
     <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {/* Left accent image — subtle, just so sides aren't blank */}
-      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "25%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.2, filter: "brightness(0.4) saturate(0.5)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${C.bg}44 0%, ${C.bg} 100%)` }} />
+      {/* Left accent image — food imagery visible on the side */}
+      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "28%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/food/lemon-pepper-wings.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.55, filter: "brightness(0.6) saturate(0.7)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${C.bg}22 0%, ${C.bg}cc 70%, ${C.bg} 100%)` }} />
       </div>
-      {/* Right accent image — mirrored */}
-      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "25%", zIndex: 0, overflow: "hidden" }}>
-        <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.2, filter: "brightness(0.4) saturate(0.5)", transform: "scaleX(-1)" }} />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}44 0%, ${C.bg} 100%)` }} />
+      {/* Right accent image — different food photo, mirrored gradient */}
+      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "28%", zIndex: 0, overflow: "hidden" }}>
+        <img src="/images/food/premium-burger.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", opacity: 0.55, filter: "brightness(0.6) saturate(0.7)" }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to left, ${C.bg}22 0%, ${C.bg}cc 70%, ${C.bg} 100%)` }} />
       </div>
       {/* MAIN ANIMATION — center focus, as big as possible without stretching */}
       <video src="/videos/casper-ani.mp4" autoPlay muted loop playsInline onLoadedData={() => setLoaded(true)} onError={() => setLoaded(true)}
@@ -140,8 +140,8 @@ function Hero() {
 function Thesis() {
   return (
     <section style={{ background: C.bg, padding: "clamp(80px,10vh,140px) clamp(32px,5vw,80px)", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.05 }}>
-        <img src="/images/casper-kitchen.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.3) saturate(0.4)" }} />
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.14 }}>
+        <img src="/images/casper-kitchen.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.6)" }} />
       </div>
       <Grain opacity={0.02} />
       <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "clamp(48px,6vw,120px)", alignItems: "start" }}>
@@ -270,7 +270,7 @@ function FoodGallery() {
     <section style={{ background: C.bg, padding: "clamp(80px,10vh,120px) 0", position: "relative" }}>
       <Grain opacity={0.02} />
       {/* Section background image */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.06 }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.15 }}>
         <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.4) saturate(0.5)" }} />
       </div>
       <div style={{ position: "relative", zIndex: 1, padding: "0 clamp(32px,5vw,80px) clamp(40px,5vh,56px)", maxWidth: "1400px", margin: "0 auto" }}>
@@ -302,7 +302,7 @@ function FoodGallery() {
 function Operation() {
   return (
     <section id="story" style={{ background: C.bg, padding: "clamp(80px,10vh,140px) clamp(32px,5vw,80px)", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.06 }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.15 }}>
         <img src="/images/casper-background.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.3) saturate(0.5)" }} />
       </div>
       <Grain opacity={0.02} />
@@ -346,7 +346,7 @@ function Operation() {
 function WhyCasper() {
   return (
     <section style={{ background: C.bg, padding: "clamp(80px,10vh,120px) clamp(32px,5vw,80px)", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.05 }}>
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.14 }}>
         <img src="/images/casper-team.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.25) saturate(0.4)" }} />
       </div>
       <Grain opacity={0.02} />
@@ -384,8 +384,8 @@ function WhyCasper() {
 function FranchiseCTA() {
   return (
     <section id="franchise" style={{ background: C.bg, padding: "clamp(100px,12vh,160px) clamp(32px,5vw,80px)", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.07 }}>
-        <img src="/images/lifestyle/casper-kitchen-crew.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.3) saturate(0.4)" }} />
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.16 }}>
+        <img src="/images/lifestyle/casper-kitchen-crew.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) saturate(0.6)" }} />
       </div>
       <Grain opacity={0.03} />
       <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 30% 50%, ${C.burgundyGlow}, transparent 50%), radial-gradient(ellipse at 70% 50%, ${C.goldDim}, transparent 50%)` }} />
