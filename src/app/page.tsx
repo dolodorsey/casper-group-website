@@ -472,7 +472,7 @@ function Footer() {
 
 export default function CasperGroupV3() {
   return (
-    <div style={{ background: C.bg }}>
+    <div style={{ background: C.bg ,overflowX:'hidden'}}>
       <Nav />
       <Hero />
       <Thesis />
