@@ -72,16 +72,18 @@ const Divider = () => (
 );
 
 const BRANDS = [
-  { name: "Angel Wings", type: "Basket Bar", logo: "/images/logo-angel-wings.png", portal: "/images/portal-angel-wings.jpeg", food: ["/images/angel-wings-plate.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "Heaven-sent heat.", desc: "Atlanta-style lemon pepper wings built for mass demand and ghost kitchen velocity. Every wing gets the halo treatment — sauced, tossed, and served with divine crunch.", url: "https://angel-wings-website.vercel.app" },
-  { name: "Tha Morning After", type: "Breakfast Bar", logo: "/images/logo-morning-after.png", portal: "/images/portal-morning-after.jpeg", food: ["/images/morning-french-toast.jpg", "/images/morning-sandwiches.jpg"], accent: "#D89A2B", bg: "#1a1608", tagline: "Wake up legendary.", desc: "Creative breakfast culture engineered for craveability and all-day repeat traffic. French toast that makes you forget last night.", url: "#" },
-  { name: "Patty Daddy", type: "Burger Bar", logo: "/images/logo-patty-daddy.png", portal: "/images/portal-patty-daddy.jpeg", food: ["/images/patty-smashburger.jpg", "/images/patty-sliders.jpg"], accent: "#D89A2B", bg: "#18120a", tagline: "Bigger. Bolder. Daddy.", desc: "Larger-than-life burger concept with bold personality and franchise-ready systems. Smashed patties, towers of flavor.", url: "#" },
-  { name: "Espresso Co.", type: "Coffee Bar", logo: "/images/logo-espresso-co.png", portal: "/images/portal-espresso.jpeg", food: ["/images/espresso-lab.png", "/images/espresso-latte.png"], accent: "#8A6A3A", bg: "#15120a", tagline: "Science of the perfect cup.", desc: "Modern coffee culture meets lab precision. Every pour is an experiment. Every sip is the result.", url: "https://espresso-co-website.vercel.app" },
-  { name: "Mojo Juice", type: "Juice Bar", logo: "/images/logo-mojo-juice.png", portal: "/images/portal-mojo.jpeg", food: ["/images/mojo-smoothie.png"], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fuel the ritual.", desc: "Fresh-pressed ritual with bright wellness positioning and lifestyle brand appeal.", url: "#" },
-  { name: "Mr. Oyster", type: "Oyster Bar", logo: "/images/logo-mr-oyster.png", portal: "/images/portal-mr-oyster.jpeg", food: ["/images/oyster-scallops.jpg"], accent: "#3A6A8A", bg: "#0a1018", tagline: "The deep end of flavor.", desc: "Elevated seafood with visual authority. Squid ink pasta, seared scallops, calamari towers.", url: "#" },
-  { name: "Sweet Tooth", type: "Dessert Bar", logo: "/images/logo-sweet-tooth.png", portal: "/images/portal-sweet-tooth.jpeg", food: [], accent: "#C83A8A", bg: "#180a18", tagline: "Indulgence engineered.", desc: "Dessert indulgence engineered for impulse, social virality, and high-margin volume.", url: "#" },
-  { name: "Taco Yaki", type: "Taco × Hibachi", logo: "/images/logo-taco-yaki.png", portal: "/images/portal-taco-yaki.png", food: ["/images/taco-platter.jpg", "/images/taco-hibachi.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "East meets west. Fire meets grill.", desc: "Fusion tacos meet hibachi heat. Wood-fired tortillas loaded with global flavors.", url: "#" },
-  { name: "Toss'd", type: "Salad Bar", logo: "/images/logo-tossd.png", portal: "/images/portal-tossd.jpeg", food: [], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fresh. Fast. No excuses.", desc: "Fresh bowls and salads with speed, simplicity, and wellness-forward brand identity.", url: "#" },
-  { name: "Pasta Bish", type: "Pasta Bar", logo: "/images/logo-pasta-bish.png", portal: "/images/portal-pasta-bish.jpeg", food: ["/images/pasta-fettuccine.jpg", "/images/pasta-marinara.jpg"], accent: "#C83A3A", bg: "#180808", tagline: "Comfort with attitude.", desc: "Comfort-food pasta with personality. Creamy fettuccine, proper marinara, fresh herbs.", url: "#" },
+  { name: "Angel Wings", type: "Basket Bar", logo: "/images/logo-angel-wings.png", portal: "/images/portal-angel-wings.jpeg", food: ["/images/angel-wings-plate.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "Heaven-sent heat.", desc: "Atlanta-style lemon pepper wings built for mass demand and ghost kitchen velocity. Every wing gets the halo treatment — sauced, tossed, and served with divine crunch.", url: "/angel-wings" },
+  { name: "Tha Morning After", type: "Breakfast Bar", logo: "/images/logo-morning-after.png", portal: "/images/portal-morning-after.jpeg", food: ["/images/morning-french-toast.jpg", "/images/morning-sandwiches.jpg"], accent: "#D89A2B", bg: "#1a1608", tagline: "Wake up legendary.", desc: "Creative breakfast culture engineered for craveability and all-day repeat traffic. French toast that makes you forget last night.", url: "/tha-morning-after" },
+  { name: "Patty Daddy", type: "Burger Bar", logo: "/images/logo-patty-daddy.png", portal: "/images/portal-patty-daddy.jpeg", food: ["/images/patty-smashburger.jpg", "/images/patty-sliders.jpg"], accent: "#D89A2B", bg: "#18120a", tagline: "Bigger. Bolder. Daddy.", desc: "Larger-than-life burger concept with bold personality and franchise-ready systems. Smashed patties, towers of flavor.", url: "/patty-daddy" },
+  { name: "Espresso Co.", type: "Coffee Bar", logo: "/images/logo-espresso-co.png", portal: "/images/portal-espresso.jpeg", food: ["/images/espresso-lab.png", "/images/espresso-latte.png"], accent: "#8A6A3A", bg: "#15120a", tagline: "Science of the perfect cup.", desc: "Modern coffee culture meets lab precision. Every pour is an experiment. Every sip is the result.", url: "/espresso-co" },
+  { name: "Mojo Juice", type: "Juice Bar", logo: "/images/logo-mojo-juice.png", portal: "/images/portal-mojo.jpeg", food: ["/images/mojo-smoothie.png"], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fuel the ritual.", desc: "Fresh-pressed ritual with bright wellness positioning and lifestyle brand appeal.", url: "/mojo-juice" },
+  { name: "Mr. Oyster", type: "Oyster Bar", logo: "/images/logo-mr-oyster.png", portal: "/images/portal-mr-oyster.jpeg", food: ["/images/oyster-scallops.jpg"], accent: "#3A6A8A", bg: "#0a1018", tagline: "The deep end of flavor.", desc: "Elevated seafood with visual authority. Squid ink pasta, seared scallops, calamari towers.", url: "/mr-oyster" },
+  { name: "Sweet Tooth", type: "Dessert Bar", logo: "/images/logo-sweet-tooth.png", portal: "/images/portal-sweet-tooth.jpeg", food: [], accent: "#C83A8A", bg: "#180a18", tagline: "Indulgence engineered.", desc: "Dessert indulgence engineered for impulse, social virality, and high-margin volume.", url: "/sweet-tooth" },
+  { name: "Taco Yaki", type: "Taco × Hibachi", logo: "/images/logo-taco-yaki.png", portal: "/images/portal-taco-yaki.png", food: ["/images/taco-platter.jpg", "/images/taco-hibachi.jpg"], accent: "#C85A1A", bg: "#1a1008", tagline: "East meets west. Fire meets grill.", desc: "Fusion tacos meet hibachi heat. Wood-fired tortillas loaded with global flavors.", url: "/taco-yaki" },
+  { name: "Toss'd", type: "Salad Bar", logo: "/images/logo-tossd.png", portal: "/images/portal-tossd.jpeg", food: [], accent: "#4A8A3A", bg: "#0e1608", tagline: "Fresh. Fast. No excuses.", desc: "Fresh bowls and salads with speed, simplicity, and wellness-forward brand identity.", url: "/tossd" },
+  { name: "Pasta Bish", type: "Pasta Bar", logo: "/images/logo-pasta-bish.png", portal: "/images/portal-pasta-bish.jpeg", food: ["/images/pasta-fettuccine.jpg", "/images/pasta-marinara.jpg"], accent: "#C83A3A", bg: "#180808", tagline: "Comfort with attitude.", desc: "Comfort-food pasta with personality. Creamy fettuccine, proper marinara, fresh herbs.", url: "/pasta-bish" },
+  { name: "Peace Pizza", type: "Pizza Bar", logo: "/images/logo-peace-pizza.png", portal: "/images/portal-peace-pizza.png", food: [], accent: "#F28C28", bg: "#1c0e04", tagline: "Good slices. Good energy.", desc: "A warm, retro pizza concept built around shareable pies, optimistic culture, and a peace-sign pie that turns every box into a brand moment.", url: "/peace-pizza" },
+  { name: "American Dragon", type: "American Chinese", logo: "/images/logo-american-dragon.png", portal: "/images/portal-american-dragon.png", food: [], accent: "#D9A52E", bg: "#080706", tagline: "Luxury takeout. American fire.", desc: "American Chinese favorites elevated through bold presentation, premium packaging, late-night energy, and a gold-and-red identity made for delivery.", url: "/american-dragon" },
 ];
 
 function Nav() {
@@ -152,14 +154,14 @@ function Thesis() {
               The Empire
             </div>
             <h2 style={{ fontFamily: F.serif, fontSize: "clamp(40px,5.5vw,76px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.92, letterSpacing: "-0.02em", color: C.cream, margin: 0 }}>
-              Ten brands.<br /><span style={{ color: C.gold }}>One kitchen.</span>
+              Twelve brands.<br /><span style={{ color: C.gold }}>One kitchen.</span>
             </h2>
           </div>
         </Reveal>
         <Reveal delay={0.15}>
           <div style={{ paddingTop: "clamp(8px,2vw,40px)" }}>
             <p style={{ fontFamily: F.sans, fontSize: "clamp(15px,1.3vw,18px)", lineHeight: 1.85, color: C.muted, marginBottom: "28px" }}>
-              Casper Group is a multi-concept restaurant empire — ten distinct food brands operating from shared infrastructure. Every brand has its own identity, its own mascot, and its own lane. But behind the scenes, they all run on one system built for ghost kitchens, franchising, and scale.
+              Casper Group is a multi-concept restaurant empire — twelve distinct food brands operating from shared infrastructure. Every brand has its own identity, its own character, and its own lane. But behind the scenes, they all run on one system built for ghost kitchens, franchising, and scale.
             </p>
             <p style={{ fontFamily: F.sans, fontSize: "clamp(14px,1.1vw,16px)", lineHeight: 1.85, color: "rgba(246,240,231,0.35)" }}>
               From Atlanta to Houston to Charlotte — Casper Group is building the future of multi-brand food operations. Wings, burgers, breakfast, pasta, seafood, coffee, juice, fusion, desserts, and salads. Every daypart. Every craving. One empire.
@@ -168,7 +170,7 @@ function Thesis() {
         </Reveal>
       </div>
       <div style={{ maxWidth: "1200px", margin: "clamp(56px,6vh,96px) auto 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2px", background: C.border }}>
-        {[["10+", "Concepts"], ["15", "Original Mascots"], ["3+", "Active Markets"], ["∞", "Ghost Kitchen Ready"]].map(([val, label], i) => (
+        {[["12", "Concepts"], ["15+", "Original Characters"], ["3+", "Active Markets"], ["∞", "Ghost Kitchen Ready"]].map(([val, label], i) => (
           <Reveal key={label} delay={0.1 * i}>
             <div style={{ background: C.bg, padding: "clamp(28px,3vh,48px) clamp(20px,2vw,36px)", textAlign: "center" }}>
               <div style={{ fontFamily: F.serif, fontSize: "clamp(28px,3.5vw,52px)", fontStyle: "italic", color: C.gold, lineHeight: 1 }}>{val}</div>
@@ -202,10 +204,10 @@ function BrandPortals() {
             The <span style={{ color: C.gold }}>Brands</span>
           </h2>
         </Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "3px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: "3px" }}>
           {BRANDS.map((b, i) => (
-            <Reveal key={b.name} d={i * 0.04}>
-              <div onClick={() => { if (b.url && b.url !== "#") window.open(b.url, "_blank"); else setExpanded(expanded === i ? null : i); }}
+            <Reveal key={b.name} delay={i * 0.04}>
+              <div onClick={() => { if (b.url) window.location.href = b.url; else setExpanded(expanded === i ? null : i); }}
                 style={{ background: C.surface, padding: "clamp(28px,3vw,44px) 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)", borderBottom: `2px solid ${b.accent}40`, minHeight: "180px" }}
                 onMouseEnter={e => { e.currentTarget.style.background = C.surface2; e.currentTarget.style.borderBottomColor = b.accent; }}
                 onMouseLeave={e => { e.currentTarget.style.background = C.surface; e.currentTarget.style.borderBottomColor = `${b.accent}40`; }}
@@ -236,7 +238,7 @@ function BrandPortals() {
           <p style={{ fontFamily: F.sans, fontSize: "clamp(14px,1.2vw,17px)", color: C.muted, maxWidth: "560px", lineHeight: 1.8, marginBottom: "48px" }}>Every brand has a face. Every face tells a story. Meet the characters behind the empire.</p>
         </Reveal>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "2px", background: C.border }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2px", background: C.border }}>
         {BRANDS.map((b, i) => (
           <div key={b.name} onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
             style={{ position: "relative", overflow: "hidden", aspectRatio: "3/4", cursor: "pointer", background: b.bg }}>
@@ -363,7 +365,7 @@ function Operation() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2px", marginTop: "2px", background: C.border }}>
           {[
-            { title: "Shared Infrastructure", desc: "One supply chain, one kitchen system, ten brands running simultaneously. Maximum efficiency." },
+            { title: "Shared Infrastructure", desc: "One supply chain, one kitchen system, twelve brands running simultaneously. Maximum efficiency." },
             { title: "Ghost Kitchen Native", desc: "Every brand is designed for delivery-first. Low overhead, high velocity, scalable anywhere." },
             { title: "Franchise Ready", desc: "Turnkey systems for operators. Training, supply, branding, tech — all built and documented." },
           ].map((item, i) => (
@@ -394,7 +396,7 @@ function WhyCasper() {
         </Reveal>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2px", background: C.border }}>
           {[
-            { title: "Our Brands", color: C.burgundy, items: ["10+ distinct restaurant concepts", "Original mascot IP per brand", "Multi-daypart coverage built in", "Shared operational infrastructure"] },
+            { title: "Our Brands", color: C.burgundy, items: ["12 distinct restaurant concepts", "Original character IP per brand", "Multi-daypart coverage built in", "Shared operational infrastructure"] },
             { title: "Our Markets", color: C.gold, items: ["Atlanta — Flagship", "Houston — Active expansion", "Charlotte — Growing demand", "Nationwide ghost kitchen network"] },
             { title: "Our Advantage", color: C.orange, items: ["Franchise-ready systems", "Dual kitchen operating model", "Proprietary mascot IP library", "Central supply chain + support"] },
           ].map((col, ci) => (
@@ -448,7 +450,7 @@ function Footer() {
         <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(3,1fr)", gap: "48px", marginBottom: "56px" }}>
           <div>
             <img src="/images/casper-logo-white.png" alt="Casper Group" style={{ height: "32px", marginBottom: "16px", display: "block", opacity: 0.7 }} />
-            <p style={{ fontFamily: F.sans, fontSize: "13px", lineHeight: 1.75, color: "rgba(246,240,231,0.35)" }}>10+ concepts. 15 original characters.<br />One infrastructure built to scale.</p>
+            <p style={{ fontFamily: F.sans, fontSize: "13px", lineHeight: 1.75, color: "rgba(246,240,231,0.35)" }}>12 concepts. 15+ original characters.<br />One infrastructure built to scale.</p>
           </div>
           {[
             { h: "Brands", l: BRANDS.map(b => b.name) },
