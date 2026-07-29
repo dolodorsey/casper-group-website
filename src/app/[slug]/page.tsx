@@ -199,12 +199,64 @@ const brands: Record<string, Brand> = {
   },
 };
 
+const brandMedia: Record<string, { src: string; label: string }[]> = {
+  "tha-morning-after": [
+    { src: "/images/morning-french-toast.jpg", label: "Stuffed French toast direction" },
+    { src: "/images/morning-sandwiches.jpg", label: "Breakfast sandwich system" },
+    { src: "/images/morning-after-booth.jpg", label: "All-day breakfast environment" },
+  ],
+  "patty-daddy": [
+    { src: "/images/patty-smashburger.jpg", label: "Signature smash discipline" },
+    { src: "/images/patty-sliders.jpg", label: "Slider-flight direction" },
+    { src: "/images/patty-daddy-rain.jpg", label: "Patty Daddy campaign world" },
+  ],
+  "mojo-juice": [
+    { src: "/images/mojo-juice.png", label: "Fresh-pressed color system" },
+    { src: "/images/mojo-smoothie.png", label: "Functional smoothie direction" },
+    { src: "/images/food/green-juice-splash.png", label: "Ingredient-motion study" },
+  ],
+  "mr-oyster": [
+    { src: "/images/mr-oyster.png", label: "Raw-bar identity study" },
+    { src: "/images/oyster-scallops.jpg", label: "Premium hot-seafood direction" },
+    { src: "/images/portal-mr-oyster.jpeg", label: "Occasion-led brand world" },
+  ],
+  "sweet-tooth": [
+    { src: "/images/sweet-tooth.png", label: "Dessert-bar visual direction" },
+    { src: "/images/portal-sweet-tooth.jpeg", label: "Celebration brand world" },
+    { src: "/images/mascot-sweet-tooth.png", label: "Character system" },
+  ],
+  "taco-yaki": [
+    { src: "/images/taco-hibachi.jpg", label: "Hibachi taco direction" },
+    { src: "/images/taco-platter.jpg", label: "Catering platter system" },
+    { src: "/images/taco-yaki-ninja.jpg", label: "Taco Yaki character world" },
+  ],
+  tossd: [
+    { src: "/images/tossd.png", label: "Salad and bowl direction" },
+    { src: "/images/mascot-lenny-lettuce.png", label: "Lenny Lettuce" },
+    { src: "/images/mascot-king-kale.png", label: "King Kale" },
+  ],
+  "pasta-bish": [
+    { src: "/images/pasta-fettuccine.jpg", label: "Cream-sauce direction" },
+    { src: "/images/pasta-marinara.jpg", label: "Tomato-sauce direction" },
+    { src: "/images/pasta-bish.jpg", label: "Pasta Bish brand world" },
+  ],
+  "peace-pizza": [
+    { src: "/images/portal-peace-pizza.png", label: "Peace Pizza campaign world" },
+    { src: "/images/logo-peace-pizza.png", label: "Cheese-pull peace mark" },
+  ],
+  "american-dragon": [
+    { src: "/images/portal-american-dragon.png", label: "American Dragon campaign world" },
+    { src: "/images/food/fried-rice-shrimp.png", label: "Fried-rice direction study" },
+  ],
+};
+
 export function generateStaticParams() {
   return Object.keys(brands).map((slug) => ({ slug }));
 }
 
 export default function BrandPage({ params }: { params: { slug: string } }) {
   const brand = brands[params.slug];
+  const media = brandMedia[params.slug] || [];
   if (!brand) notFound();
 
   return (
@@ -222,6 +274,22 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
           <p style={{ margin: "28px 0 10px", color: brand.accent, textTransform: "uppercase", letterSpacing: "0.34em", fontSize: 11 }}>{brand.type}</p>
           <h1 style={{ margin: 0, fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(42px,7vw,88px)", lineHeight: .95, fontStyle: "italic", fontWeight: 500 }}>{brand.tagline}</h1>
           <p style={{ maxWidth: 740, margin: "28px auto 0", color: "rgba(246,240,231,.72)", fontSize: "clamp(16px,2vw,21px)", lineHeight: 1.7 }}>{brand.description}</p>
+        </div>
+      </section>
+
+      <section style={{ background: "#090807", padding: "0 0 90px" }}>
+        <div style={{ padding: "0 clamp(20px,5vw,72px) 28px", display: "flex", justifyContent: "space-between", gap: 20, alignItems: "end", flexWrap: "wrap" }}>
+          <div>
+            <p style={{ color: brand.accent, textTransform: "uppercase", letterSpacing: "0.3em", fontSize: 11 }}>Brand world</p>
+            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(38px,5vw,66px)", fontWeight: 500, margin: "12px 0 0" }}>The appetite, character,<br />and occasion.</h2>
+          </div>
+          <p style={{ maxWidth: 420, color: "rgba(246,240,231,.52)", lineHeight: 1.7, margin: 0 }}>{media.length < 3 ? "Current approved visual studies are shown here. The complete food, environment, packaging, and lifestyle production is listed in the asset register." : "Existing approved studies establish the visual appetite. Final launch photography will convert the direction into a complete customer-facing system."}</p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", minHeight: 520 }}>
+          {media.map((item, index) => <figure key={item.src} style={{ position: "relative", margin: 0, minHeight: 520, overflow: "hidden", borderLeft: index ? "3px solid #090807" : 0 }}>
+            <img src={item.src} alt={item.label} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "saturate(.88) contrast(1.04)", position: "absolute", inset: 0 }} />
+            <figcaption style={{ position: "absolute", inset: "auto 0 0", padding: "70px 24px 24px", background: "linear-gradient(transparent,rgba(0,0,0,.9))", color: "#fff", fontSize: 12, letterSpacing: ".12em", textTransform: "uppercase" }}><span style={{ color: brand.accent, marginRight: 12 }}>0{index + 1}</span>{item.label}</figcaption>
+          </figure>)}
         </div>
       </section>
 
