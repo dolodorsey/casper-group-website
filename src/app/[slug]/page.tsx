@@ -266,7 +266,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         <Link href="/connect" style={{ color: "#0d0f0e", background: brand.accent, padding: "11px 20px", textDecoration: "none", fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase" }}>Connect</Link>
       </nav>
 
-      <section style={{ minHeight: "92vh", position: "relative", display: "grid", placeItems: "center", overflow: "hidden", padding: "120px clamp(20px,5vw,72px) 72px" }}>
+      <section id="overview" style={{ minHeight: "92vh", position: "relative", display: "grid", placeItems: "center", overflow: "hidden", padding: "120px clamp(20px,5vw,72px) 72px" }}>
         <img src={brand.hero} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.38, filter: "saturate(.9) brightness(.55)" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(13,15,14,.35),#0d0f0e 95%)" }} />
         <div style={{ position: "relative", maxWidth: 960, textAlign: "center" }}>
@@ -277,7 +277,19 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         </div>
       </section>
 
-      <section style={{ background: "#090807", padding: "0 0 90px" }}>
+      <nav aria-label={`${brand.name} sections`} style={{ position: "sticky", top: 0, zIndex: 30, display: "flex", justifyContent: "center", gap: 0, overflowX: "auto", background: "rgba(9,8,7,.96)", borderTop: `1px solid ${brand.accent}33`, borderBottom: `1px solid ${brand.accent}33`, backdropFilter: "blur(18px)" }}>
+        {[
+          ["Overview", "#overview"],
+          ["Brand world", "#world"],
+          ["Concept", "#concept"],
+          ["Menu + audience", "#menu"],
+          ["Activation", "#activation"],
+        ].map(([label, href]) => (
+          <a key={href} href={href} style={{ flex: "0 0 auto", padding: "17px clamp(14px,2.3vw,30px)", color: "#F6F0E7", textDecoration: "none", textTransform: "uppercase", letterSpacing: ".16em", fontSize: 10, borderRight: "1px solid rgba(246,240,231,.08)" }}>{label}</a>
+        ))}
+      </nav>
+
+      <section id="world" style={{ background: "#090807", padding: "90px 0" }}>
         <div style={{ padding: "0 clamp(20px,5vw,72px) 28px", display: "flex", justifyContent: "space-between", gap: 20, alignItems: "end", flexWrap: "wrap" }}>
           <div>
             <p style={{ color: brand.accent, textTransform: "uppercase", letterSpacing: "0.3em", fontSize: 11 }}>Brand world</p>
@@ -293,7 +305,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         </div>
       </section>
 
-      <section style={{ maxWidth: 1240, margin: "0 auto", padding: "90px clamp(20px,5vw,72px)" }}>
+      <section id="concept" style={{ maxWidth: 1240, margin: "0 auto", padding: "90px clamp(20px,5vw,72px)" }}>
         <p style={{ color: brand.accent, textTransform: "uppercase", letterSpacing: "0.3em", fontSize: 11 }}>The concept</p>
         <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(38px,5vw,66px)", fontWeight: 500, margin: "12px 0 40px" }}>Built to be distinct.<br />Built to operate together.</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
@@ -306,7 +318,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         </div>
       </section>
 
-      <section style={{ background: "#090807", padding: "90px clamp(20px,5vw,72px)" }}>
+      <section id="menu" style={{ background: "#090807", padding: "90px clamp(20px,5vw,72px)" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "clamp(42px,7vw,110px)" }}>
           <div>
             <p style={{ color: brand.accent, textTransform: "uppercase", letterSpacing: "0.3em", fontSize: 11 }}>Menu direction</p>
@@ -325,7 +337,7 @@ export default function BrandPage({ params }: { params: { slug: string } }) {
         </div>
       </section>
 
-      <section style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center", padding: "100px clamp(20px,5vw,72px)" }}>
+      <section id="activation" style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center", padding: "100px clamp(20px,5vw,72px)" }}>
         <p style={{ color: brand.accent, textTransform: "uppercase", letterSpacing: "0.3em", fontSize: 11 }}>Current focus</p>
         <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(38px,5vw,62px)", fontWeight: 500, margin: "16px 0 26px" }}>{brand.focus}</h2>
         <p style={{ color: "rgba(246,240,231,.58)", lineHeight: 1.8, maxWidth: 720, margin: "0 auto 38px" }}>Casper Group is preparing this concept for its next operating phase. Partners, operators, property owners, vendors, and collaborators can identify the brand in the inquiry notes.</p>
