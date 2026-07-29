@@ -185,7 +185,7 @@ function OrderCTA() {
             The perfect cup is an experiment. Come find yours at Espresso Co. — where science meets soul.
           </p>
           <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.brown, padding: "16px 48px", textDecoration: "none" }}>Find a Location</a>
+            <a href="/forms/consultation" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.brown, padding: "16px 48px", textDecoration: "none" }}>Opening Updates</a>
             <a href="/" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", color: C.cream, border: `1px solid ${C.border}`, padding: "16px 36px", textDecoration: "none" }}>Back to Casper Group</a>
           </div>
         </Reveal>
