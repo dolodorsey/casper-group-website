@@ -16,3 +16,31 @@
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body { overflow-x: hidden; background: var(--base); color: var(--cream); }
 ::selection { background: rgba(94, 31, 36, 0.5); color: var(--cream); }
+
+/* Brand presentation guardrails. Logos stay visually centered and never carry
+   a component-level background plate over the artwork. */
+img[src*="/images/logo-"] {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  object-position: center center !important;
+  background: transparent !important;
+}
+
+/* The approved Espresso mark is white-on-dark. Screen blending makes its dark
+   source plate disappear against the Casper surface while preserving the white
+   mark, so the logo reads as a clean transparent overlay instead of a box. */
+img[src$="/images/logo-espresso-co.png"] {
+  mix-blend-mode: screen !important;
+  filter: brightness(1.35) contrast(1.08) drop-shadow(0 4px 18px rgba(0,0,0,.55)) !important;
+}
+
+/* Keep logo-led brand cards optically centered even when the source artwork has
+   uneven transparent padding. */
+div:has(> img[src*="/images/logo-"]) {
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  img[src*="/images/logo-"] { max-width: 82% !important; }
+}
