@@ -13,12 +13,6 @@ const GALLERY_INDEX: Partial<Record<CasperSection, number>> = {
   contact: 2,
 };
 
-function sectionVideo(section: CasperSection, hero?: string, secondary?: string) {
-  if (section === 'order' || section === 'about') return hero;
-  if (section === 'catering' || section === 'rewards') return secondary || hero;
-  return undefined;
-}
-
 export default function CasperSectionVisualShell({
   profile,
   section,
@@ -33,7 +27,6 @@ export default function CasperSectionVisualShell({
 
   const galleryIndex = GALLERY_INDEX[section] ?? 0;
   const image = experience.gallery[galleryIndex] || experience.gallery[0] || profile.heroImage;
-  const video = sectionVideo(section, experience.heroVideo, experience.secondaryVideo);
   const showMascot = Boolean(experience.mascot && ['about', 'rewards', 'contact'].includes(section));
 
   return (
@@ -47,13 +40,7 @@ export default function CasperSectionVisualShell({
       } as CSSProperties}
     >
       <div className="csv-hero-layer" aria-hidden="true">
-        {video ? (
-          <video autoPlay muted loop playsInline poster={image}>
-            <source src={video} type="video/mp4" />
-          </video>
-        ) : (
-          <Image src={image} alt="" fill priority sizes="100vw" />
-        )}
+        <Image src={image} alt="" fill priority sizes="100vw" />
         <div className="csv-hero-texture" />
         {showMascot ? (
           <div className="csv-mascot">
