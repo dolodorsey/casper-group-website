@@ -10,13 +10,15 @@ import {
 
 export const dynamicParams = false;
 
+const SECTION_ROUTES = CASPER_SECTIONS.filter((section) => section !== 'menu');
+
 export function generateStaticParams() {
-  return casperBrandSlugs.flatMap((slug) => CASPER_SECTIONS.map((section) => ({ slug, section })));
+  return casperBrandSlugs.flatMap((slug) => SECTION_ROUTES.map((section) => ({ slug, section })));
 }
 
 export function generateMetadata({ params }: { params: { slug: string; section: string } }): Metadata {
   const profile = getCasperSiteProfile(params.slug);
-  if (!profile || !isCasperSection(params.section)) return {};
+  if (!profile || !isCasperSection(params.section) || params.section === 'menu') return {};
 
   const sectionName = params.section === 'catering' ? profile.serviceLabel : params.section.charAt(0).toUpperCase() + params.section.slice(1);
   const title = `${sectionName} | ${profile.name} — Casper Group`;
@@ -46,6 +48,6 @@ export function generateMetadata({ params }: { params: { slug: string; section: 
 
 export default function CasperConceptSectionRoute({ params }: { params: { slug: string; section: string } }) {
   const profile = getCasperSiteProfile(params.slug);
-  if (!profile || !isCasperSection(params.section)) notFound();
+  if (!profile || !isCasperSection(params.section) || params.section === 'menu') notFound();
   return <CasperBrandSectionPage profile={profile} section={params.section} />;
 }
