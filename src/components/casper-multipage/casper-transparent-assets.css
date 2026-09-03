@@ -1,5 +1,6 @@
 /* Brand integrity invariant: standalone logos and mascots are transparent artwork.
-   Full-scene photography/illustration may have backgrounds; logo/mascot layers never do. */
+   Full-scene photography/illustration may have backgrounds; logo/mascot layers never do.
+   Source assets used as floating identity artwork must also contain real alpha transparency. */
 .cbh-brand,
 .cmb-brand,
 .cmp-brand-link,
@@ -7,6 +8,7 @@
 .cbh-mascot,
 .csv-mascot {
   background: transparent !important;
+  background-color: transparent !important;
   background-image: none !important;
 }
 
@@ -17,6 +19,7 @@
 .cbh-mascot img,
 .csv-mascot img {
   background: transparent !important;
+  background-color: transparent !important;
   background-image: none !important;
   border: 0 !important;
   box-shadow: none !important;
