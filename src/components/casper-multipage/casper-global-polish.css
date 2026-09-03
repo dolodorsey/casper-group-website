@@ -1,0 +1,140 @@
+/* Casper production visual normalization
+   Goals: animation-first home screens, mathematically even grids, consistent spacing,
+   and no identity artwork backgrounds. */
+
+/* --- Brand home: let the animation own the first viewport --- */
+.cbh-nav{
+  min-height:76px!important;
+  background:rgba(7,7,7,.94)!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+  backdrop-filter:blur(18px) saturate(120%)!important;
+}
+.cbh-brand img{height:46px!important;max-width:170px!important}
+.cbh-hero{
+  height:100svh!important;
+  min-height:100svh!important;
+  align-items:stretch!important;
+  background:#050505!important;
+}
+.cbh-hero-media{inset:0!important;transform:none!important}
+.cbh-hero-media video,.cbh-hero-media img{
+  width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;
+}
+/* No copy, mascot, badges, index or decorative geometry on top of the home animation. */
+.cbh-hero-content,.cbh-mascot,.cbh-hero-index,.cbh-hero-geometry{display:none!important}
+.cbh-hero-scrim{
+  display:block!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,rgba(0,0,0,.22) 0,transparent 16%,transparent 82%,rgba(0,0,0,.34) 100%)!important;
+}
+.cbh-site[data-variant='halo'] .cbh-hero:before,
+.cbh-site[data-variant='halo'] .cbh-hero:after{display:none!important}
+
+/* --- Brand home: balanced content rhythm below the animation --- */
+.cbh-signature,.cbh-directory,.cbh-final-cta{scroll-margin-top:76px}
+.cbh-signature{
+  padding:clamp(84px,9vw,144px) max(28px,calc((100vw - 1440px)/2))!important;
+  gap:clamp(44px,7vw,110px)!important;
+}
+.cbh-directory{
+  padding:clamp(80px,9vw,132px) max(28px,calc((100vw - 1440px)/2))!important;
+}
+.cbh-directory-head,.cbh-page-grid{max-width:1440px!important;width:100%!important}
+.cbh-directory-head{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)!important;gap:64px!important;margin-bottom:48px!important}
+
+/* 7 links: first row 4 equal cards, second row 3 equal cards across full width. */
+.cbh-page-grid{
+  display:grid!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  gap:1px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  background:rgba(255,255,255,.12)!important;
+}
+.cbh-page-card,
+.cbh-page-card:nth-child(odd),
+.cbh-page-card:nth-child(even){
+  grid-column:span 3!important;
+  min-height:190px!important;
+  padding:26px!important;
+  border:0!important;
+  background:#0b0b0b!important;
+  transform:none!important;
+}
+.cbh-page-card:nth-child(n+5){grid-column:span 4!important}
+.cbh-page-card:hover{background:color-mix(in srgb,var(--cbh-accent) 12%,#0b0b0b)!important;transform:none!important}
+
+/* Editorial media: feature motion full width, then three equal graphics. No orphan black cell. */
+.cbh-media-deck,
+.cbh-media-deck:has(.cbh-media-video){
+  display:grid!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  gap:3px!important;
+  min-height:0!important;
+  padding:3px!important;
+}
+.cbh-media,.cbh-media-deck:has(.cbh-media-video) .cbh-media{
+  grid-column:span 4!important;
+  grid-row:auto!important;
+  min-height:clamp(300px,34vw,520px)!important;
+}
+.cbh-media-video,.cbh-media-deck:has(.cbh-media-video) .cbh-media-video{
+  grid-column:1/-1!important;
+  min-height:clamp(420px,62svh,760px)!important;
+}
+
+/* --- Corporate pages: larger aligned canvas and exact 4x3 brand portfolio --- */
+.cgc-shell{width:min(1440px,calc(100% - 64px))!important}
+.cgc-nav{padding-left:max(32px,calc((100vw - 1440px)/2))!important;padding-right:max(32px,calc((100vw - 1440px)/2))!important}
+.cgc-brand-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important}
+.cgc-brand-card{display:grid!important;grid-template-rows:108px 1fr!important;min-height:350px!important;height:100%!important;border-radius:20px!important}
+.cgc-brand-logo{height:108px!important;padding:24px 24px 8px!important;align-items:center!important}
+.cgc-brand-logo img{width:100%!important;max-width:170px!important;height:74px!important;max-height:74px!important;object-fit:contain!important;object-position:left center!important}
+.cgc-brand-body{display:flex!important;flex-direction:column!important;padding:18px 24px 24px!important;height:100%!important}
+.cgc-brand-card h3{font-size:30px!important;line-height:1.05!important}
+.cgc-brand-card p{min-height:78px!important}
+.cgc-brand-links{margin-top:auto!important;padding-top:18px!important}
+
+/* --- Parent homepage: force the 12-brand and 12-character grids into 4x3 on desktop --- */
+#brands > div:last-child > div:last-child,
+div[style*="minmax(190px"],
+div[style*="minmax(220px"]{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:stretch!important;
+}
+#brands > div:last-child > div:last-child > div{height:100%!important}
+#brands > div:last-child > div:last-child > div > div{height:100%!important;min-height:220px!important}
+
+/* --- Inner pages: same usable width and balanced cards --- */
+.cmp-shell{width:min(1440px,calc(100% - 64px))!important}
+.cmp-nav{padding-left:max(32px,calc((100vw - 1440px)/2))!important;padding-right:max(32px,calc((100vw - 1440px)/2))!important}
+.cmp-grid{align-items:stretch!important}
+.cmp-card{display:flex!important;flex-direction:column!important;height:100%!important}
+.cmp-card-body{display:flex!important;flex:1!important;flex-direction:column!important}
+.cmp-card-footer{margin-top:auto!important}
+
+/* Never manufacture plates behind standalone identity artwork. */
+.cbh-brand,.cbh-brand img,.cbh-hero-logo,.cbh-mascot,.cbh-mascot img,
+.cgc-brand-logo,.cgc-brand-logo img,.cmp-brand-link,.cmp-brand-mark,.cmb-brand,.cmb-brand img{
+  background:transparent!important;background-image:none!important;box-shadow:none!important;border:0!important;
+}
+
+@media(max-width:1180px){
+  .cgc-brand-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  #brands > div:last-child > div:last-child,div[style*="minmax(190px"],div[style*="minmax(220px"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .cbh-page-card,.cbh-page-card:nth-child(odd),.cbh-page-card:nth-child(even),.cbh-page-card:nth-child(n+5){grid-column:span 6!important}
+  .cbh-page-card:last-child:nth-child(odd){grid-column:1/-1!important}
+}
+@media(max-width:820px){
+  .cgc-shell,.cmp-shell{width:min(100% - 36px,1440px)!important}
+  .cgc-brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #brands > div:last-child > div:last-child,div[style*="minmax(190px"],div[style*="minmax(220px"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .cbh-directory-head{grid-template-columns:1fr!important;gap:18px!important}
+  .cbh-media,.cbh-media-deck:has(.cbh-media-video) .cbh-media{grid-column:span 12!important;min-height:62vw!important}
+  .cbh-media-video,.cbh-media-deck:has(.cbh-media-video) .cbh-media-video{min-height:58svh!important}
+}
+@media(max-width:620px){
+  .cgc-brand-grid{grid-template-columns:1fr!important}
+  #brands > div:last-child > div:last-child,div[style*="minmax(190px"],div[style*="minmax(220px"]{grid-template-columns:1fr!important}
+  .cbh-page-card,.cbh-page-card:nth-child(odd),.cbh-page-card:nth-child(even),.cbh-page-card:nth-child(n+5),.cbh-page-card:last-child:nth-child(odd){grid-column:1/-1!important;min-height:auto!important}
+  .cbh-hero{height:100svh!important;min-height:100svh!important}
+}
