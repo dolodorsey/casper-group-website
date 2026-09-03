@@ -1,0 +1,61 @@
+/* Current Drive motion layer. Full-scene motion can fill a hero; standalone marks/mascots remain transparent artwork. */
+.cbh-hero-media video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+.cbh-media-video video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+.cbh-media-video{
+  min-height:340px;
+}
+
+/* Never create a plate behind standalone identity artwork. */
+.cbh-brand,
+.cbh-brand img,
+.cbh-hero-logo,
+.cbh-mascot,
+.cbh-mascot img{
+  background:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  border:0 !important;
+}
+
+.cbh-mascot{
+  pointer-events:none;
+}
+
+.cbh-mascot img{
+  padding:0 !important;
+  filter:drop-shadow(0 20px 34px rgba(0,0,0,.34));
+}
+
+/* Secondary motion joins the editorial deck without turning the whole page into a video wall. */
+.cbh-media-deck:has(.cbh-media-video){
+  grid-template-columns:1.35fr 1fr 1fr;
+}
+.cbh-media-deck:has(.cbh-media-video) .cbh-media-video{
+  grid-row:span 2;
+}
+
+@media (max-width:900px){
+  .cbh-media-deck,
+  .cbh-media-deck:has(.cbh-media-video){
+    grid-template-columns:1fr;
+  }
+  .cbh-media-deck:has(.cbh-media-video) .cbh-media-video{
+    grid-row:auto;
+  }
+}
