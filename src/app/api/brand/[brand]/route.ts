@@ -4,6 +4,21 @@ import { getCasperSiteProfile } from '@/lib/casper-site-registry';
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
 const EDGE_BASE = `${SUPABASE_URL}/functions/v1`;
 
+const CONTACT_TABLES: Record<string, string> = {
+  'angel-wings': 'angel_wings_contact_requests',
+  'tha-morning-after': 'the_morning_after_contact_requests',
+  'patty-daddy': 'patty_daddy_contact_requests',
+  'espresso-co': 'espresso_co_contact_requests',
+  'mojo-juice': 'mojo_juice_contact_requests',
+  'mr-oyster': 'mr_oyster_contact_requests',
+  'sweet-tooth': 'sweet_tooth_contact_requests',
+  'taco-yaki': 'taco_yaki_contact_requests',
+  tossd: 'tossd_contact_requests',
+  'pasta-bish': 'pasta_bish_contact_requests',
+  'peace-pizza': 'peace_pizza_contact_requests',
+  'american-dragon': 'american_dragon_contact_requests',
+};
+
 function response(body: unknown, status = 200) {
   return NextResponse.json(body, {
     status,
@@ -12,6 +27,14 @@ function response(body: unknown, status = 200) {
       'X-Content-Type-Options': 'nosniff',
     },
   });
+}
+
+function clean(value: unknown, max = 500) {
+  return typeof value === 'string' ? value.trim().replace(/[<>]/g, '').slice(0, max) : '';
+}
+
+function validEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function edgeTarget(brand: string, resource?: string) {
@@ -26,14 +49,16 @@ function edgeTarget(brand: string, resource?: string) {
   return `${EDGE_BASE}/casper-brand-intake?${params.toString()}`;
 }
 
-async function rest(path: string) {
+async function rest(path: string, init: RequestInit = {}) {
   const serviceKey = process.env.SUPABASE_SERVICE_KEY;
-  if (!serviceKey) throw new Error('Location data service is not configured.');
+  if (!serviceKey) throw new Error('Casper data service is not configured.');
   return fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...init,
     headers: {
       apikey: serviceKey,
       Authorization: `Bearer ${serviceKey}`,
       'Content-Type': 'application/json',
+      ...(init.headers || {}),
     },
     cache: 'no-store',
   });
@@ -56,9 +81,9 @@ async function getLocations(brand: string) {
   const ids = links.map((row) => row.location_id).filter(Boolean);
   if (!ids.length) return [];
 
-  const encodedIds = ids.map((id) => `"${id}"`).join(',');
+  const idFilter = ids.join(',');
   const locationsRes = await rest(
-    `cg_locations?id=in.(${encodeURIComponent(encodedIds)})&status=eq.open&select=id,name,address,city,state,kitchen_hours,delivery_platforms,status&order=name.asc`
+    `cg_locations?id=in.(${idFilter})&status=eq.open&select=id,name,address,city,state,kitchen_hours,delivery_platforms,status&order=name.asc`
   );
   if (!locationsRes.ok) throw new Error('Unable to load brand locations.');
   return locationsRes.json();
@@ -88,6 +113,46 @@ function normalizedPayload(brand: string, type: string, raw: Record<string, unkn
   }
 
   return { type: backendType, payload };
+}
+
+async function saveContact(brand: string, raw: Record<string, unknown>) {
+  const table = CONTACT_TABLES[brand];
+  if (!table) throw new Error('Unknown contact destination.');
+
+  const customerName = clean(raw.customerName, 160);
+  const email = clean(raw.email, 180).toLowerCase();
+  const phone = clean(raw.phone, 50);
+  const subject = clean(raw.subject, 180);
+  const message = clean(raw.message, 4000);
+  const orderConfirmation = clean(raw.orderConfirmation, 120);
+
+  if (customerName.length < 2 || !validEmail(email) || subject.length < 2 || message.length < 5) {
+    return { ok: false, status: 400, error: 'Enter a valid name, email, subject, and message.' };
+  }
+
+  const confirmationCode = `CS-${brand.replace(/[^a-z0-9]/gi, '').slice(0, 4).toUpperCase()}-${Date.now().toString(36).toUpperCase()}-${crypto.randomUUID().slice(0, 4).toUpperCase()}`;
+  const save = await rest(table, {
+    method: 'POST',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({
+      confirmation_code: confirmationCode,
+      customer_name: customerName,
+      email,
+      phone: phone || null,
+      subject,
+      message,
+      order_confirmation: orderConfirmation || null,
+      source: `${brand}-website`,
+    }),
+  });
+
+  if (!save.ok) throw new Error(`Contact request could not be saved (${save.status}).`);
+  return {
+    ok: true,
+    status: 200,
+    confirmationCode,
+    message: 'Your message is recorded. The brand team will follow up from this request.',
+  };
 }
 
 export async function GET(request: NextRequest, { params }: { params: { brand: string } }) {
@@ -133,8 +198,13 @@ export async function POST(request: NextRequest, { params }: { params: { brand: 
   try {
     const body = (await request.json()) as { type?: string; payload?: Record<string, unknown> };
     const requestedType = String(body.type || '');
-    if (!['order', 'service', 'club'].includes(requestedType)) {
+    if (!['order', 'service', 'club', 'contact'].includes(requestedType)) {
       return response({ ok: false, error: 'Unknown request type.' }, 400);
+    }
+
+    if (requestedType === 'contact') {
+      const saved = await saveContact(profile.slug, body.payload || {});
+      return response(saved.ok ? { ok: true, confirmationCode: saved.confirmationCode, message: saved.message } : { ok: false, error: saved.error }, saved.status);
     }
 
     const normalized = normalizedPayload(profile.slug, requestedType, body.payload || {});
