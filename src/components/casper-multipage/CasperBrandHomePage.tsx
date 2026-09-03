@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import type { CasperSiteProfile } from '@/lib/casper-site-registry';
 import { getCasperBrandExperience } from '@/lib/casper-brand-experience';
 import './casper-brand-home.css';
 
 const PAGE_LINKS = [
-  { key: 'menu', title: 'Menu', copy: 'Browse one category at a time instead of one endless menu wall.' },
-  { key: 'order', title: 'Order', copy: 'Build a live order request from the active kitchen menu.' },
+  { key: 'menu', title: 'Menu', copy: 'Explore the menu by category, signature favorites, and current kitchen availability.' },
+  { key: 'order', title: 'Order', copy: 'Build an order request directly from the active kitchen menu.' },
   { key: 'catering', title: 'Catering / Services', copy: 'Plan group orders, events, drops, staffed service, and custom programs.' },
-  { key: 'locations', title: 'Locations', copy: 'See only verified locations mapped to this exact brand.' },
-  { key: 'about', title: 'About', copy: 'Brand story, point of view, product lane, and operating identity.' },
-  { key: 'rewards', title: 'Rewards', copy: 'Join this brand’s own member list, offers, openings, and drops.' },
-  { key: 'contact', title: 'Contact', copy: 'Reach the correct brand support destination—not a portfolio catch-all.' },
+  { key: 'locations', title: 'Locations', copy: 'Find verified locations currently serving this brand.' },
+  { key: 'about', title: 'About', copy: 'Discover the story, point of view, food lane, and culture behind the brand.' },
+  { key: 'rewards', title: 'Rewards', copy: 'Join for member offers, openings, limited drops, and first access.' },
+  { key: 'contact', title: 'Contact', copy: 'Connect directly with this brand’s support and guest experience team.' },
 ] as const;
 
 export default function CasperBrandHomePage({ profile }: { profile: CasperSiteProfile }) {
@@ -26,7 +27,7 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
         '--cbh-accent': profile.accent,
         '--cbh-accent-bright': profile.accentBright,
         '--cbh-secondary': profile.secondary,
-      } as React.CSSProperties}
+      } as CSSProperties}
     >
       <nav className="cbh-nav" aria-label={`${profile.name} navigation`}>
         <Link className="cbh-brand" href={`/${profile.slug}`}>
@@ -74,10 +75,10 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
       <section className="cbh-directory" aria-labelledby={`${profile.slug}-directory`}>
         <div className="cbh-directory-head">
           <div>
-            <span>Individual brand site</span>
-            <h1 id={`${profile.slug}-directory`}>{profile.name} has its own pages now.</h1>
+            <span>Explore {profile.name}</span>
+            <h1 id={`${profile.slug}-directory`}>Choose your experience.</h1>
           </div>
-          <p>The homepage is the front door—not the entire website. Choose what you need and move into a dedicated experience.</p>
+          <p>Menu, ordering, events, locations, rewards, brand story, and guest support each have a dedicated destination.</p>
         </div>
 
         <div className="cbh-page-grid">
