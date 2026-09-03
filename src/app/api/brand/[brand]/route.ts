@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCasperSiteProfile } from '@/lib/casper-site-registry';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
+const SUPABASE_URL = process.env.CASPER_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
 const EDGE_BASE = `${SUPABASE_URL}/functions/v1`;
 
 const CONTACT_TABLES: Record<string, string> = {
