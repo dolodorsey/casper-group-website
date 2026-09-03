@@ -30,7 +30,7 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
       </nav>
 
       <section className="cbh-hero">
-        <div className="cbh-hero-media" aria-hidden="true">{experience.heroVideo ? <video autoPlay muted loop playsInline poster={profile.heroImage}><source src={experience.heroVideo} type="video/mp4" /></video> : <Image src={profile.heroImage} alt="" fill priority sizes="100vw" />}</div>
+        <div className="cbh-hero-media" aria-hidden="true">{experience.heroVideo ? <video autoPlay muted loop playsInline poster={profile.heroImage}>{experience.heroVideoMobile ? <source media="(max-width: 700px)" src={experience.heroVideoMobile} type="video/mp4" /> : null}<source src={experience.heroVideo} type="video/mp4" /></video> : <Image src={profile.heroImage} alt="" fill priority sizes="100vw" />}</div>
         <div className="cbh-hero-scrim" />
         <div className="cbh-hero-content"><div className="cbh-kicker">{experience.shortLabel} · A Casper Group brand</div><img className="cbh-hero-logo" src={profile.logo} alt={profile.name} /><p>{profile.description}</p><div className="cbh-actions"><Link className="cbh-button cbh-button-primary" href={`/${profile.slug}/menu`}>Enter the menu</Link><Link className="cbh-button" href={`/${profile.slug}/order`}>Start an order</Link></div></div>
         {experience.mascot ? <div className="cbh-mascot" aria-hidden="true"><img src={experience.mascot} alt="" /></div> : null}
