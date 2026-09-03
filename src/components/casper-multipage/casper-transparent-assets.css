@@ -1,0 +1,38 @@
+/* Brand integrity invariant: standalone logos and mascots are transparent artwork.
+   Full-scene photography/illustration may have backgrounds; logo/mascot layers never do. */
+.cbh-brand,
+.cmb-brand,
+.cmp-brand-link,
+.cbh-hero-logo,
+.cbh-mascot,
+.csv-mascot {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+.cbh-brand img,
+.cmb-brand img,
+.cmp-brand-mark,
+.cbh-hero-logo,
+.cbh-mascot img,
+.csv-mascot img {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Never turn a logo or mascot into a card/plate through pseudo-elements. */
+.cbh-brand::before,
+.cbh-brand::after,
+.cmb-brand::before,
+.cmb-brand::after,
+.cmp-brand-link::before,
+.cmp-brand-link::after,
+.cbh-mascot::before,
+.cbh-mascot::after,
+.csv-mascot::before,
+.csv-mascot::after {
+  content: none !important;
+}
