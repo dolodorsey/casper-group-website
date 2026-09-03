@@ -59,11 +59,3 @@
     grid-row:auto;
   }
 }
-
-@media (prefers-reduced-motion:reduce){
-  .cbh-hero-media video,
-  .cbh-media-video video{
-    display:none;
-  }
-  .cbh-hero-media{background-size:cover;background-position:center}
-}
