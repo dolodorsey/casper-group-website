@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 const GHL_API = 'https://services.leadconnectorhq.com';
 const ENTITY_KEY = 'casper_group';
 const RETRY_DELAY_MS = 5 * 60 * 1000;
+const CASPER_SUPABASE_URL = process.env.CASPER_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
 
 function json(body, status = 200) {
   return NextResponse.json(body, {
@@ -46,13 +47,12 @@ function buildAttribution(request, body) {
 }
 
 async function supabaseRequest(path, init = {}) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl || !serviceKey) {
+  if (!serviceKey) {
     throw new Error('Durable intake storage is not configured.');
   }
 
-  return fetch(`${supabaseUrl}/rest/v1/${path}`, {
+  return fetch(`${CASPER_SUPABASE_URL}/rest/v1/${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
