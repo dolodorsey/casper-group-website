@@ -71,7 +71,7 @@ export default function CasperMenuBrowser({ profile }: { profile: CasperSiteProf
 
       <header className="cmb-hero">
         <div className="cmb-hero-media">
-          {experience?.secondaryVideo ? <video autoPlay muted loop playsInline poster={profile.heroImage}><source src={experience.secondaryVideo} type="video/mp4" /></video> : <Image src={experience?.gallery?.[0] || profile.heroImage} alt="" fill priority sizes="100vw" />}
+          <Image src={experience?.gallery?.[0] || profile.heroImage} alt="" fill priority sizes="100vw" />
         </div>
         <div className="cmb-scrim" />
         <div className="cmb-hero-copy"><span>Menu / {profile.name}</span><h1>Choose your lane.<br />Find your favorite.</h1><p>Start with what you’re craving, then explore every dish, build, drink, or signature in that category.</p></div>
