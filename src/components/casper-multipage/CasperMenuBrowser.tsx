@@ -74,19 +74,19 @@ export default function CasperMenuBrowser({ profile }: { profile: CasperSiteProf
           {experience?.secondaryVideo ? <video autoPlay muted loop playsInline poster={profile.heroImage}><source src={experience.secondaryVideo} type="video/mp4" /></video> : <Image src={experience?.gallery?.[0] || profile.heroImage} alt="" fill priority sizes="100vw" />}
         </div>
         <div className="cmb-scrim" />
-        <div className="cmb-hero-copy"><span>Menu / {profile.name}</span><h1>Choose a menu.<br />Then go deeper.</h1><p>The menu is now organized as real pages by category instead of one endless scroll. Pick the lane you want, then browse that menu on its own page.</p></div>
+        <div className="cmb-hero-copy"><span>Menu / {profile.name}</span><h1>Choose your lane.<br />Find your favorite.</h1><p>Start with what you’re craving, then explore every dish, build, drink, or signature in that category.</p></div>
       </header>
 
       <section className="cmb-category-landing">
-        <div className="cmb-results-head"><div><span>{profile.name}</span><h2>Menu departments</h2></div><p>{items.length} live items across {categories.length} categories</p></div>
-        {loading ? <div className="cmb-state">Loading live menu…</div> : null}
+        <div className="cmb-results-head"><div><span>{profile.name}</span><h2>Explore the menu</h2></div><p>{items.length} item{items.length === 1 ? '' : 's'} · {categories.length} categor{categories.length === 1 ? 'y' : 'ies'}</p></div>
+        {loading ? <div className="cmb-state">Loading the menu…</div> : null}
         {error ? <div className="cmb-state">{error}</div> : null}
-        {!loading && !error && !items.length ? <div className="cmb-state">No active menu items are published yet.</div> : null}
+        {!loading && !error && !items.length ? <div className="cmb-state">The next menu update is on the way.</div> : null}
         <div className="cmb-category-grid">
           {categories.map((group) => (
             <Link className="cmb-category-card" href={`/${profile.slug}/menu/${group.slug}`} key={group.slug}>
               <div className="cmb-category-media">{group.image ? <img src={group.image} alt="" loading="lazy" /> : null}<div className="cmb-category-overlay" /></div>
-              <div className="cmb-category-body"><span>{group.count} item{group.count === 1 ? '' : 's'}</span><h3>{labelize(group.name)}</h3><p>{group.preview.join(' · ')}</p><strong>Open this menu →</strong></div>
+              <div className="cmb-category-body"><span>{group.count} item{group.count === 1 ? '' : 's'}</span><h3>{labelize(group.name)}</h3><p>{group.preview.join(' · ')}</p><strong>Explore {labelize(group.name)} →</strong></div>
             </Link>
           ))}
         </div>
