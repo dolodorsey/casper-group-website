@@ -6,13 +6,13 @@ import { getCasperBrandExperience } from '@/lib/casper-brand-experience';
 import './casper-brand-home.css';
 
 const PAGE_LINKS = [
-  { key: 'menu', title: 'Menu', copy: 'Enter a dedicated menu hub, then open category pages and individual item pages.' },
-  { key: 'order', title: 'Order', copy: 'Build an order request directly from the active kitchen menu.' },
-  { key: 'catering', title: 'Catering / Services', copy: 'Plan group orders, events, drops, staffed service, and custom programs.' },
-  { key: 'locations', title: 'Locations', copy: 'Find verified locations currently serving this brand.' },
-  { key: 'about', title: 'About', copy: 'Discover the story, point of view, food lane, and culture behind the brand.' },
-  { key: 'rewards', title: 'Rewards', copy: 'Join for member offers, openings, limited drops, and first access.' },
-  { key: 'contact', title: 'Contact', copy: 'Connect directly with this brand’s support and guest experience team.' },
+  { key: 'menu', title: 'Menu', copy: 'Browse signatures by category, then open full details for the dishes calling your name.' },
+  { key: 'order', title: 'Order', copy: 'Build your order from the current kitchen menu and send it directly to the brand team.' },
+  { key: 'catering', title: 'Catering / Services', copy: 'Plan group orders, events, drops, staffed service, and custom experiences.' },
+  { key: 'locations', title: 'Locations', copy: 'See where this brand is currently serving and what each location supports.' },
+  { key: 'about', title: 'About', copy: 'Meet the story, food, culture, and point of view behind the brand.' },
+  { key: 'rewards', title: 'Rewards', copy: 'Get member offers, openings, limited drops, and first access.' },
+  { key: 'contact', title: 'Contact', copy: 'Questions, feedback, or help with an order? Reach the brand team here.' },
 ] as const;
 
 export default function CasperBrandHomePage({ profile }: { profile: CasperSiteProfile }) {
@@ -37,7 +37,7 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
       </section>
 
       <section className="cbh-directory" aria-labelledby={`${profile.slug}-directory`}>
-        <div className="cbh-directory-head"><div><span>{profile.name} website</span><h1 id={`${profile.slug}-directory`}>A full site. Not one long page.</h1></div><p>Every major customer action now lives on a dedicated URL. The menu goes deeper again into category and individual item pages.</p></div>
+        <div className="cbh-directory-head"><div><span>Explore {profile.name}</span><h1 id={`${profile.slug}-directory`}>Pick your next move.</h1></div><p>Menu, ordering, events, locations, member access, the brand story, and guest support—each ready when you need it.</p></div>
         <div className="cbh-page-grid">{PAGE_LINKS.map((page,index)=><Link className="cbh-page-card" href={`/${profile.slug}/${page.key}`} key={page.key}><span className="cbh-page-number">0{index+1}</span><div><h2>{page.key==='catering'?profile.serviceLabel:page.key==='rewards'?profile.clubLabel:page.title}</h2><p>{page.copy}</p></div><span className="cbh-arrow">↗</span></Link>)}</div>
       </section>
 
