@@ -6,19 +6,26 @@ export const dynamic = 'force-dynamic';
 const ALLOWED_DRIVE_MEDIA = new Set([
   // Brand animations
   '1V25uOjLKns4L_CsIojnlakPrV8L8sTY6', // Angel Wings ANI2
+  '1MD79M4KjdAe_vr4D2SK5hdd0MVpOlnRD', // Angel Wings portrait mobile ANI4
   '1THO-QL2tgwvKyGgJElTIqObLSME836Fm', // Angel + Mascot ANI2
   '1o7dtk3fpPqsaVYKAqkhZ2Jcbpne_P2YB', // Morning After
   '1KiYD9D0I2O6ZLrtYV3xkiF1RvsuXhWmo', // Patty Daddy
   '1ipuuxn9Oem8EezABsfiSkOhuDQ77y7_E', // Espresso
+  '1aBmFWUJ4eFPGFZp5kUU6jsBVpLUUdJPK', // Espresso logo motion
   '10Gaduvuzb8wxuxfUhr_0u638-SHZihmx', // Mojo
   '1mg0svDReyPM0mpcxnrF7-opxKMftygvL', // Mr Oyster
   '1KjCPso-XE0KUTzqNCLFJtrbAF5971kDk', // Sweet Tooth
   '1FOz7i7bMHl2WRECMxVretfGaYPF657AG', // Taco Yaki
   '18SDp95ZVyAftd55R4zG2gwxd-EC4J4O8', // Tossd
-  '1th39hcfT-smuvF4GCeju70tFuGpBfZxK', // Pasta Bish
+  '1th39hcfT-smuvF4GCeju70tFuGpBfZxK', // Pasta Bish hero
+  '1SxjkEl25QUsUYy8msWiU1MbhzV3uNcWu', // Pasta Bish secondary motion
   '1_PhppyhAo7ezAwHISk26u8F_juhdBQDr', // Peace Pizza
-  '15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI', // American Dragon
+  '1BtFGByA-rYxZCcb1SUz1L701lEEIBOml', // American Dragon ANI2
+  '15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI', // American Dragon prior animation
   '1qNk8AyjwZfzTbwFV9fJMnVeTMngTlnDf', // Casper Group
+
+  // Parent Casper graphics
+  '1cwLz3YW2Sl6V55vdzgZLVb1ZwAEMCHdh',
 
   // Angel Wings graphics
   '1yICMDAcyzC9Er5o1B99kmG0OqwGkvh7Z',
