@@ -3,6 +3,7 @@ export type CasperHomeVariant = 'halo' | 'sunrise' | 'smash' | 'lab' | 'fresh' |
 export type CasperBrandExperience = {
   variant: CasperHomeVariant;
   heroVideo?: string;
+  heroVideoMobile?: string;
   secondaryVideo?: string;
   gallery: string[];
   mascot?: string;
@@ -15,6 +16,7 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   'angel-wings': {
     variant: 'halo',
     heroVideo: driveMedia('1V25uOjLKns4L_CsIojnlakPrV8L8sTY6'),
+    heroVideoMobile: driveMedia('1MD79M4KjdAe_vr4D2SK5hdd0MVpOlnRD'),
     secondaryVideo: driveMedia('1THO-QL2tgwvKyGgJElTIqObLSME836Fm'),
     gallery: [
       driveMedia('1yICMDAcyzC9Er5o1B99kmG0OqwGkvh7Z'),
@@ -41,7 +43,7 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   'espresso-co': {
     variant: 'lab',
     heroVideo: driveMedia('1ipuuxn9Oem8EezABsfiSkOhuDQ77y7_E'),
-    secondaryVideo: '/videos/espresso-logo-ani.mp4',
+    secondaryVideo: driveMedia('1aBmFWUJ4eFPGFZp5kUU6jsBVpLUUdJPK'),
     gallery: [
       driveMedia('1_qafmRb8HnjycpCYZ8owwNOZ9dB4AoDg'),
       driveMedia('1TVeu5og1YDWrz9yDxsnzHWncfwqQJKVW'),
@@ -108,7 +110,7 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   'pasta-bish': {
     variant: 'sauce',
     heroVideo: driveMedia('1th39hcfT-smuvF4GCeju70tFuGpBfZxK'),
-    secondaryVideo: '/videos/pasta-bish-logo.mp4',
+    secondaryVideo: driveMedia('1SxjkEl25QUsUYy8msWiU1MbhzV3uNcWu'),
     gallery: [
       driveMedia('1z1DyOlro8Zg5foX2FDVKzq3Z26Bzx-Cy'),
       driveMedia('1M4SsHXK3uDJgIU2t66Y5_9sOBKAboVjh'),
@@ -129,7 +131,8 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'american-dragon': {
     variant: 'dragon',
-    heroVideo: driveMedia('15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI'),
+    heroVideo: driveMedia('1BtFGByA-rYxZCcb1SUz1L701lEEIBOml'),
+    secondaryVideo: driveMedia('15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI'),
     gallery: [
       driveMedia('1gwefS0XW6EkYfMARut8zxWg-ZjXgCLHc'),
       driveMedia('1xd7dcc-Tdw__vqNoGvrRM7wT-t1PUcL6'),
