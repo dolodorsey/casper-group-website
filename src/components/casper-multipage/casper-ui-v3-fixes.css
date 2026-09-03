@@ -1,0 +1,34 @@
+/* Final usability and contrast pass for Casper UI v3. */
+.cmb-hero-copy{color:#fff}
+.csv-shell[data-variant='sunrise'] .cmp-hero,.csv-shell[data-variant='fresh'] .cmp-hero,.csv-shell[data-variant='garden'] .cmp-hero,.csv-shell[data-variant='peace'] .cmp-hero{color:#fff}
+.csv-shell[data-variant='sunrise'] .cmp-casper-link,.csv-shell[data-variant='fresh'] .cmp-casper-link,.csv-shell[data-variant='garden'] .cmp-casper-link,.csv-shell[data-variant='peace'] .cmp-casper-link{color:rgba(30,45,32,.62)}
+.cmb-site[data-variant='sunrise'] .cmb-results-head>p,.cmb-site[data-variant='fresh'] .cmb-results-head>p,.cmb-site[data-variant='garden'] .cmb-results-head>p,.cmb-site[data-variant='peace'] .cmb-results-head>p{color:rgba(30,45,32,.58)}
+.cmb-site[data-variant='sunrise'] .cmb-deep-head p,.cmb-site[data-variant='fresh'] .cmb-deep-head p,.cmb-site[data-variant='garden'] .cmb-deep-head p,.cmb-site[data-variant='peace'] .cmb-deep-head p{color:rgba(30,45,32,.62)}
+.cmb-site[data-variant='sunrise'] .cmb-breadcrumbs,.cmb-site[data-variant='fresh'] .cmb-breadcrumbs,.cmb-site[data-variant='garden'] .cmb-breadcrumbs,.cmb-site[data-variant='peace'] .cmb-breadcrumbs{color:rgba(30,45,32,.48)}
+.cmb-site[data-variant='sunrise'] .cmb-menu-actions,.cmb-site[data-variant='fresh'] .cmb-menu-actions,.cmb-site[data-variant='garden'] .cmb-menu-actions,.cmb-site[data-variant='peace'] .cmb-menu-actions{background:rgba(30,60,35,.1);border-color:rgba(30,60,35,.1)}
+.cmb-site[data-variant='sunrise'] .cmb-menu-actions a,.cmb-site[data-variant='fresh'] .cmb-menu-actions a,.cmb-site[data-variant='garden'] .cmb-menu-actions a,.cmb-site[data-variant='peace'] .cmb-menu-actions a{background:rgba(255,255,255,.65);color:#203222}
+.cmb-site[data-variant='sunrise'] .cmb-footer,.cmb-site[data-variant='fresh'] .cmb-footer,.cmb-site[data-variant='garden'] .cmb-footer,.cmb-site[data-variant='peace'] .cmb-footer{background:#213124}
+
+/* Keep image-led menu cards legible even on light brand sites. */
+.cmb-category-card,.cmb-category-card h3,.cmb-category-card strong{color:#fff!important}.cmb-category-card p{color:rgba(255,255,255,.68)!important}
+
+/* Better form hierarchy. */
+.cmp-form-panel,.cmp-cart{overflow:clip}.cmp-field input,.cmp-field select,.cmp-field textarea{min-height:46px}.cmp-field textarea{min-height:120px}.cmp-form .cmp-button-primary{width:100%;min-height:52px}.cmp-form-note{max-width:72ch}.cmp-cart-head{min-height:68px}
+
+/* Full navigation on tablets without cramming the viewport. */
+@media(max-width:1120px) and (min-width:761px){.cbh-nav{gap:16px}.cbh-nav-links{gap:10px;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}.cbh-nav-links::-webkit-scrollbar{display:none}.cbh-nav-links a{white-space:nowrap}.cmb-nav{gap:16px}.cmb-nav-links{gap:14px;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}.cmb-nav-links::-webkit-scrollbar{display:none}.cmb-nav-links a{white-space:nowrap}}
+
+/* Mobile: two-row brand navigation instead of hiding the whole website. */
+@media(max-width:760px){
+  .cbh-nav{height:112px;padding:10px 16px 8px;grid-template-columns:1fr auto;grid-template-rows:52px 34px;gap:4px 12px;background:rgba(8,8,8,.93);backdrop-filter:blur(18px)}
+  .cbh-brand{grid-column:1;grid-row:1}.cbh-nav-cta{grid-column:2;grid-row:1}.cbh-nav-links{display:flex!important;grid-column:1/-1;grid-row:2;justify-content:flex-start;gap:18px;overflow-x:auto;scrollbar-width:none;padding:5px 0}.cbh-nav-links::-webkit-scrollbar{display:none}.cbh-nav-links a{white-space:nowrap;font-size:9px!important}.cbh-hero{padding-top:36px}
+  .cmb-nav{height:108px;padding:8px 16px 7px;grid-template-columns:1fr auto;grid-template-rows:50px 34px;gap:5px 12px;background:rgba(8,8,8,.94)}
+  .cmb-brand{grid-column:1;grid-row:1}.cmb-order{grid-column:2;grid-row:1}.cmb-nav-links{display:flex!important;grid-column:1/-1;grid-row:2;justify-content:flex-start;gap:18px;overflow-x:auto;scrollbar-width:none;padding:4px 0}.cmb-nav-links::-webkit-scrollbar{display:none}.cmb-nav-links a{white-space:nowrap;font-size:9px}.cmb-hero-copy{padding-top:150px}.cmb-deep{padding-top:142px}
+  .cmp-nav{grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:5px 10px;padding-top:9px;padding-bottom:8px}.cmp-brand-link{grid-column:1}.cmp-casper-link{grid-column:2}.cmp-nav-links{grid-column:1/-1;justify-content:flex-start;width:100%;padding-top:3px}.cmp-nav-link{padding:7px 9px;font-size:9px}
+  .csv-hero-layer{top:112px}.cmp-hero{min-height:450px}.cmp-hero-content{padding-top:130px}
+}
+
+/* Light mobile headers. */
+@media(max-width:760px){
+.cbh-site[data-variant='sunrise'] .cbh-nav,.cmb-site[data-variant='sunrise'] .cmb-nav,.cbh-site[data-variant='fresh'] .cbh-nav,.cmb-site[data-variant='fresh'] .cmb-nav,.cbh-site[data-variant='garden'] .cbh-nav,.cmb-site[data-variant='garden'] .cmb-nav,.cbh-site[data-variant='peace'] .cbh-nav,.cmb-site[data-variant='peace'] .cmb-nav{background:rgba(248,246,238,.96)}
+}
