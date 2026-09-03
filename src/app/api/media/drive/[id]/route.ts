@@ -24,6 +24,9 @@ const ALLOWED_DRIVE_MEDIA = new Set([
   '15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI', // American Dragon prior animation
   '1qNk8AyjwZfzTbwFV9fJMnVeTMngTlnDf', // Casper Group
 
+  // Verified transparent standalone artwork
+  '1gJiMLlqRDc_AJKS-PYcvTJ0Fx9d-WR8Y', // Loudini transparent PNG
+
   // Parent Casper graphics
   '1cwLz3YW2Sl6V55vdzgZLVb1ZwAEMCHdh',
 
