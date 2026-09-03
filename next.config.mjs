@@ -35,6 +35,19 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          // Preserve the existing homepage code path while serving the newer Casper Group animation.
+          source: '/videos/casper-ani.mp4',
+          destination: '/api/media/drive/1qNk8AyjwZfzTbwFV9fJMnVeTMngTlnDf',
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
 };
 
 export default nextConfig;
