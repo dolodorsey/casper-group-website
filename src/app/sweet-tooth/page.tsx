@@ -1,11 +1,7 @@
 import type { Metadata } from 'next';
-import CasperCommercePage from '@/components/casper-commerce/CasperCommercePage';
-import { remainingCasperBrands } from '@/lib/casper-commerce-config';
-import { buildCasperCommerceMetadata } from '@/lib/casper-commerce-metadata';
+import CasperBrandHomePage from '@/components/casper-multipage/CasperBrandHomePage';
+import { getCasperSiteProfile } from '@/lib/casper-site-registry';
 
-const brand = remainingCasperBrands['sweet-tooth'];
-export const metadata: Metadata = buildCasperCommerceMetadata(brand);
-
-export default function SweetToothPage() {
-  return <CasperCommercePage brand={brand} />;
-}
+const profile = getCasperSiteProfile('sweet-tooth')!;
+export const metadata: Metadata = { title: 'Sweet Tooth | Casper Group', description: `${profile.tagline} ${profile.description}`, alternates: { canonical: 'https://caspergroupworldwide.com/sweet-tooth' }, openGraph: { title: 'Sweet Tooth | Casper Group', description: profile.description, url: 'https://caspergroupworldwide.com/sweet-tooth', siteName: 'Sweet Tooth', images: [profile.heroImage], type: 'website' } };
+export default function SweetToothPage() { return <CasperBrandHomePage profile={profile} />; }
