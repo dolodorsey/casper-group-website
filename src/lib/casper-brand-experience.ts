@@ -12,8 +12,8 @@ export type CasperBrandExperience = {
 export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   'angel-wings': {
     variant: 'halo',
-    heroVideo: '/videos/angel.mp4',
-    secondaryVideo: '/videos/angel-wings.mp4',
+    heroVideo: '/videos/angel-wings.mp4',
+    secondaryVideo: '/videos/angel.mp4',
     gallery: ['/images/angel-wings-plate.jpg', '/images/angel-wings-mural.jpg', '/images/food/lemon-pepper-wings.png'],
     mascot: '/images/mascot-loudini.png',
     shortLabel: 'Heaven-sent heat',
