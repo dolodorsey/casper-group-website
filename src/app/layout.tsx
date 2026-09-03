@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "../components/casper-multipage/casper-ui-v3.css";
+import "../components/casper-multipage/casper-ui-v3-fixes.css";
 
 export const metadata: Metadata = {
   title: "Casper Group Worldwide — Restaurant Empire",
