@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import CasperBrandSectionPage from '@/components/casper-multipage/CasperBrandSectionPage';
+import CasperSectionVisualShell from '@/components/casper-multipage/CasperSectionVisualShell';
 import {
   CASPER_SECTIONS,
   casperBrandSlugs,
@@ -49,5 +50,9 @@ export function generateMetadata({ params }: { params: { slug: string; section: 
 export default function CasperConceptSectionRoute({ params }: { params: { slug: string; section: string } }) {
   const profile = getCasperSiteProfile(params.slug);
   if (!profile || !isCasperSection(params.section) || params.section === 'menu') notFound();
-  return <CasperBrandSectionPage profile={profile} section={params.section} />;
+  return (
+    <CasperSectionVisualShell profile={profile} section={params.section}>
+      <CasperBrandSectionPage profile={profile} section={params.section} />
+    </CasperSectionVisualShell>
+  );
 }
