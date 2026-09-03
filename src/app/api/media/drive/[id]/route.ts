@@ -4,7 +4,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const ALLOWED_DRIVE_MEDIA = new Set([
-  // Brand animations
+  // Current brand animations
   '1V25uOjLKns4L_CsIojnlakPrV8L8sTY6', // Angel Wings ANI2
   '1MD79M4KjdAe_vr4D2SK5hdd0MVpOlnRD', // Angel Wings portrait mobile ANI4
   '1THO-QL2tgwvKyGgJElTIqObLSME836Fm', // Angel + Mascot ANI2
@@ -21,11 +21,20 @@ const ALLOWED_DRIVE_MEDIA = new Set([
   '1SxjkEl25QUsUYy8msWiU1MbhzV3uNcWu', // Pasta Bish secondary motion
   '1_PhppyhAo7ezAwHISk26u8F_juhdBQDr', // Peace Pizza
   '1BtFGByA-rYxZCcb1SUz1L701lEEIBOml', // American Dragon ANI2
-  '15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI', // American Dragon prior animation
+  '15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI', // American Dragon secondary
   '1qNk8AyjwZfzTbwFV9fJMnVeTMngTlnDf', // Casper Group
 
-  // Verified transparent standalone artwork
-  '1gJiMLlqRDc_AJKS-PYcvTJ0Fx9d-WR8Y', // Loudini transparent PNG
+  // Verified alpha-transparent standalone mascots / character artwork
+  '1gJiMLlqRDc_AJKS-PYcvTJ0Fx9d-WR8Y', // Loudini
+  '1lFpOiklEfS74Jz_meTEw-1Qb6uhai-bM', // Eggavier
+  '1gPgAxM8aO7p3FmLHDZ0QUvQCftG7ofJ1', // Paddy Daddy
+  '1JcskswWYKwgF6JudT6jjA95nVm3CQG22', // Beanzo
+  '1g6gL48VTB_ENxjHWqJflfl2JZjanM9OW', // Mr. Oyster
+  '1SM62KxJCCUOdt2I5usgX2JMgUNkOcbxq', // Sweet Tooth character
+  '1m5ZukRzFyjGhHELq6H-sryO4PdRSP8-s', // Yaki
+  '1WGvE6Jl_sMogvbeKKueFu9NrsEmv_bg0', // Lenny Lettuce
+  '1H3774fi3Z8qoEmAm9S-Vo1alVjNq7r9o', // Lil Linguine
+  '1oOJ6bE_B1tbZaYTPAeCJ8M54iHIUXfmK', // Peace Pizza mascot
 
   // Parent Casper graphics
   '1cwLz3YW2Sl6V55vdzgZLVb1ZwAEMCHdh',
