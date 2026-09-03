@@ -1,11 +1,7 @@
 import type { Metadata } from 'next';
-import CasperCommercePage from '@/components/casper-commerce/CasperCommercePage';
-import { remainingCasperBrands } from '@/lib/casper-commerce-config';
-import { buildCasperCommerceMetadata } from '@/lib/casper-commerce-metadata';
+import CasperBrandHomePage from '@/components/casper-multipage/CasperBrandHomePage';
+import { getCasperSiteProfile } from '@/lib/casper-site-registry';
 
-const brand = remainingCasperBrands['tossd'];
-export const metadata: Metadata = buildCasperCommerceMetadata(brand);
-
-export default function TossdPage() {
-  return <CasperCommercePage brand={brand} />;
-}
+const profile = getCasperSiteProfile('tossd')!;
+export const metadata: Metadata = { title: 'Toss’d | Casper Group', description: `${profile.tagline} ${profile.description}`, alternates: { canonical: 'https://caspergroupworldwide.com/tossd' }, openGraph: { title: 'Toss’d | Casper Group', description: profile.description, url: 'https://caspergroupworldwide.com/tossd', siteName: 'Toss’d', images: [profile.heroImage], type: 'website' } };
+export default function TossdPage() { return <CasperBrandHomePage profile={profile} />; }
