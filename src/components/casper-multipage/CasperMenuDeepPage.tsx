@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import type { CasperSiteProfile } from '@/lib/casper-site-registry';
 import { getCasperBrandExperience } from '@/lib/casper-brand-experience';
+import ResilientMenuImage from './ResilientMenuImage';
 import './casper-menu-browser.css';
 
 type MenuItem = { slug:string; name:string; description?:string; category?:string; price?:number; image_path?:string|null; featured?:boolean };
@@ -28,13 +28,13 @@ export default function CasperMenuDeepPage({profile,category,item}:{profile:Casp
     {item ? <section className="cmb-deep">
       <div className="cmb-breadcrumbs"><Link href={`/${profile.slug}`}>{profile.name}</Link><span>/</span><Link href={`/${profile.slug}/menu`}>Menu</Link><span>/</span><Link href={`/${profile.slug}/menu/${category}`}>{labelize(categoryName)}</Link></div>
       {loading?<div className="cmb-state">Loading item…</div>:null}{error?<div className="cmb-state">{error}</div>:null}
-      {!loading&&!error&&selected?<div className="cmb-item-detail"><div className="cmb-item-visual">{selected.image_path?<img src={selected.image_path} alt={selected.name}/>:<Image src={fallback} alt="" fill priority sizes="60vw"/>}</div><div className="cmb-item-copy"><span>{labelize(selected.category||'Signature')}</span><h1>{selected.name}</h1><p>{selected.description||`A current ${profile.name} menu item.`}</p><strong className="cmb-item-price">{money(selected.price)}</strong><div className="cmb-item-actions"><Link href={`/${profile.slug}/order`}>Order this</Link><Link href={`/${profile.slug}/menu/${category}`}>Back to {labelize(categoryName)}</Link></div></div></div>:null}
+      {!loading&&!error&&selected?<div className="cmb-item-detail"><div className="cmb-item-visual"><ResilientMenuImage src={selected.image_path} fallback={fallback} alt={selected.name}/></div><div className="cmb-item-copy"><span>{labelize(selected.category||'Signature')}</span><h1>{selected.name}</h1><p>{selected.description||`A current ${profile.name} menu item.`}</p><strong className="cmb-item-price">{money(selected.price)}</strong><div className="cmb-item-actions"><Link href={`/${profile.slug}/order`}>Order this</Link><Link href={`/${profile.slug}/menu/${category}`}>Back to {labelize(categoryName)}</Link></div></div></div>:null}
       {!loading&&!error&&!selected?<div className="cmb-state">That menu item is not currently published.</div>:null}
     </section>:<section className="cmb-deep">
       <div className="cmb-breadcrumbs"><Link href={`/${profile.slug}`}>{profile.name}</Link><span>/</span><Link href={`/${profile.slug}/menu`}>Menu</Link><span>/</span><span>{labelize(categoryName)}</span></div>
-      <div className="cmb-deep-head"><div><span style={{color:'var(--cmb-bright)',fontSize:10,fontWeight:700,letterSpacing:'.18em',textTransform:'uppercase'}}>Dedicated menu</span><h1>{labelize(categoryName)}</h1></div><p>This is its own menu page—not another section buried in a long scroll. Open any item for its own detail page or jump directly into ordering.</p></div>
+      <div className="cmb-deep-head"><div><span className="cmb-section-label">{profile.name} menu</span><h1>{labelize(categoryName)}</h1></div><p>Browse this category, open any item for full details, or jump directly into ordering.</p></div>
       {loading?<div className="cmb-state">Loading live menu…</div>:null}{error?<div className="cmb-state">{error}</div>:null}
-      <div className="cmb-grid">{categoryItems.map(entry=><article className="cmb-card" key={entry.slug}><div className="cmb-card-media">{entry.image_path?<img src={entry.image_path} alt={entry.name} loading="lazy"/>:<Image src={fallback} alt="" fill sizes="(max-width:800px) 100vw, 40vw"/>}</div><div className="cmb-card-body"><span>{labelize(entry.category||'Signature')}</span><h3>{entry.name}</h3><p>{entry.description||'A current brand menu item.'}</p><div className="cmb-card-bottom"><strong>{money(entry.price)}</strong><Link href={`/${profile.slug}/menu/${category}/${entry.slug}`}>View item ↗</Link></div></div></article>)}</div>
+      <div className="cmb-grid">{categoryItems.map(entry=><article className="cmb-card" key={entry.slug}><div className="cmb-card-media"><ResilientMenuImage src={entry.image_path} fallback={fallback} alt={entry.name}/></div><div className="cmb-card-body"><span>{labelize(entry.category||'Signature')}</span><h3>{entry.name}</h3><p>{entry.description||'A current brand menu item.'}</p><div className="cmb-card-bottom"><strong>{money(entry.price)}</strong><Link href={`/${profile.slug}/menu/${category}/${entry.slug}`}>View item ↗</Link></div></div></article>)}</div>
       {!loading&&!error&&!categoryItems.length?<div className="cmb-state">This category is not currently published.</div>:null}
     </section>}
     <footer className="cmb-footer"><Link href={`/${profile.slug}/menu`}>← All menu categories</Link><Link href={`/${profile.slug}/order`}>Build an order →</Link></footer>
