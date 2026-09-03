@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import type { CasperSiteProfile } from '@/lib/casper-site-registry';
 import { getCasperBrandExperience } from '@/lib/casper-brand-experience';
+import ResilientMenuImage from './ResilientMenuImage';
 import './casper-menu-browser.css';
 
 type MenuItem = {
@@ -59,6 +60,8 @@ export default function CasperMenuBrowser({ profile }: { profile: CasperSiteProf
     }));
   }, [experience?.gallery, items, profile.heroImage]);
 
+  const fallbackImage = experience?.gallery?.[0] || profile.heroImage;
+
   return (
     <main className="cmb-site" data-variant={experience?.variant || 'halo'} style={{ '--cmb-accent': profile.accent, '--cmb-bright': profile.accentBright } as React.CSSProperties}>
       <nav className="cmb-nav">
@@ -71,7 +74,7 @@ export default function CasperMenuBrowser({ profile }: { profile: CasperSiteProf
 
       <header className="cmb-hero">
         <div className="cmb-hero-media">
-          <Image src={experience?.gallery?.[0] || profile.heroImage} alt="" fill priority sizes="100vw" />
+          <Image src={fallbackImage} alt="" fill priority sizes="100vw" />
         </div>
         <div className="cmb-scrim" />
         <div className="cmb-hero-copy"><span>Menu / {profile.name}</span><h1>Choose your lane.<br />Find your favorite.</h1><p>Start with what you’re craving, then explore every dish, build, drink, or signature in that category.</p></div>
@@ -85,7 +88,7 @@ export default function CasperMenuBrowser({ profile }: { profile: CasperSiteProf
         <div className="cmb-category-grid">
           {categories.map((group) => (
             <Link className="cmb-category-card" href={`/${profile.slug}/menu/${group.slug}`} key={group.slug}>
-              <div className="cmb-category-media">{group.image ? <img src={group.image} alt="" loading="lazy" /> : null}<div className="cmb-category-overlay" /></div>
+              <div className="cmb-category-media"><ResilientMenuImage src={group.image} fallback={fallbackImage} alt="" /><div className="cmb-category-overlay" /></div>
               <div className="cmb-category-body"><span>{group.count} item{group.count === 1 ? '' : 's'}</span><h3>{labelize(group.name)}</h3><p>{group.preview.join(' · ')}</p><strong>Explore {labelize(group.name)} →</strong></div>
             </Link>
           ))}
