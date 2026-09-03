@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
+const SUPABASE_URL = process.env.CASPER_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
 
 export async function GET() {
   const serviceKey = process.env.SUPABASE_SERVICE_KEY;
