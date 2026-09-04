@@ -12,12 +12,14 @@ export type CasperBrandExperience = {
 
 const driveMedia = (id: string) => `/api/media/drive/${id}`;
 
+/*
+ * Motion rule: all legacy Casper animations are intentionally excluded from the live
+ * experience registry. Brand homepages use their approved static hero/gallery assets
+ * until brand-specific 2026+ motion is produced and explicitly approved.
+ */
 export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   'angel-wings': {
     variant: 'halo',
-    heroVideo: driveMedia('1V25uOjLKns4L_CsIojnlakPrV8L8sTY6'),
-    heroVideoMobile: driveMedia('1MD79M4KjdAe_vr4D2SK5hdd0MVpOlnRD'),
-    secondaryVideo: driveMedia('1THO-QL2tgwvKyGgJElTIqObLSME836Fm'),
     gallery: [
       driveMedia('1yICMDAcyzC9Er5o1B99kmG0OqwGkvh7Z'),
       driveMedia('1HwanqSmzyDXBxdvYSnngIpQJNDa_C-lc'),
@@ -28,22 +30,18 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'tha-morning-after': {
     variant: 'sunrise',
-    heroVideo: driveMedia('1o7dtk3fpPqsaVYKAqkhZ2Jcbpne_P2YB'),
     gallery: ['/images/morning-after-hero.jpg', '/images/morning-french-toast.jpg', '/images/morning-sandwiches.jpg'],
     mascot: driveMedia('1lFpOiklEfS74Jz_meTEw-1Qb6uhai-bM'),
     shortLabel: 'Breakfast after everything',
   },
   'patty-daddy': {
     variant: 'smash',
-    heroVideo: driveMedia('1KiYD9D0I2O6ZLrtYV3xkiF1RvsuXhWmo'),
     gallery: ['/images/patty-daddy-hero.jpg', '/images/patty-smashburger.jpg', '/images/patty-sliders.jpg'],
     mascot: driveMedia('1gPgAxM8aO7p3FmLHDZ0QUvQCftG7ofJ1'),
     shortLabel: 'Big smash energy',
   },
   'espresso-co': {
     variant: 'lab',
-    heroVideo: driveMedia('1ipuuxn9Oem8EezABsfiSkOhuDQ77y7_E'),
-    secondaryVideo: driveMedia('1aBmFWUJ4eFPGFZp5kUU6jsBVpLUUdJPK'),
     gallery: [
       driveMedia('1_qafmRb8HnjycpCYZ8owwNOZ9dB4AoDg'),
       driveMedia('1TVeu5og1YDWrz9yDxsnzHWncfwqQJKVW'),
@@ -54,7 +52,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'mojo-juice': {
     variant: 'fresh',
-    heroVideo: driveMedia('10Gaduvuzb8wxuxfUhr_0u638-SHZihmx'),
     gallery: [
       driveMedia('1wMBHI5-xnZ41SxA7a4vLOiVfhG9Ncybv'),
       driveMedia('1QNG8F6U0O6pFYhiTrOGpxpebhQqdBiqd'),
@@ -64,7 +61,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'mr-oyster': {
     variant: 'ocean',
-    heroVideo: driveMedia('1mg0svDReyPM0mpcxnrF7-opxKMftygvL'),
     gallery: [
       driveMedia('1BdPSH3UUW139zBfcVYohBVXsPQRr4o_x'),
       driveMedia('1QY8JL4kR4io6Joaww4ttPhbx6sKmDYHl'),
@@ -75,7 +71,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'sweet-tooth': {
     variant: 'candy',
-    heroVideo: driveMedia('1KjCPso-XE0KUTzqNCLFJtrbAF5971kDk'),
     gallery: [
       driveMedia('1csLrgQIVpbxyeLSC11rSuPfAfdUiAewR'),
       driveMedia('1hh3Z9ww4USs72vjslax6KEUEyKrkR6Hu'),
@@ -86,7 +81,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'taco-yaki': {
     variant: 'fire',
-    heroVideo: driveMedia('1FOz7i7bMHl2WRECMxVretfGaYPF657AG'),
     gallery: [
       driveMedia('1VujWrnb5M0RxKjFFBpcbE_RVlvjbw-T2'),
       driveMedia('1zJdTniHvV079VO4Z4VgSMpatIKe-LFLk'),
@@ -97,7 +91,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   tossd: {
     variant: 'garden',
-    heroVideo: driveMedia('18SDp95ZVyAftd55R4zG2gwxd-EC4J4O8'),
     gallery: [
       driveMedia('1cTKrc-cMqZ-IJHXAllAWL5YCC538aUwv'),
       driveMedia('1xdMvL2hoUnpYpXQ_2dD6NIGO4zwu8DTV'),
@@ -108,8 +101,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'pasta-bish': {
     variant: 'sauce',
-    heroVideo: driveMedia('1th39hcfT-smuvF4GCeju70tFuGpBfZxK'),
-    secondaryVideo: driveMedia('1SxjkEl25QUsUYy8msWiU1MbhzV3uNcWu'),
     gallery: [
       driveMedia('1z1DyOlro8Zg5foX2FDVKzq3Z26Bzx-Cy'),
       driveMedia('1M4SsHXK3uDJgIU2t66Y5_9sOBKAboVjh'),
@@ -120,7 +111,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'peace-pizza': {
     variant: 'peace',
-    heroVideo: driveMedia('1_PhppyhAo7ezAwHISk26u8F_juhdBQDr'),
     gallery: [
       driveMedia('1wk28ZOfO-43WK7EQX2ZvyqvbclK4jg8N'),
       driveMedia('1rDNq7uPVc7iQqKpaPgky4WCI8h6EWlWZ'),
@@ -131,8 +121,6 @@ export const casperBrandExperiences: Record<string, CasperBrandExperience> = {
   },
   'american-dragon': {
     variant: 'dragon',
-    heroVideo: driveMedia('1BtFGByA-rYxZCcb1SUz1L701lEEIBOml'),
-    secondaryVideo: driveMedia('15q_Ofxf_Khl3lErxVbbCNcn9NMxBbjaI'),
     gallery: [
       driveMedia('1gwefS0XW6EkYfMARut8zxWg-ZjXgCLHc'),
       driveMedia('1xd7dcc-Tdw__vqNoGvrRM7wT-t1PUcL6'),
