@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "verify:isolation": "node scripts/verify-casper-isolation.mjs"
+    "verify:isolation": "node scripts/verify-casper-isolation.mjs",
+    "verify:outage": "node scripts/verify-casper-outage-contract.mjs"
   },
   "dependencies": {
     "react": "^18",
