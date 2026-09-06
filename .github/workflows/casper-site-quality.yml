@@ -34,6 +34,9 @@ jobs:
       - name: Verify Casper backend isolation
         run: npm run verify:isolation
 
+      - name: Verify Casper outage contract
+        run: npm run verify:outage
+
       - name: Production dependency audit
         run: npm audit --omit=dev --audit-level=critical
 
