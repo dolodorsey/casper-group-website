@@ -4,15 +4,43 @@ import { getCasperSiteProfile } from '@/lib/casper-site-registry';
 const SUPABASE_URL = process.env.CASPER_SUPABASE_URL || 'https://qhgmukwoennurwuvmbhy.supabase.co';
 const EDGE_BASE = `${SUPABASE_URL}/functions/v1`;
 const WEB_GATEWAY = `${EDGE_BASE}/casper-web-gateway`;
+const UPSTREAM_TIMEOUT_MS = 5000;
 
-function response(body: unknown, status = 200) {
+function response(body: unknown, status = 200, extraHeaders: Record<string, string> = {}) {
   return NextResponse.json(body, {
     status,
     headers: {
       'Cache-Control': 'no-store',
       'X-Content-Type-Options': 'nosniff',
+      ...extraHeaders,
     },
   });
+}
+
+function unavailableResponse(message: string) {
+  return response(
+    { ok: false, available: false, error: message },
+    503,
+    {
+      'Retry-After': '30',
+      'X-Casper-Data': 'unavailable',
+    }
+  );
+}
+
+async function fetchWithDeadline(input: string, init: RequestInit = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
+  try {
+    return await fetch(input, {
+      ...init,
+      cache: 'no-store',
+      redirect: 'error',
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function edgeTarget(brand: string, resource?: string) {
@@ -53,7 +81,12 @@ function normalizedPayload(brand: string, type: string, raw: Record<string, unkn
   return { type: backendType, payload };
 }
 
-async function proxy(upstream: Response) {
+async function proxy(upstream: Response, unavailableMessage: string) {
+  if (upstream.status >= 500) {
+    console.error('Casper upstream unavailable:', upstream.status);
+    return unavailableResponse(unavailableMessage);
+  }
+
   const text = await upstream.text();
   return new NextResponse(text, {
     status: upstream.status,
@@ -61,6 +94,7 @@ async function proxy(upstream: Response) {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
       'X-Content-Type-Options': 'nosniff',
+      'X-Casper-Data': upstream.ok ? 'available' : 'rejected',
     },
   });
 }
@@ -72,14 +106,15 @@ export async function GET(request: NextRequest, { params }: { params: { brand: s
   const resource = request.nextUrl.searchParams.get('resource') || 'menu';
   if (resource === 'locations') {
     try {
-      const upstream = await fetch(
+      const upstream = await fetchWithDeadline(
         `${WEB_GATEWAY}?resource=brand_locations&brand=${encodeURIComponent(profile.slug)}`,
-        { cache: 'no-store' }
+        { headers: { Accept: 'application/json' } }
       );
-      return proxy(upstream);
+      return proxy(upstream, 'Locations are temporarily unavailable.');
     } catch (error) {
-      console.error('Casper brand locations gateway:', error);
-      return response({ ok: false, error: 'Locations are temporarily unavailable.' }, 503);
+      const errorName = error instanceof Error ? error.name : 'UnknownError';
+      console.error('Casper brand locations gateway unavailable:', errorName);
+      return unavailableResponse('Locations are temporarily unavailable.');
     }
   }
 
@@ -88,10 +123,12 @@ export async function GET(request: NextRequest, { params }: { params: { brand: s
   if (!target) return response({ ok: false, error: 'Unknown Casper brand.' }, 404);
 
   try {
-    return proxy(await fetch(target, { cache: 'no-store' }));
+    const upstream = await fetchWithDeadline(target, { headers: { Accept: 'application/json' } });
+    return proxy(upstream, 'Menu is temporarily unavailable.');
   } catch (error) {
-    console.error('Casper menu gateway:', error);
-    return response({ ok: false, error: 'Menu is temporarily unavailable.' }, 503);
+    const errorName = error instanceof Error ? error.name : 'UnknownError';
+    console.error('Casper menu gateway unavailable:', errorName);
+    return unavailableResponse('Menu is temporarily unavailable.');
   }
 }
 
@@ -101,19 +138,22 @@ export async function POST(request: NextRequest, { params }: { params: { brand: 
 
   try {
     const body = (await request.json()) as { type?: string; payload?: Record<string, unknown> };
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return response({ ok: false, error: 'Invalid request payload.' }, 400);
+    }
+
     const requestedType = String(body.type || '');
     if (!['order', 'service', 'club', 'contact'].includes(requestedType)) {
       return response({ ok: false, error: 'Unknown request type.' }, 400);
     }
 
     if (requestedType === 'contact') {
-      const upstream = await fetch(WEB_GATEWAY, {
+      const upstream = await fetchWithDeadline(WEB_GATEWAY, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ action: 'brand_contact', brand: profile.slug, payload: body.payload || {} }),
-        cache: 'no-store',
       });
-      return proxy(upstream);
+      return proxy(upstream, 'Request could not be completed.');
     }
 
     const normalized = normalizedPayload(profile.slug, requestedType, body.payload || {});
@@ -124,15 +164,15 @@ export async function POST(request: NextRequest, { params }: { params: { brand: 
       ? { brand: profile.apiSlug, ...normalized }
       : normalized;
 
-    const upstream = await fetch(target, {
+    const upstream = await fetchWithDeadline(target, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(upstreamBody),
-      cache: 'no-store',
     });
-    return proxy(upstream);
+    return proxy(upstream, 'Request could not be completed.');
   } catch (error) {
-    console.error('Casper brand gateway:', error);
-    return response({ ok: false, error: 'Request could not be completed.' }, 500);
+    const errorName = error instanceof Error ? error.name : 'UnknownError';
+    console.error('Casper brand gateway unavailable:', errorName);
+    return unavailableResponse('Request could not be completed.');
   }
 }
