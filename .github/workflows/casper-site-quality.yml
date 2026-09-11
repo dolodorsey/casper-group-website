@@ -31,8 +31,14 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Verify Casper backend isolation
+        run: npm run verify:isolation
+
+      - name: Verify Casper outage contract
+        run: npm run verify:outage
+
       - name: Production dependency audit
-        run: npm audit --omit=dev --audit-level=critical
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Lint
         run: npm run lint
