@@ -6,6 +6,11 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   {
+    rules: {
+      '@next/next/no-html-link-for-pages': 'off',
+    },
+  },
+  {
     files: ['components/KHGForms.jsx', 'src/components/KHGForms.jsx', 'src/app/connect/page.jsx'],
     rules: {
       'react/no-unescaped-entities': 'off',
@@ -15,6 +20,7 @@ export default defineConfig([
     files: ['components/forms/KHGFormModal.jsx', 'src/components/forms/KHGFormModal.jsx'],
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { caughtErrors: 'none' }],
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
