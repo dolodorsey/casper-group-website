@@ -5,6 +5,10 @@ import { casperBrandSlugs, getCasperSiteProfile } from '@/lib/casper-site-regist
 
 const DEDICATED_HOME_ROUTES = new Set(['angel-wings', 'espresso-co', 'pasta-bish', 'taco-yaki']);
 
+type BrandHomeRouteProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export function generateStaticParams() {
   return casperBrandSlugs
     .filter((slug) => !DEDICATED_HOME_ROUTES.has(slug))
@@ -13,8 +17,9 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const profile = getCasperSiteProfile(params.slug);
+export async function generateMetadata({ params }: BrandHomeRouteProps): Promise<Metadata> {
+  const { slug } = await params;
+  const profile = getCasperSiteProfile(slug);
   if (!profile) return {};
   const title = `${profile.name} | Casper Group`;
   const description = `${profile.tagline} ${profile.description}`;
@@ -28,8 +33,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function CasperBrandHomeRoute({ params }: { params: { slug: string } }) {
-  const profile = getCasperSiteProfile(params.slug);
-  if (!profile || DEDICATED_HOME_ROUTES.has(params.slug)) notFound();
+export default async function CasperBrandHomeRoute({ params }: BrandHomeRouteProps) {
+  const { slug } = await params;
+  const profile = getCasperSiteProfile(slug);
+  if (!profile || DEDICATED_HOME_ROUTES.has(slug)) notFound();
   return <CasperBrandHomePage profile={profile} />;
 }
