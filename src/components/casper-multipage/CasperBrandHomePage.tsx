@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import type { CasperSiteProfile } from '@/lib/casper-site-registry';
@@ -33,10 +32,32 @@ const SIGNATURES: Record<CasperHomeVariant, { eyebrow: string; title: string; co
   dragon: { eyebrow: 'American-Chinese after dark', title: 'ENTER FUTURE CHINATOWN', copy: 'Neon, steam, takeout ritual and a moving dragon language turn ordering into a cinematic night-market journey.', beats: ['NEON', 'STEAM', 'DRAGON'] },
 };
 
+/* Stable local photography already developed in the Casper repo. These are intentionally
+   mixed with current Drive campaign art so the site does not repeat three near-identical
+   posters or turn into empty black panels if a remote asset is slow. */
+const LOCAL_MEDIA: Record<string, string[]> = {
+  'angel-wings': ['/images/angel-wings-plate.jpg', '/images/angel-wings-mural.jpg', '/images/angel-wings-hero.jpg'],
+  'tha-morning-after': ['/images/morning-french-toast.jpg', '/images/morning-sandwiches.jpg', '/images/portal-morning-after.jpeg'],
+  'patty-daddy': ['/images/patty-smashburger.jpg', '/images/patty-sliders.jpg', '/images/portal-patty-daddy.jpeg'],
+  'espresso-co': ['/images/espresso-lab.png', '/images/espresso-latte.png', '/images/espresso-crew.jpg', '/images/portal-espresso.jpeg'],
+  'mojo-juice': ['/images/mojo-smoothie.png', '/images/portal-mojo.jpeg'],
+  'mr-oyster': ['/images/oyster-scallops.jpg', '/images/portal-mr-oyster.jpeg'],
+  'sweet-tooth': ['/images/portal-sweet-tooth.jpeg'],
+  'taco-yaki': ['/images/taco-platter.jpg', '/images/taco-hibachi.jpg', '/images/portal-taco-yaki.png'],
+  tossd: ['/images/portal-tossd.jpeg'],
+  'pasta-bish': ['/images/pasta-fettuccine.jpg', '/images/pasta-marinara.jpg', '/images/portal-pasta-bish.jpeg'],
+  'peace-pizza': ['/images/portal-peace-pizza.png'],
+  'american-dragon': ['/images/portal-american-dragon.png'],
+};
+
 export default function CasperBrandHomePage({ profile }: { profile: CasperSiteProfile }) {
   const experience = getCasperBrandExperience(profile.slug);
   if (!experience) return null;
   const signature = SIGNATURES[experience.variant];
+  const localMedia = LOCAL_MEDIA[profile.slug] || [profile.heroImage];
+  const gallery = [...localMedia, ...(experience.mascot ? [experience.mascot] : []), ...experience.gallery]
+    .filter((src, index, all) => all.indexOf(src) === index)
+    .slice(0, 5);
 
   return (
     <main className="cbh-site" data-variant={experience.variant} style={{ '--cbh-accent': profile.accent, '--cbh-accent-bright': profile.accentBright, '--cbh-secondary': profile.secondary } as CSSProperties}>
@@ -55,7 +76,7 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
               {experience.heroVideoMobile ? <source media="(max-width: 700px)" src={experience.heroVideoMobile} type="video/mp4" /> : null}
               <source src={experience.heroVideo} type="video/mp4" />
             </video>
-          ) : <Image src={profile.heroImage} alt="" fill priority sizes="100vw" />}
+          ) : <img src={profile.heroImage} alt="" />}
         </div>
         <div className="cbh-hero-scrim" />
         <div className="cbh-hero-geometry" aria-hidden="true"><i/><i/><i/></div>
@@ -75,8 +96,8 @@ export default function CasperBrandHomePage({ profile }: { profile: CasperSitePr
       </section>
 
       <section className="cbh-media-deck" aria-label={`${profile.name} visual world`}>
-        {experience.secondaryVideo ? <div className="cbh-media cbh-media-video"><video autoPlay muted loop playsInline preload="metadata"><source src={experience.secondaryVideo} type="video/mp4" /></video></div> : null}
-        {experience.gallery.map((src,index)=><div className={`cbh-media cbh-media-${index+1}`} key={src}><Image src={src} alt={`${profile.name} visual ${index+1}`} fill sizes="(max-width: 900px) 100vw, 50vw" /></div>)}
+        {experience.secondaryVideo ? <div className="cbh-media cbh-media-video" style={{ backgroundImage: `url(${profile.heroImage})` }}><video autoPlay muted loop playsInline preload="metadata" poster={profile.heroImage}><source src={experience.secondaryVideo} type="video/mp4" /></video></div> : null}
+        {gallery.map((src,index)=><div className={`cbh-media cbh-media-${index+1}`} key={`${src}-${index}`} style={{ backgroundImage: `url(${profile.heroImage})` }}><img src={src} alt={`${profile.name} visual ${index+1}`} loading="lazy" decoding="async" /></div>)}
       </section>
 
       <section className="cbh-final-cta"><span>{experience.shortLabel}</span><h2>{profile.tagline}</h2><div><Link className="cbh-button cbh-button-primary" href={`/${profile.slug}/order`}>Order {profile.name}</Link><Link className="cbh-button" href={`/${profile.slug}/about`}>Enter the story</Link></div></section>

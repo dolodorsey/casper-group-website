@@ -5,12 +5,17 @@ import { casperBrandSlugs, getCasperSiteProfile } from '@/lib/casper-site-regist
 
 export const dynamicParams = false;
 
+type MenuRouteProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export function generateStaticParams() {
   return casperBrandSlugs.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const profile = getCasperSiteProfile(params.slug);
+export async function generateMetadata({ params }: MenuRouteProps): Promise<Metadata> {
+  const { slug } = await params;
+  const profile = getCasperSiteProfile(slug);
   if (!profile) return {};
   const title = `Menu | ${profile.name} — Casper Group`;
   const description = `Browse ${profile.name} by menu category: ${profile.description}`;
@@ -24,8 +29,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function CasperMenuRoute({ params }: { params: { slug: string } }) {
-  const profile = getCasperSiteProfile(params.slug);
+export default async function CasperMenuRoute({ params }: MenuRouteProps) {
+  const { slug } = await params;
+  const profile = getCasperSiteProfile(slug);
   if (!profile) notFound();
   return <CasperMenuBrowser profile={profile} />;
 }

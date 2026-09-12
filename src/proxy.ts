@@ -7,17 +7,9 @@ const DRIVE_ASSET_REWRITES: Record<string, string> = {
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Corporate homepage uses the 2026 static/portal experience. Legacy Casper motion is blocked.
-  if (pathname === '/') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/corporate';
-    return NextResponse.rewrite(url);
-  }
-
-  if (pathname === '/videos/casper-ani.mp4') {
-    return new NextResponse(null, { status: 410 });
-  }
-
+  // Preserve the longstanding Casper homepage and its motion system.
+  // New corporate and concept experiences must layer on top of existing development,
+  // never replace or block previously shipped customer-facing features.
   const replacement = DRIVE_ASSET_REWRITES[pathname];
   if (replacement) {
     const url = request.nextUrl.clone();
@@ -29,5 +21,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/videos/casper-ani.mp4', '/images/casper-hero-bg.png'],
+  matcher: ['/images/casper-hero-bg.png'],
 };
