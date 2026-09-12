@@ -5,6 +5,7 @@ import type { CasperSiteProfile } from '@/lib/casper-site-registry';
 import { getCasperBrandExperience, type CasperHomeVariant } from '@/lib/casper-brand-experience';
 import './casper-brand-home.css';
 import './casper-motion-refresh.css';
+import './casper-six-creative-2026.css';
 
 const PAGE_LINKS = [
   { key: 'menu', title: 'Menu', copy: 'Browse signatures by category, then open full details for the dishes calling your name.' },
