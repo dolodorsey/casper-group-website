@@ -5,6 +5,8 @@ const SUPABASE_URL = process.env.CASPER_SUPABASE_URL || 'https://qhgmukwoennurwu
 const EDGE_BASE = `${SUPABASE_URL}/functions/v1`;
 const WEB_GATEWAY = `${EDGE_BASE}/casper-web-gateway`;
 
+type BrandContext = { params: Promise<{ brand: string }> };
+
 function response(body: unknown, status = 200) {
   return NextResponse.json(body, {
     status,
@@ -65,8 +67,9 @@ async function proxy(upstream: Response) {
   });
 }
 
-export async function GET(request: NextRequest, { params }: { params: { brand: string } }) {
-  const profile = getCasperSiteProfile(params.brand);
+export async function GET(request: NextRequest, context: BrandContext) {
+  const { brand } = await context.params;
+  const profile = getCasperSiteProfile(brand);
   if (!profile) return response({ ok: false, error: 'Unknown Casper brand.' }, 404);
 
   const resource = request.nextUrl.searchParams.get('resource') || 'menu';
@@ -95,8 +98,9 @@ export async function GET(request: NextRequest, { params }: { params: { brand: s
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { brand: string } }) {
-  const profile = getCasperSiteProfile(params.brand);
+export async function POST(request: NextRequest, context: BrandContext) {
+  const { brand } = await context.params;
+  const profile = getCasperSiteProfile(brand);
   if (!profile) return response({ ok: false, error: 'Unknown Casper brand.' }, 404);
 
   try {
