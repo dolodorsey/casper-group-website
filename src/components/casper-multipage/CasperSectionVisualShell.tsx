@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { ReactNode, CSSProperties } from 'react';
 import type { CasperSection, CasperSiteProfile } from '@/lib/casper-site-registry';
 import { getCasperBrandExperience } from '@/lib/casper-brand-experience';
@@ -40,16 +39,15 @@ export default function CasperSectionVisualShell({
         '--csv-bright': profile.accentBright,
       } as CSSProperties}
     >
-      <div className="csv-hero-layer" aria-hidden="true">
+      <div className="csv-hero-layer" aria-hidden="true" style={{ backgroundImage: `url(${profile.heroImage})` }}>
         {showMotion ? (
-          <video autoPlay muted loop playsInline preload="metadata" poster={image}>
+          <video autoPlay muted loop playsInline preload="metadata" poster={profile.heroImage}>
             <source src={experience.secondaryVideo} type="video/mp4" />
           </video>
-        ) : <Image src={image} alt="" fill priority sizes="100vw" />}
+        ) : <img src={image} alt="" loading="eager" decoding="async" />}
         <div className="csv-hero-texture" />
         {showMascot ? (
           <div className="csv-mascot">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={experience.mascot} alt="" />
           </div>
         ) : null}
