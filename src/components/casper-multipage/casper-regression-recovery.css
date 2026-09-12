@@ -109,10 +109,36 @@
 /* First-wave creative rules hid normal hero content. Keep motion-led visuals but do not create blank screens. */
 .cbh-home .cbh-title,.cbh-home .cbh-subtitle,.cbh-home .cbh-description,.cbh-home .cbh-hero-actions{opacity:1!important;color:inherit!important;pointer-events:auto!important}
 
+/* Customer subpages: readable brand color, denser cards, full functionality. */
+.cmp-root .cmp-nav{min-height:68px;background:rgba(7,8,8,.94)}
+.cmp-root .cmp-nav-link{color:rgba(255,255,255,.76)}
+.cmp-root .cmp-nav-link:hover,.cmp-root .cmp-nav-link[data-active='true']{color:#fff}
+.cmp-root .cmp-button-primary,.cmp-root .cmp-chip[data-active='true']{
+  color:#080808!important;
+  font-weight:850;
+}
+.cmp-root .cmp-main{padding:44px 0 80px}
+.cmp-root .cmp-page-head{padding:12px 0 32px;gap:30px}
+.cmp-root .cmp-page-head h2{font-size:clamp(34px,4.6vw,60px)}
+.cmp-root .cmp-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.cmp-root .cmp-card{border-radius:17px}
+.cmp-root .cmp-card-body{padding:16px}
+.cmp-root .cmp-card h3{font-size:22px}
+.cmp-root .cmp-card p{min-height:0;font-size:12px}
+.cmp-root .cmp-card-footer{margin-top:14px}
+.cmp-root .cmp-info-panel,.cmp-root .cmp-form-panel,.cmp-root .cmp-cart{border-radius:18px}
+.cmp-root .cmp-info-panel{padding:24px}
+.cmp-root .cmp-location{border-radius:17px;padding:18px}
+.csv-hero-layer{background-position:center;background-size:cover}
+
 @media(max-width:1180px){
   .cbh-site .cbh-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .cbh-site .cbh-media{grid-column:span 6}
   .cbh-site .cbh-media-video{grid-column:span 12}
+  .cmp-root .cmp-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .cmp-root .cmp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:760px){
   .cbh-site .cbh-nav{grid-template-columns:auto 1fr;min-height:62px;padding:0 16px}
@@ -125,4 +151,6 @@
   .cbh-site .cbh-page-card{min-height:0}
   .cbh-site .cbh-media{grid-column:span 12;min-height:300px!important}
   .cbh-site .cbh-media-video{min-height:360px!important}
+  .cmp-root .cmp-grid{grid-template-columns:1fr}
+  .cmp-root .cmp-page-head{grid-template-columns:1fr;gap:14px}
 }
