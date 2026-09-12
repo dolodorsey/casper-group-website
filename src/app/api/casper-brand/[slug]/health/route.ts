@@ -5,8 +5,9 @@ export const dynamic = 'force-dynamic';
 
 const API_URL = 'https://qhgmukwoennurwuvmbhy.supabase.co/functions/v1/casper-brand-intake';
 
-export async function GET(_request: Request, { params }: { params: { slug: string } }) {
-  const brand = getRemainingCasperBrand(params.slug);
+export async function GET(_request: Request, context: { params: Promise<{ slug: string }> }) {
+  const { slug } = await context.params;
+  const brand = getRemainingCasperBrand(slug);
   if (!brand) {
     return NextResponse.json({ ok: false, error: 'Unknown brand.' }, { status: 404 });
   }
