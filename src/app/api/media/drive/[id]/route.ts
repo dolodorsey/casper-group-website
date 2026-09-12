@@ -39,30 +39,57 @@ const ALLOWED_DRIVE_MEDIA = new Set([
   // Parent Casper graphics
   '1cwLz3YW2Sl6V55vdzgZLVb1ZwAEMCHdh',
 
-  // Angel Wings graphics
+  // Angel Wings graphics — original + current Drive campaign set
   '1yICMDAcyzC9Er5o1B99kmG0OqwGkvh7Z',
   '1HwanqSmzyDXBxdvYSnngIpQJNDa_C-lc',
   '1_1oz3EyYJ01qzIgQLvVBcDq__IsF0HJ7',
+  '1uVh4F0G56A-Q3n0l9ib2liV7VDXd8xs-',
+  '11Af9xIhyFG6aHpg-gPM3FJJtPHy9pD-X',
+  '12YANAf_KCXD1dg1lSus40gIYCtJQ0DbC',
+  '1bXaVog9fL5wO5gg6c2myI25QQqHStfoS',
 
-  // Espresso graphics
+  // Tha Morning After current Drive campaign set
+  '1ICwpewyTAXp7kAeEOkUTedglm81yI9it',
+  '15xZ2qw-tIQ2_fjY3vk8HRMcZkltEQAzV',
+  '17xqYXkV4M8b4BVqLkyZV7P2e_j244EPe',
+
+  // Patty Daddy current Drive campaign set
+  '1BwfhCwAjTzQ_Eszg94L3WYfriO8OKVlH',
+  '1l4xG1N0lkwKoXKlWeWChFKCBIA6BQro8',
+  '1RK6YUSSidyIgON6TR2unEAYgnx_8-Okq',
+  '1mFtjN9ByHsqkIOPaovwSgNhbPdIgVkpl',
+
+  // Espresso graphics — original + current Drive campaign set
   '1_qafmRb8HnjycpCYZ8owwNOZ9dB4AoDg',
   '1TVeu5og1YDWrz9yDxsnzHWncfwqQJKVW',
   '1sUqswa5ZiE6xLdNCJR9c7FI-h7c3E7HP',
+  '1545tK6BbikyBeafmmAnuKmpa67DsMe76',
+  '1T6Na4cX6qrrr07ZS_I2bn9vRcufD96B4',
+  '1RwJstvLEtOIEgFvmDAwBZk3JTZNaBZlK',
+  '1ziiFgFI7tCBaNuXVejfz9vpnI3dtiC0k',
 
-  // Mojo graphics
+  // Mojo graphics — original + current Drive campaign set
   '1wMBHI5-xnZ41SxA7a4vLOiVfhG9Ncybv',
   '1QNG8F6U0O6pFYhiTrOGpxpebhQqdBiqd',
   '1bqntIh0GW3xpud0-llds6VW1dm_Y8ZTm',
+  '1b5nwhWjXuuLx5eOg67R-meYQV8QceJ1W',
+  '1AGsyDnQSHtXIaRACmeoRcke-secy3yGN',
+  '1SOzb74TwmcvW8vVjtZ9ouXlgfQpYb2Jb',
+  '17bmvrSubOrqxDXe6hhD7GmDkpuN6b6sU',
 
   // Mr Oyster graphics
   '1BdPSH3UUW139zBfcVYohBVXsPQRr4o_x',
   '1QY8JL4kR4io6Joaww4ttPhbx6sKmDYHl',
   '1-LJw0dOiP5g1SMP0F3XuRsCM2SuM-V19',
 
-  // Sweet Tooth graphics
+  // Sweet Tooth graphics — original + current Drive campaign set
   '1csLrgQIVpbxyeLSC11rSuPfAfdUiAewR',
   '1hh3Z9ww4USs72vjslax6KEUEyKrkR6Hu',
   '1ZI2XC2YtmNF8sQWYYxQ06wMlxW2gmvaT',
+  '1tBeHx7LT5Kc-wBuF-n3_P6FxUCjWwpWK',
+  '1tA1I2tTKmr0bEAzYDkYKUsDxsGJ64gjh',
+  '1V451MLUY6WUHY4__Qvfoqk8XBRbhdakz',
+  '1vEG2Oc_90Gn--y0YaKJ3kEhVzlfTHxfr',
 
   // Taco Yaki graphics
   '1VujWrnb5M0RxKjFFBpcbE_RVlvjbw-T2',

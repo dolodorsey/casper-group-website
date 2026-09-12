@@ -28,6 +28,7 @@ export default function CasperSectionVisualShell({
   const galleryIndex = GALLERY_INDEX[section] ?? 0;
   const image = experience.gallery[galleryIndex] || experience.gallery[0] || profile.heroImage;
   const showMascot = Boolean(experience.mascot && ['about', 'rewards', 'contact'].includes(section));
+  const showMotion = Boolean(experience.secondaryVideo && ['about', 'catering', 'rewards'].includes(section));
 
   return (
     <div
@@ -40,7 +41,11 @@ export default function CasperSectionVisualShell({
       } as CSSProperties}
     >
       <div className="csv-hero-layer" aria-hidden="true">
-        <Image src={image} alt="" fill priority sizes="100vw" />
+        {showMotion ? (
+          <video autoPlay muted loop playsInline preload="metadata" poster={image}>
+            <source src={experience.secondaryVideo} type="video/mp4" />
+          </video>
+        ) : <Image src={image} alt="" fill priority sizes="100vw" />}
         <div className="csv-hero-texture" />
         {showMascot ? (
           <div className="csv-mascot">

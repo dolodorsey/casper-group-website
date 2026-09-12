@@ -1,0 +1,53 @@
+/* 2026 creative completion — the six priority Casper concepts stop behaving like recolored templates. */
+.cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-hero-content p,
+.cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-hero-content .cbh-actions{display:none}
+.cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-hero-content{padding-bottom:clamp(36px,6vh,72px)}
+.cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-hero-logo{max-height:220px}
+
+/* ANGEL WINGS — celestial/infernal diptych rather than a standard gallery. */
+.cbh-site[data-variant='halo'] .cbh-media-deck{grid-template-columns:1.15fr .85fr 1fr;grid-template-rows:52vh 38vh;padding:0;gap:0;background:#050508}
+.cbh-site[data-variant='halo'] .cbh-media-deck .cbh-media{min-height:0;border:1px solid rgba(255,255,255,.06)}
+.cbh-site[data-variant='halo'] .cbh-media-deck .cbh-media:first-child{grid-row:1/3;clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%)}
+.cbh-site[data-variant='halo'] .cbh-media-deck .cbh-media:nth-child(2){border-radius:50% 50% 0 0}
+.cbh-site[data-variant='halo'] .cbh-media-deck .cbh-media:last-child{filter:saturate(1.25)}
+
+/* THA MORNING AFTER — after-hours footage resolves into a sunrise filmstrip. */
+.cbh-site[data-variant='sunrise'] .cbh-media-deck{display:flex;min-height:64vh;align-items:stretch;padding:clamp(16px,3vw,42px);gap:clamp(8px,1.2vw,18px);background:linear-gradient(105deg,#170b11,#713224 48%,#ffc87b)}
+.cbh-site[data-variant='sunrise'] .cbh-media-deck .cbh-media{flex:1;min-height:520px;border-radius:180px 180px 22px 22px;transform:translateY(var(--rise,0))}
+.cbh-site[data-variant='sunrise'] .cbh-media-deck .cbh-media:nth-child(2){--rise:36px}.cbh-site[data-variant='sunrise'] .cbh-media-deck .cbh-media:nth-child(3){--rise:74px}
+
+/* PATTY DADDY — oversized burger-card brutalism. */
+.cbh-site[data-variant='smash'] .cbh-media-deck{grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,minmax(250px,36vh));gap:12px;padding:28px;background:#f3b72e}
+.cbh-site[data-variant='smash'] .cbh-media-deck .cbh-media{border:5px solid #0b0b0b;box-shadow:12px 12px 0 #0b0b0b;min-height:0}
+.cbh-site[data-variant='smash'] .cbh-media-deck .cbh-media:nth-child(1){grid-column:1/8;grid-row:1/3;transform:rotate(-1.6deg)}
+.cbh-site[data-variant='smash'] .cbh-media-deck .cbh-media:nth-child(2){grid-column:8/13;grid-row:1;transform:rotate(1.4deg)}
+.cbh-site[data-variant='smash'] .cbh-media-deck .cbh-media:nth-child(3){grid-column:8/13;grid-row:2;transform:rotate(-.9deg)}
+.cbh-site[data-variant='smash'] .cbh-media-deck .cbh-media:nth-child(n+4){display:none}
+
+/* ESPRESSO CO — calibrated extraction grid. */
+.cbh-site[data-variant='lab'] .cbh-media-deck{grid-template-columns:repeat(4,1fr);min-height:78vh;padding:1px;gap:1px;background:#866b43}
+.cbh-site[data-variant='lab'] .cbh-media-deck .cbh-media{min-height:390px;background:#111;clip-path:inset(10px)}
+.cbh-site[data-variant='lab'] .cbh-media-deck .cbh-media:first-child{grid-column:span 2;grid-row:span 2;min-height:780px}
+.cbh-site[data-variant='lab'] .cbh-media-deck .cbh-media:nth-child(2){grid-column:span 2}
+.cbh-site[data-variant='lab'] .cbh-media-deck .cbh-media:after{content:'EXTRACTION / 09 BAR';position:absolute;left:26px;bottom:22px;font:700 9px/1 ui-monospace,monospace;letter-spacing:.18em;color:#fff;background:rgba(0,0,0,.54);padding:8px 10px}
+
+/* MOJO — color-burst wellness carousel. */
+.cbh-site[data-variant='fresh'] .cbh-media-deck{grid-template-columns:1fr 1.18fr 1fr;min-height:74vh;gap:0;padding:clamp(20px,4vw,70px);background:radial-gradient(circle at 15% 15%,#ffd12e 0 18%,transparent 18.5%),radial-gradient(circle at 92% 20%,#ff7548 0 17%,transparent 17.5%),#c7ef65}
+.cbh-site[data-variant='fresh'] .cbh-media-deck .cbh-media{min-height:520px;border-radius:48% 48% 18% 18%;box-shadow:0 34px 70px rgba(19,52,13,.18)}
+.cbh-site[data-variant='fresh'] .cbh-media-deck .cbh-media:nth-child(2){transform:translateY(-42px);border-radius:28px}
+.cbh-site[data-variant='fresh'] .cbh-media-deck .cbh-media:nth-child(3){transform:translateY(36px);border-radius:18% 18% 48% 48%}
+.cbh-site[data-variant='fresh'] .cbh-media-deck .cbh-media:nth-child(n+4){display:none}
+
+/* SWEET TOOTH — oversized sticker/candy-room collage. */
+.cbh-site[data-variant='candy'] .cbh-media-deck{grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(8,72px);min-height:720px;padding:48px;background:radial-gradient(circle at 20% 20%,#ff8ac7,transparent 34%),radial-gradient(circle at 78% 76%,#8e65df,transparent 34%),#351334;overflow:hidden}
+.cbh-site[data-variant='candy'] .cbh-media-deck .cbh-media{min-height:0;border:8px solid #fff;box-shadow:0 22px 50px rgba(0,0,0,.26)}
+.cbh-site[data-variant='candy'] .cbh-media-deck .cbh-media:nth-child(1){grid-column:1/7;grid-row:1/7;transform:rotate(-3deg);border-radius:34px}
+.cbh-site[data-variant='candy'] .cbh-media-deck .cbh-media:nth-child(2){grid-column:6/11;grid-row:2/6;transform:rotate(5deg);border-radius:50%}
+.cbh-site[data-variant='candy'] .cbh-media-deck .cbh-media:nth-child(3){grid-column:4/10;grid-row:5/9;transform:rotate(-2deg);border-radius:24px}
+.cbh-site[data-variant='candy'] .cbh-media-deck .cbh-media:nth-child(n+4){display:none}
+
+@media(max-width:900px){
+  .cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-media-deck{display:grid;grid-template-columns:1fr;grid-template-rows:auto;min-height:0;padding:12px;gap:12px}
+  .cbh-site:is([data-variant='halo'],[data-variant='sunrise'],[data-variant='smash'],[data-variant='lab'],[data-variant='fresh'],[data-variant='candy']) .cbh-media-deck .cbh-media{grid-column:auto!important;grid-row:auto!important;min-height:58vw!important;transform:none!important;clip-path:none!important;border-radius:22px!important}
+  .cbh-site:is([data-variant='smash'],[data-variant='fresh'],[data-variant='candy']) .cbh-media-deck .cbh-media:nth-child(n+4){display:block}
+}
