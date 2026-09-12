@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { casperSiteProfiles } from '@/lib/casper-site-registry';
 import './corporate.css';
+import './corporate-recovery.css';
 
 const brands = Object.values(casperSiteProfiles);
 const companyPages = [
