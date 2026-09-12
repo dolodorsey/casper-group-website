@@ -1,0 +1,59 @@
+/* Corporate recovery: the /corporate index supplements the longtime homepage; it does not replace it. */
+.ccorp-nav{min-height:68px!important;padding-top:10px!important;padding-bottom:10px!important}
+.ccorp-nav>div{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.6vw,24px);overflow-x:auto;scrollbar-width:none}
+.ccorp-nav>div::-webkit-scrollbar{display:none}
+.ccorp-nav>div a{white-space:nowrap;color:rgba(255,255,255,.72)!important}
+.ccorp-nav>div a:hover{color:#fff!important}
+.ccorp-hero{min-height:min(86svh,820px)!important}
+
+.ccorp-story{padding:clamp(68px,8vw,110px) clamp(24px,5vw,76px);background:#090a09;color:#f5f0e8;display:grid;grid-template-columns:minmax(280px,.75fr) minmax(0,1.25fr);gap:clamp(34px,6vw,86px);align-items:center;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.ccorp-story-copy>span,.ccorp-company-pages header>span{display:block;color:#b9e66f;font:800 9px/1.2 system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.ccorp-story-copy h2,.ccorp-company-pages h2{font:400 clamp(38px,5vw,68px)/.96 Georgia,serif;letter-spacing:-.04em;margin:0 0 20px}
+.ccorp-story-copy p,.ccorp-company-pages header p{color:rgba(255,255,255,.62);font:400 15px/1.7 system-ui,sans-serif;margin:0;max-width:650px}
+.ccorp-story-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.ccorp-story-links a{border:1px solid rgba(255,255,255,.13);border-radius:999px;padding:10px 14px;color:#fff;text-decoration:none;font:750 10px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.ccorp-story-media{display:grid;grid-template-columns:1.15fr .85fr;grid-template-rows:1fr 1fr;gap:8px;min-height:520px}
+.ccorp-story-media figure{position:relative;overflow:hidden;margin:0;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#111}
+.ccorp-story-media figure:first-child{grid-row:1/3}
+.ccorp-story-media img{width:100%;height:100%;object-fit:cover;display:block}
+.ccorp-story-media figcaption{position:absolute;left:12px;bottom:12px;padding:7px 9px;border-radius:999px;background:rgba(0,0,0,.68);color:#fff;font:700 9px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(10px)}
+
+/* The portfolio grid should be useful, not a wall of oversized cards. */
+.ccorp-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+.ccorp-card{min-height:360px!important;border-radius:18px!important}
+.ccorp-card-media{height:52%!important}
+.ccorp-card-logo{max-height:58px!important;max-width:145px!important}
+.ccorp-card p{font-size:13px!important}
+
+.ccorp-company-pages{padding:clamp(68px,8vw,110px) clamp(24px,5vw,76px);background:#0d0f0e;color:#f5f0e8;border-top:1px solid rgba(255,255,255,.07)}
+.ccorp-company-pages header{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.55fr);column-gap:40px;align-items:end;margin-bottom:28px}
+.ccorp-company-pages header>span{grid-column:1/-1}
+.ccorp-company-pages header p{justify-self:end}
+.ccorp-company-pages>div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ccorp-company-pages>div a{min-height:110px;padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.025);display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;color:#fff;text-decoration:none}
+.ccorp-company-pages>div a:hover{background:rgba(255,255,255,.055);border-color:rgba(185,230,111,.35)}
+.ccorp-company-pages small{color:#b9e66f;font:700 9px/1 ui-monospace,monospace}
+.ccorp-company-pages strong{font:700 17px/1.1 system-ui,sans-serif}
+.ccorp-company-pages a>span{color:#b9e66f;font-size:20px}
+
+@media(max-width:1180px){
+  .ccorp-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .ccorp-company-pages>div{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .ccorp-nav{grid-template-columns:auto 1fr!important}
+  .ccorp-nav>div{display:none}
+  .ccorp-story{grid-template-columns:1fr}
+  .ccorp-story-media{min-height:430px}
+  .ccorp-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .ccorp-company-pages header{grid-template-columns:1fr;gap:14px}
+  .ccorp-company-pages header p{justify-self:start}
+  .ccorp-company-pages>div{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .ccorp-story-media{grid-template-columns:1fr;grid-template-rows:repeat(3,240px);min-height:0}
+  .ccorp-story-media figure:first-child{grid-row:auto}
+  .ccorp-grid{grid-template-columns:1fr!important}
+  .ccorp-card{min-height:330px!important}
+  .ccorp-company-pages>div{grid-template-columns:1fr}
+}
