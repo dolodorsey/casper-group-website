@@ -1,0 +1,128 @@
+/* Casper regression recovery — preserve every brand world, repair usability and density. */
+
+/* Navigation must remain readable regardless of brand palette. */
+.cbh-site .cbh-nav{
+  min-height:68px;
+  background:rgba(5,5,5,.94)!important;
+  border-bottom:1px solid rgba(255,255,255,.09);
+  backdrop-filter:blur(20px) saturate(135%);
+}
+.cbh-site .cbh-nav-links a{
+  color:#f7f4ee!important;
+  opacity:.78!important;
+  text-shadow:0 1px 10px rgba(0,0,0,.55);
+}
+.cbh-site .cbh-nav-links a:hover{opacity:1!important;color:#fff!important}
+.cbh-site .cbh-nav-cta{
+  color:#080808!important;
+  box-shadow:0 8px 28px color-mix(in srgb,var(--cbh-accent) 24%,transparent);
+}
+
+/* Keep cinematic heroes, but eliminate empty oversized first folds. */
+.cbh-site .cbh-hero{min-height:min(88svh,880px)}
+.cbh-site .cbh-hero-media video,.cbh-site .cbh-hero-media img{width:100%;height:100%;object-fit:cover}
+.cbh-site .cbh-hero-content{padding-bottom:clamp(42px,6vh,72px)}
+.cbh-site .cbh-signature{padding:clamp(54px,6vw,86px) clamp(22px,5vw,72px);gap:clamp(30px,5vw,72px)}
+.cbh-site .cbh-signature-intro h1{font-size:clamp(38px,6vw,82px);line-height:.92}
+.cbh-site .cbh-signature-intro p{font-size:clamp(14px,1.25vw,18px)}
+.cbh-site .cbh-signature-beats div{padding:15px 0}
+
+/* Directory is a usable navigation system, not giant decorative cards. */
+.cbh-site .cbh-directory{
+  padding:clamp(52px,6vw,86px) clamp(20px,4.5vw,68px)!important;
+  background:
+    radial-gradient(circle at 92% 0%,color-mix(in srgb,var(--cbh-accent) 17%,transparent),transparent 28rem),
+    #0b0b0b!important;
+  color:#f7f4ee!important;
+}
+.cbh-site .cbh-directory-head{max-width:1480px;margin-bottom:28px;gap:32px}
+.cbh-site .cbh-directory-head span{color:var(--cbh-accent-bright)!important}
+.cbh-site .cbh-directory-head h2{color:#f8f6f1!important;font-size:clamp(34px,4.4vw,62px)!important}
+.cbh-site .cbh-directory-head>p{color:rgba(255,255,255,.68)!important;font-size:14px!important;line-height:1.6}
+.cbh-site .cbh-page-grid{
+  max-width:1480px;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px;
+  border:0!important;
+}
+.cbh-site .cbh-page-card,
+.cbh-site .cbh-page-card:nth-child(odd),
+.cbh-site .cbh-page-card:nth-child(even){
+  min-height:150px;
+  grid-template-columns:30px minmax(0,1fr) auto;
+  gap:11px;
+  padding:20px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:18px;
+  background:rgba(255,255,255,.035)!important;
+  color:#f9f7f2!important;
+  transform:none;
+}
+.cbh-site .cbh-page-card:hover{
+  transform:translateY(-2px);
+  background:color-mix(in srgb,var(--cbh-accent) 10%,rgba(255,255,255,.04))!important;
+  border-color:color-mix(in srgb,var(--cbh-accent) 38%,rgba(255,255,255,.12))!important;
+}
+.cbh-site .cbh-page-card h3{color:#fff!important;font-size:clamp(17px,1.4vw,22px)!important;line-height:1.1;margin-bottom:7px}
+.cbh-site .cbh-page-card p{color:rgba(255,255,255,.63)!important;font-size:12px!important;line-height:1.5}
+.cbh-site .cbh-page-number,.cbh-site .cbh-arrow{color:var(--cbh-accent-bright)!important}
+
+/* Media should feel editorial, not like three enormous near-identical posters. */
+.cbh-site .cbh-media-deck{
+  min-height:0!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  gap:8px!important;
+  padding:8px!important;
+  background:#070707!important;
+}
+.cbh-site .cbh-media{
+  grid-column:span 3;
+  min-height:clamp(250px,30vw,430px)!important;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background-color:#111;
+  background-position:center;
+  background-size:cover;
+}
+.cbh-site .cbh-media-video{grid-column:span 6}
+.cbh-site .cbh-media img,.cbh-site .cbh-media video{width:100%;height:100%;object-fit:cover;display:block}
+.cbh-site .cbh-media img{position:absolute;inset:0}
+
+/* CTA contrast must never depend on a too-dark brand accent. */
+.cbh-site .cbh-final-cta{
+  padding:clamp(68px,8vw,108px) clamp(24px,6vw,90px)!important;
+  background:#070707!important;
+  color:#fff!important;
+}
+.cbh-site .cbh-final-cta>span{color:var(--cbh-accent-bright)!important}
+.cbh-site .cbh-final-cta h2{color:#f8f6f1!important;font-size:clamp(38px,5.6vw,78px)!important;margin-bottom:26px}
+.cbh-site .cbh-final-cta .cbh-button:not(.cbh-button-primary){color:#fff!important;border-color:rgba(255,255,255,.28)!important}
+
+/* Known light signature worlds need dark readable copy. */
+.cbh-site[data-variant='fresh'] .cbh-signature,
+.cbh-site[data-variant='lab'] .cbh-signature{color:#14130f!important}
+.cbh-site[data-variant='fresh'] .cbh-signature-intro p,
+.cbh-site[data-variant='lab'] .cbh-signature-intro p{color:rgba(15,15,12,.72)!important}
+.cbh-site[data-variant='fresh'] .cbh-signature-beats strong,
+.cbh-site[data-variant='lab'] .cbh-signature-beats strong{color:#15130f!important}
+
+/* First-wave creative rules hid normal hero content. Keep motion-led visuals but do not create blank screens. */
+.cbh-home .cbh-title,.cbh-home .cbh-subtitle,.cbh-home .cbh-description,.cbh-home .cbh-hero-actions{opacity:1!important;color:inherit!important;pointer-events:auto!important}
+
+@media(max-width:1180px){
+  .cbh-site .cbh-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .cbh-site .cbh-media{grid-column:span 6}
+  .cbh-site .cbh-media-video{grid-column:span 12}
+}
+@media(max-width:760px){
+  .cbh-site .cbh-nav{grid-template-columns:auto 1fr;min-height:62px;padding:0 16px}
+  .cbh-site .cbh-nav-links{display:none}
+  .cbh-site .cbh-nav-cta{justify-self:end}
+  .cbh-site .cbh-hero{min-height:76svh}
+  .cbh-site .cbh-signature{grid-template-columns:1fr!important}
+  .cbh-site .cbh-directory-head{grid-template-columns:1fr;gap:14px}
+  .cbh-site .cbh-page-grid{grid-template-columns:1fr!important}
+  .cbh-site .cbh-page-card{min-height:0}
+  .cbh-site .cbh-media{grid-column:span 12;min-height:300px!important}
+  .cbh-site .cbh-media-video{min-height:360px!important}
+}
