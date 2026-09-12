@@ -13,18 +13,23 @@ export const dynamicParams = false;
 
 const SECTION_ROUTES = CASPER_SECTIONS.filter((section) => section !== 'menu');
 
+type SectionRouteProps = {
+  params: Promise<{ slug: string; section: string }>;
+};
+
 export function generateStaticParams() {
   return casperBrandSlugs.flatMap((slug) => SECTION_ROUTES.map((section) => ({ slug, section })));
 }
 
-export function generateMetadata({ params }: { params: { slug: string; section: string } }): Metadata {
-  const profile = getCasperSiteProfile(params.slug);
-  if (!profile || !isCasperSection(params.section) || params.section === 'menu') return {};
+export async function generateMetadata({ params }: SectionRouteProps): Promise<Metadata> {
+  const { slug, section } = await params;
+  const profile = getCasperSiteProfile(slug);
+  if (!profile || !isCasperSection(section) || section === 'menu') return {};
 
-  const sectionName = params.section === 'catering' ? profile.serviceLabel : params.section.charAt(0).toUpperCase() + params.section.slice(1);
+  const sectionName = section === 'catering' ? profile.serviceLabel : section.charAt(0).toUpperCase() + section.slice(1);
   const title = `${sectionName} | ${profile.name} — Casper Group`;
   const description = `${profile.name} ${sectionName.toLowerCase()}: ${profile.description}`;
-  const canonical = `https://caspergroupworldwide.com/${profile.slug}/${params.section}`;
+  const canonical = `https://caspergroupworldwide.com/${profile.slug}/${section}`;
 
   return {
     title,
@@ -47,12 +52,13 @@ export function generateMetadata({ params }: { params: { slug: string; section: 
   };
 }
 
-export default function CasperConceptSectionRoute({ params }: { params: { slug: string; section: string } }) {
-  const profile = getCasperSiteProfile(params.slug);
-  if (!profile || !isCasperSection(params.section) || params.section === 'menu') notFound();
+export default async function CasperConceptSectionRoute({ params }: SectionRouteProps) {
+  const { slug, section } = await params;
+  const profile = getCasperSiteProfile(slug);
+  if (!profile || !isCasperSection(section) || section === 'menu') notFound();
   return (
-    <CasperSectionVisualShell profile={profile} section={params.section}>
-      <CasperBrandSectionPage profile={profile} section={params.section} />
+    <CasperSectionVisualShell profile={profile} section={section}>
+      <CasperBrandSectionPage profile={profile} section={section} />
     </CasperSectionVisualShell>
   );
 }
