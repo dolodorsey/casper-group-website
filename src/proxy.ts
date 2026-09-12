@@ -4,7 +4,7 @@ const DRIVE_ASSET_REWRITES: Record<string, string> = {
   '/images/casper-hero-bg.png': '/api/media/drive/1cwLz3YW2Sl6V55vdzgZLVb1ZwAEMCHdh',
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Corporate homepage uses the 2026 static/portal experience. Legacy Casper motion is blocked.
