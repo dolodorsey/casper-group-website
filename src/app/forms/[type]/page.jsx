@@ -17,7 +17,7 @@ const FORMS = {
     {n:'portfolio',l:'Portfolio / Instagram',t:'text',r:1},{n:'description',l:'Tell us about your work',t:'textarea',r:1}]},
   artist_music:{title:'Artist (Music)',sub:'Perform at our events',icon:'🎵',cat:'Creative',fields:[
     {n:'full_name',l:'Full Name',t:'text',r:1},{n:'email',l:'Email',t:'email',r:1},{n:'phone',l:'Phone',t:'tel',r:1},
-    {n:'artist_name',l:'Artist / Stage Name',t:'text',r:1},{n:'genre',l:'Primary Genre',t:'select',r:1,o:["R&B","Hip Hop","Afrobeats","Neo Soul","Pop","Jazz","DJ","Live Band","Other"]},
+    {n:'artist_name',l:'Artist / Stage Name',t:'text',r:1},{n:'genre',l:'Genre',t:'select',r:1,o:["R&B","Hip Hop","Afrobeats","Neo Soul","Pop","Jazz","DJ","Live Band","Other"]},
     {n:'music_link',l:'Music Link (Spotify / SoundCloud)',t:'text',r:1},{n:'social',l:'Instagram Handle',t:'text'},{n:'bio',l:'Short Bio',t:'textarea',r:1}]},
   influencer:{title:'Influencer',sub:'Partner with us for content',icon:'📸',cat:'Creative',fields:[
     {n:'full_name',l:'Full Name',t:'text',r:1},{n:'email',l:'Email',t:'email',r:1},{n:'phone',l:'Phone',t:'tel',r:1},
