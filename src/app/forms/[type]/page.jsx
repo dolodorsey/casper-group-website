@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const BRAND_KEY = 'casper_group';
 const BRAND = { name: 'Casper Group', bg: '#0D0D0D', accent: '#C9A961', text: '#F0EDE5', font: "'DM Sans', sans-serif" };
-const WEBHOOK = 'https://dorsey.app.n8n.cloud/webhook/khg-form-submit';
+const INTAKE_ENDPOINT = '/api/forms';
 const BG_IMG = '/images/forms-bg.png';
 
 const FORMS = {
@@ -167,7 +167,28 @@ export default function FormPage({params}){
   const set=(n,v)=>setData(p=>({...p,[n]:v}));
   const submit=async(e)=>{
     e.preventDefault();setStatus('submitting');
-    try{await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brand_key:BRAND_KEY,form_type:type,full_name:data.full_name||'',email:data.email||'',phone:data.phone||'',form_data:data,source:'standalone_form',submitted_at:new Date().toISOString()})});setStatus('success');}catch{setStatus('error');}
+    try{
+      const response=await fetch(INTAKE_ENDPOINT,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','X-Idempotency-Key':crypto.randomUUID()},
+        body:JSON.stringify({
+          entityKey:BRAND_KEY,
+          formType:type,
+          name:data.full_name||'',
+          email:data.email||'',
+          phone:data.phone||'',
+          fields:data,
+          consent:{marketing:false},
+          sourceUrl:window.location.href,
+          referrer:document.referrer||null
+        })
+      });
+      const result=await response.json().catch(()=>null);
+      if(!response.ok||!result?.accepted) throw new Error(result?.error||'Submission failed');
+      setStatus('success');
+    }catch{
+      setStatus('error');
+    }
   };
 
   if(!form) return <FormsIndex/>;
