@@ -1,3 +1,13 @@
 import { ImageResponse } from 'next/og';
 export const runtime='edge';
-export async function GET(request:Request){const requested=Number(new URL(request.url).searchParams.get('size')||512);const size=[180,192,512].includes(requested)?requested:512;return new ImageResponse(<div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden',background:'radial-gradient(circle at 72% 18%,rgba(255,255,255,.18),transparent 38%),linear-gradient(145deg,#171717,#030303 72%)'}}><div style={{position:'absolute',width:'82%',height:'82%',border:'2px solid rgba(255,255,255,.24)',borderRadius:'50%'}}/><div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'64%',height:'64%',borderRadius:'27%',background:'#f5f5f5',color:'#050505',fontFamily:'Arial,sans-serif',fontWeight:900,fontSize:size*.43,boxShadow:'0 26px 80px rgba(255,255,255,.13)'}}>C</div><div style={{position:'absolute',bottom:'7%',display:'flex',color:'#f5f5f5',fontFamily:'Arial,sans-serif',fontWeight:900,fontSize:Math.max(10,size*.036),letterSpacing:Math.max(2,size*.011)}}>CASPER GROUP</div></div>,{width:size,height:size})}
+export async function GET(request:Request){
+  const requested=Number(new URL(request.url).searchParams.get('size')||512);
+  const size=[180,192,512].includes(requested)?requested:512;
+  const logo=new URL('/images/casper-logo-white.png',request.url).toString();
+  return new ImageResponse(
+    <div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',background:'#030303',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:'5%',borderRadius:'24%',border:'2px solid rgba(255,255,255,.25)'}}/>
+      <img src={logo} alt="CASPER GROUP" style={{width:'84%',height:'84%',objectFit:'contain'}}/>
+    </div>,{width:size,height:size}
+  );
+}
