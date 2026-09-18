@@ -11,7 +11,7 @@ function InstallQr(){
   if(!qr)return null;
   return <aside aria-label="Scan to install app" style={{position:'fixed',right:22,bottom:22,zIndex:2147483002,width:188,padding:12,borderRadius:20,background:'rgba(7,8,11,.97)',border:'1px solid rgba(255,255,255,.16)',boxShadow:'0 24px 70px rgba(0,0,0,.48)',color:'#fff',fontFamily:'Arial,sans-serif'}}>
     <img src={qr} alt="QR code to install this app" width="164" height="164" style={{display:'block',width:'100%',height:'auto',borderRadius:12,background:'#fff',padding:6}}/>
-    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET THE APP</strong>
+    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET CASPER</strong>
     <small style={{display:'block',marginTop:5,color:'rgba(255,255,255,.62)',fontSize:9,lineHeight:1.45}}>iPhone: Share → Add to Home Screen → Open as Web App → Add. Android: tap Install App.</small>
   </aside>
 }
@@ -27,8 +27,9 @@ async function track(event_type:string,metadata:Record<string,unknown>={}){try{a
 
 export default function InstallAppPrompt(){
  const[prompt,setPrompt]=useState<PromptEvent|null>(null),[show,setShow]=useState(false),[steps,setSteps]=useState(false),[apple,setApple]=useState(false),[installed,setInstalled]=useState(false);
- useEffect(()=>{if(standalone()){setInstalled(true);return}const a=isIOS();setApple(a);if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>undefined);const dismissed=Number(get('casper:pwa-dismissed')||0),eligible=!dismissed||Date.now()-dismissed>DISMISS_MS;const before=(e:Event)=>{e.preventDefault();setPrompt(e as PromptEvent);if(eligible)setTimeout(()=>setShow(true),1800)};const done=()=>{setInstalled(true);setShow(false);void track('app_install',{platform:a?'ios':'web',variant:'casper_group_pwa'})};addEventListener('beforeinstallprompt',before);addEventListener('appinstalled',done);let timer=0;if(eligible&&a)timer=window.setTimeout(()=>setShow(true),4800);return()=>{removeEventListener('beforeinstallprompt',before);removeEventListener('appinstalled',done);if(timer)clearTimeout(timer)}},[]);
- if(installed||!show)return null;
+ useEffect(()=>{if(standalone()){setInstalled(true);return}const a=isIOS();setApple(a);if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>undefined);const dismissed=Number(get('casper:pwa-dismissed')||0),eligible=forceInstall()||!dismissed||Date.now()-dismissed>DISMISS_MS;const before=(e:Event)=>{e.preventDefault();setPrompt(e as PromptEvent);if(eligible)setTimeout(()=>setShow(true),1800)};const done=()=>{setInstalled(true);setShow(false);void track('app_install',{platform:a?'ios':'web',variant:'casper_group_pwa'})};addEventListener('beforeinstallprompt',before);addEventListener('appinstalled',done);let timer=0;if(forceInstall())timer=window.setTimeout(()=>setShow(true),120);else if(eligible&&a)timer=window.setTimeout(()=>setShow(true),4800);return()=>{removeEventListener('beforeinstallprompt',before);removeEventListener('appinstalled',done);if(timer)clearTimeout(timer)}},[]);
+ if(installed)return null;
+ if(!show)return <button aria-label="Get Casper Group app" onClick={()=>{setSteps(false);setShow(true);void track('cta_click',{cta:'casper_persistent_get_app'})}} style={{position:'fixed',right:16,bottom:18,zIndex:2147482500,border:'1px solid #ffffff2e',borderRadius:999,padding:'13px 17px',background:'#f5f5f5',color:'#050505',font:'900 11px/1 Arial',letterSpacing:'.08em',boxShadow:'0 16px 44px rgba(0,0,0,.38)',cursor:'pointer'}}>GET CASPER ↗</button>;
  const close=()=>{set('casper:pwa-dismissed',String(Date.now()));setShow(false);void track('cta_click',{cta:'pwa_prompt_dismiss'})};
  const install=async()=>{void track('app_install_click',{platform:apple?'ios':'web',variant:prompt?'native_prompt':'instructions'});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==='accepted')setShow(false);return}setSteps(true)};
  return <div className="casperInstall" role="dialog" aria-modal="true" aria-label="Install Casper Group">
