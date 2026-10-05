@@ -99,7 +99,7 @@ function Nav() {
             onMouseLeave={e => (e.target as HTMLAnchorElement).style.color = C.silver}
           >{n}</a>
         ))}
-        <a href="#franchise" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.gold, padding: "10px 28px", textDecoration: "none", transition: "all 0.3s" }}>Inquire</a>
+        <a href="/forms/inquiry" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.gold, padding: "10px 28px", textDecoration: "none", transition: "all 0.3s" }}>Inquire</a>
       </div>
     </nav>
   );
@@ -434,8 +434,8 @@ function FranchiseCTA() {
             Operators, landlords, and strategic partners — Casper Group has a franchise path built for velocity, scale, and cultural relevance in every market.
           </p>
           <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="mailto:info@caspergroupworldwide.com?subject=Franchise Inquiry" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.gold, padding: "16px 48px", textDecoration: "none", transition: "all 0.3s" }}>Start Franchise Inquiry</a>
-            <a href="mailto:info@caspergroupworldwide.com?subject=Partnership" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", color: C.cream, background: "transparent", border: `1px solid ${C.border}`, padding: "16px 36px", textDecoration: "none", transition: "all 0.3s" }}>Operator Partnership</a>
+            <a href="/forms/inquiry" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: C.bg, background: C.gold, padding: "16px 48px", textDecoration: "none", transition: "all 0.3s" }}>Start Franchise Inquiry</a>
+            <a href="/forms/consultation" style={{ fontFamily: F.mono, fontSize: "9px", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", color: C.cream, background: "transparent", border: `1px solid ${C.border}`, padding: "16px 36px", textDecoration: "none", transition: "all 0.3s" }}>Operator Partnership</a>
           </div>
         </Reveal>
       </div>
